@@ -71,7 +71,26 @@ class GoogleSheet:
         except Exception as error:
             print(f"Error deleting rows: {str(error)}")
         return False
+    
+    def add_worksheet(self, title, rows, cols):
+        """
+        Add a new worksheet to the Google Spreadsheet
+        """
+        try:
+            self.sheet.add_worksheet(title=title, rows=rows, cols=cols)
+            return True
+        except Exception as error:
+            print(f"Error adding worksheet: {str(error)}")
 
+    def del_worksheet(self, worksheet):
+        """
+        Delete a worksheet from the Google Spreadsheet
+        """
+        try:
+            self.sheet.del_worksheet(worksheet)
+            return True
+        except Exception as error:
+            print(f"Error deleting worksheet: {str(error)}")
 
 db = GoogleSheet()
 db.connect('creds.json', SCOPE, 'calories_tracker')
