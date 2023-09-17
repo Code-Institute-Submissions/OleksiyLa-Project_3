@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import datetime
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -7,7 +8,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-class GoogleSheet:
+class BasicGoogleSheetOperations:
     """
     Class that implements basic CRUD operations with Google Sheet
     """
@@ -58,7 +59,7 @@ class GoogleSheet:
             self.sheet.worksheet(worksheet_name).update_cell(to_update[0], to_update[1], updated)
             return True
         except Exception as error:
-            print(f"Error updating row")
+            print(f"Error updating row: {str(error)}")
         return False
 
     def delete_row(self, row_number, worksheet_name):
@@ -92,5 +93,46 @@ class GoogleSheet:
         except Exception as error:
             print(f"Error deleting worksheet: {str(error)}")
 
-db = GoogleSheet()
+
+class CaloriesTrackerGS(BasicGoogleSheetOperations):
+    """
+    Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
+    """
+    def __init__(self):
+        super().__init__()
+
+    def login(self, username, password):
+        """
+        Login to the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for user in users:
+                if user[0] == username and user[1] == password:
+                    return username
+        except Exception as error:
+            print(f"Error logging in: {str(error)}")
+        return False
+    
+    def register(self, username, password):
+        """
+        Register a new user in the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for user in users:
+                if user[0] == username:
+                    return False
+            current_datetime = datetime.datetime.now()
+            current_datetime = current_datetime.strftime("%d/%m/%Y")
+            data = [username, password, current_datetime]
+            self.create_row(data, "users")
+            self.add_worksheet(username, 500, 20)
+            return True
+        except Exception as error:
+            print(f"Error registering: {str(error)}")
+        return False
+
+
+db = CaloriesTrackerGS()
 db.connect('creds.json', SCOPE, 'calories_tracker')
