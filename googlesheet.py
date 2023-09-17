@@ -100,6 +100,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
     """
     def __init__(self):
         super().__init__()
+        self.username = None
 
     def login(self, username, password):
         """
@@ -109,6 +110,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             users = self.read_rows("users")
             for user in users:
                 if user[0] == username and user[1] == password:
+                    self.username = username
                     return username
         except Exception as error:
             print(f"Error logging in: {str(error)}")
@@ -187,6 +189,36 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                     return True
         except Exception as error:
             print(f"Error updating product: {str(error)}")
+        return False
+    
+    def update_password(self, username, password):
+        """
+        Update a user's password in the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for index, user in enumerate(users):
+                if user[0] == username:
+                    self.update_cell([index + 1, 2], password, "users")
+                    return True
+        except Exception as error:
+            print(f"Error updating password: {str(error)}")
+        return False
+        
+    def delete_user(self, username):
+        """
+        Delete a user from the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for index, user in enumerate(users):
+                if user[0] == username:
+                    self.delete_row(index + 1, "users")
+                    self.del_worksheet(username)
+                    self.username = None
+                    return True
+        except Exception as error:
+            print(f"Error deleting user: {str(error)}")
         return False
     
     def find_product(self, product):

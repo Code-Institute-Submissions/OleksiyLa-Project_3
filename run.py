@@ -109,7 +109,34 @@ def calculate_calories():
         else:
             print("Invalid option, please type 1 or 2")
 
+def manage_personal_info():
+    while True:
+        print("Type '1' to change your password")
+        print("Type '2' to delete your account")
+        print("Type '3' to go back to the main menu")
+        print("1. Change password")
+        print("2. Delete account")
+        print("3. Go Back")
+        option = input("Enter your option: ")
+        if option == "1":
+            password = input("Enter your new password: ")
+            googleSheetDB.update_password(password)
+        elif option == "2":
+            option = input("Are you sure you want to delete your account? (y/n): ")
+            if option == "y":
+                googleSheetDB.delete_user(googleSheetDB.username)
+                break
+            else:
+                print("Account not deleted")
+        elif option == "3":
+            break
+        else:
+            print("Invalid option, please type 1, 2 or 3")
+
 def menu(username):
+    if googleSheetDB.username:
+        log_exit_message(username)
+        return
     while True:
         print("Type '1' for CRUD operations on list of products and their respective calories per 100g table")
         print("Type '2' to calculate calories from typed food and its weight")
@@ -125,7 +152,7 @@ def menu(username):
         elif option == "2":
             calculate_calories()
         elif option == "3":
-            print("Typed '3'")
+            manage_personal_info()
         elif option == "4":
             log_exit_message(username)
             break
