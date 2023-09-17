@@ -160,6 +160,62 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error deleting product: {str(error)}")
         return False
+    
+    def update_products_calories(self, product, calories):
+        """
+        Update a product's calories in the Google Worksheet
+        """
+        try:
+            products = self.read_rows("list_of_products")
+            for index, prod in enumerate(products):
+                if prod[0] == product:
+                    self.update_cell([index + 1, 2], calories, "list_of_products")
+                    return True
+        except Exception as error:
+            print(f"Error updating product: {str(error)}")
+        return False
+    
+    def update_products(self, product, new_product):
+        """
+        Update a product in the Google Worksheet
+        """
+        try:
+            products = self.read_rows("list_of_products")
+            for index, prod in enumerate(products):
+                if prod[0] == product:
+                    self.update_cell([index + 1, 1], new_product, "list_of_products")
+                    return True
+        except Exception as error:
+            print(f"Error updating product: {str(error)}")
+        return False
+    
+    def find_product(self, product):
+        """
+        Find a product in the Google Worksheet
+        """
+        try:
+            products = self.read_rows("list_of_products")
+            for prod in products:
+                if prod[0] == product:
+                    return prod
+        except Exception as error:
+            print(f"Error finding product: {str(error)}")
+        return False
+    
+    def find_products_starting_with(self, string):
+        """
+        Find a product in the Google Worksheet
+        """
+        try:
+            products = self.read_rows("list_of_products")
+            found_products = []
+            for prod in products:
+                if string in prod[0]:
+                    found_products.append(prod)
+            return found_products
+        except Exception as error:
+            print(f"Error finding product: {str(error)}")
+        return False
 
 
 googleSheetDB = CaloriesTrackerGS()
