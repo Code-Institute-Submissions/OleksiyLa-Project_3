@@ -1,7 +1,4 @@
-from googlesheet import db
-
-data = db.read_rows("list_of_products")
-db.register("Oleksiy", "test")
+from googlesheet import googleSheetDB
 
 def log_exit_message(username = ""):
     print("Thank you for using the Calories Tracker App")
@@ -18,7 +15,7 @@ def auth():
         if option == "1":
             username = input("Enter your username: ")
             password = input("Enter your password: ")
-            if db.login(username, password):
+            if googleSheetDB.login(username, password):
                 print(f"Welcome {username}")
                 return username
             else:
@@ -26,7 +23,7 @@ def auth():
         elif option == "2":
             username = input("Enter your username: ")
             password = input("Enter your password: ")
-            if db.register(username, password):
+            if googleSheetDB.register(username, password):
                 print("Registration successful")
             else:
                 print("Username already exists")
@@ -36,15 +33,46 @@ def auth():
         else:
             print("Invalid option, please type 1, 2 or 3")
 
-def menu(username):
+def crud():
     while True:
-        print("Type '1' for CRUD operations on list of products and calories table")
-        print("Type '2' to calculate calories from typed food and its weight")
-        print("Type '3' to access personal table")
-        print("Type '4' to exit")
+        print("Type '1' to create a new product")
+        print("Type '2' to read a product")
+        print("Type '3' to update a product")
+        print("Type '4' to delete a product")
+        print("Type '5' to go back to the main menu")
+        print("1. Create a new product")
+        print("2. Read a product")
+        print("3. Update a product")
+        print("4. Delete a product")
+        print("5. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             print("Typed '1'")
+        elif option == "2":
+            print("Typed '2'")
+        elif option == "3":
+            print("Typed '3'")
+        elif option == "4":
+            product = input("Enter the product to delete: ")
+            googleSheetDB.delete_product(product)
+        elif option == "5":
+            break
+        else:
+            print("Invalid option, please type 1, 2, 3, 4 or 5")
+
+def menu(username):
+    while True:
+        print("Type '1' for CRUD operations on list of products and their respective calories per 100g table")
+        print("Type '2' to calculate calories from typed food and its weight")
+        print("Type '3' to access personal info")
+        print("Type '4' to exit")
+        print("1. CRUD calories table")
+        print("2. Calculate calories")
+        print("3. Personal info")
+        print("4. Exit")
+        option = input("Enter your option: ")
+        if option == "1":
+            crud()
         elif option == "2":
             print("Typed '2'")
         elif option == "3":

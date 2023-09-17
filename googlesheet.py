@@ -132,7 +132,35 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error registering: {str(error)}")
         return False
+    
+    def add_product(self, product, calories):
+        """
+        Add a new product to the Google Worksheet
+        """
+        try:
+            data = [product, calories]
+            self.create_row(data, "list_of_products")
+            return True
+        except Exception as error:
+            print(f"Error adding product: {str(error)}")
+        return False
+    
+    def delete_product(self, product):
+        """
+        Delete a product from the Google Worksheet
+        """
+        try:
+            products = self.read_rows("list_of_products")
+            for index, prod in enumerate(products):
+                print(index)
+                print(prod)
+                if prod[0] == product:
+                    self.delete_row(index + 1, "list_of_products")
+                    return True
+        except Exception as error:
+            print(f"Error deleting product: {str(error)}")
+        return False
 
 
-db = CaloriesTrackerGS()
-db.connect('creds.json', SCOPE, 'calories_tracker')
+googleSheetDB = CaloriesTrackerGS()
+googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')
