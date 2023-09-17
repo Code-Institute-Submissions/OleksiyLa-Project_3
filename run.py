@@ -47,18 +47,67 @@ def crud():
         print("5. Go Back")
         option = input("Enter your option: ")
         if option == "1":
-            print("Typed '1'")
+            isProductAdded = googleSheetDB.add_product(input("Enter the product: "), input("Enter the calories: "))
+            if isProductAdded:
+                print("Product added successfully")
+            else:
+                print("Error adding product")
         elif option == "2":
-            print("Typed '2'")
+            products = googleSheetDB.find_products_starting_with(input("Enter the product: "))
+            for product in products:
+                print(product[0] + ": " + product[1])
         elif option == "3":
-            print("Typed '3'")
+            print("1. Update a product name")
+            print("2. Update a product calories")
+            print("3. Go Back")
+            option = input("Enter your option: ")
+            if option == "1":
+                product = input("Enter the product name to update: ")
+                new_product = input("Enter the new product name: ")
+                googleSheetDB.update_products(product, new_product)
+            elif option == "2":
+                product = input("Enter the product to update: ")
+                new_calories = input("Enter the new calories: ")
+                googleSheetDB.update_products_calories(product, new_calories)
+            elif option == "3":
+                break
         elif option == "4":
-            product = input("Enter the product to delete: ")
-            googleSheetDB.delete_product(product)
+            product = googleSheetDB.find_product(input("Enter the product to delete: "))
+            if product:
+                print(product[0] + ": " + product[1])
+                option = input("Are you sure you want to delete this product? (y/n): ")
+                if option == "y":
+                    googleSheetDB.delete_product(product[0])
+                else:
+                    print("Product not deleted")
         elif option == "5":
             break
         else:
             print("Invalid option, please type 1, 2, 3, 4 or 5")
+
+def calculate_calories():
+    total_calories = 0
+    while True:
+        print("Type '1' to calculate calories from typed food and its weight")
+        print("Type '2' to go back to the main menu")
+        print("1. Calculate calories")
+        print("2. Go Back")
+        option = input("Enter your option: ")
+        if option == "1":
+            product = googleSheetDB.find_product(input("Enter the product: "))
+            if product:
+                print(product[0] + ": " + product[1])
+                weight = input("Enter the weight: ")
+                calories = int(product[1]) * int(weight) / 100
+                total_calories += calories
+                print(f"Calories for {product[0]} per {weight}gramm : " + str(calories))
+                print(f"Sum of calories for products you have calculated: " + str(total_calories))
+            else:
+                print("Product not found")
+        elif option == "2":
+            break
+        else:
+            print("Invalid option, please type 1 or 2")
 
 def menu(username):
     while True:
@@ -74,7 +123,7 @@ def menu(username):
         if option == "1":
             crud()
         elif option == "2":
-            print("Typed '2'")
+            calculate_calories()
         elif option == "3":
             print("Typed '3'")
         elif option == "4":
