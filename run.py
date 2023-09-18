@@ -171,7 +171,8 @@ def manage_personal_info():
             else:
                 print("Account not deleted")
         elif option == "3":
-            print("Are you sure you want to delete your account? (y/n): ")
+            calories_consumed = input("Enter how many calories you have consumed this day: ")
+            googleSheetDB.add_calories_consumed(calories_consumed)
         elif option == "4":
             googleSheetDB.set_calories_limit(input("Enter your calories limit per day: "))
         elif option == "5":

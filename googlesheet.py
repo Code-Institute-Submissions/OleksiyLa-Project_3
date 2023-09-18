@@ -263,6 +263,26 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error setting calories limit: {str(error)}")
         return False
+    
+    def add_calories_consumed(self, calories):
+        """
+        Add calories consumed per day to the Google Worksheet
+        """
+        try:
+            current_datetime = datetime.datetime.now()
+            current_datetime = current_datetime.strftime("%d/%m/%Y")
+            user_worksheet = self.read_rows(self.username)
+            for index, row in enumerate(user_worksheet):
+                if row[0] == current_datetime:
+                    calories = int(row[1]) + int(calories)
+                    self.update_cell([index + 1, 2], calories, self.username)
+                    return True
+            data = [current_datetime, calories]
+            self.create_row(data, self.username)
+            return True
+        except Exception as error:
+            print(f"Error adding calories consumed: {str(error)}")
+        return False
 
 
 googleSheetDB = CaloriesTrackerGS()
