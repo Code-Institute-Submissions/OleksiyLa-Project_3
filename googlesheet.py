@@ -283,7 +283,14 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding calories consumed: {str(error)}")
         return False
-
+    
+    def get_calories_consumed(self):
+        """
+        Get calories consumed per today from the Google Worksheet
+        """
+        for row in self.read_rows(self.username):
+            if row[0] == datetime.datetime.now().strftime("%d/%m/%Y"):
+                return row[1]
 
 googleSheetDB = CaloriesTrackerGS()
 googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')

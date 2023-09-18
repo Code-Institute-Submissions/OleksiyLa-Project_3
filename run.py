@@ -176,7 +176,7 @@ def manage_personal_info():
         elif option == "4":
             googleSheetDB.set_calories_limit(input("Enter your calories limit per day: "))
         elif option == "5":
-            print("Are you sure you want to delete your account? (y/n): ")
+            print("You've consumed " + googleSheetDB.get_calories_consumed() + " calories today")
         elif option == "6":
             print("Are you sure you want to delete your account? (y/n): ")
         elif option == "7":
