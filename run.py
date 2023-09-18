@@ -105,6 +105,13 @@ def calculate_calories():
                 print(f"Sum of calories for products you have calculated: " + str(total_calories))
             else:
                 print("Product not found")
+                option = input("Would you like to add this product to our database? (y/n): ")
+                if option == "y":
+                    isProductAdded = googleSheetDB.add_product(input("Enter the product: "), input("Enter the calories: "))
+                    if isProductAdded:
+                        print("Product added successfully")
+                    else:
+                        print("Error adding product")              
         elif option == "2":
             break
         else:
