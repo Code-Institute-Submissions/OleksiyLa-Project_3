@@ -157,7 +157,7 @@ def manage_personal_info():
         print("5. See calories consumed per today")
         print("6. See calories limit")
         print("7. See your progress")
-        print("8. Our advice")
+        print("8. Add your weight")
         print("9. Go Back")
         option = input("Enter your option: ")
         if option == "1":
@@ -182,7 +182,7 @@ def manage_personal_info():
         elif option == "7":
             print("Are you sure you want to delete your account? (y/n): ")
         elif option == "8":
-            print("Are you sure you want to delete your account? (y/n): ")
+            googleSheetDB.add_weight(input("Enter your weight: "))
         elif option == "9":
             break
         else:

@@ -290,7 +290,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         for row in self.read_rows(self.username):
             if row[0] == datetime.datetime.now().strftime("%d/%m/%Y"):
                 return row[1]
-            
+
     def get_calories_limit(self):
         """
         Get calories limit from the Google Worksheet
@@ -301,6 +301,25 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                     return f"{row[3]} calories"
                 except:
                     return "not set"
+          
+    def add_weight(self, weight):
+        """
+        Add weight to the Google Worksheet
+        """
+        try:
+            current_datetime = datetime.datetime.now()
+            current_datetime = current_datetime.strftime("%d/%m/%Y")
+            user_worksheet = self.read_rows(self.username)
+            for index, row in enumerate(user_worksheet):
+                if row[0] == current_datetime:
+                    self.update_cell([index + 1, 3], weight, self.username)
+                    return True
+            data = [current_datetime, 0, weight]
+            self.create_row(data, self.username)
+            return True
+        except Exception as error:
+            print(f"Error adding weight: {str(error)}")
+        return False
 
 
 googleSheetDB = CaloriesTrackerGS()
