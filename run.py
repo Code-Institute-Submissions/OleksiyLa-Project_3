@@ -117,6 +117,21 @@ def calculate_calories():
         else:
             print("Invalid option, please type 1 or 2")
 
+def set_calories_limit():
+    while True:
+        print("Type '1' to set calories limit")
+        print("Type '2' to go back to the main menu")
+        print("1. Set calories limit")
+        print("2. Go Back")
+        option = input("Enter your option: ")
+        if option == "1":
+            calories_limit = input("Enter your calories limit: ")
+            googleSheetDB.set_calories_limit(calories_limit)
+        elif option == "2":
+            break
+        else:
+            print("Invalid option, please type 1 or 2")
+
 def manage_personal_info():
     while True:
         print("Type '1' to change your password")
@@ -133,6 +148,12 @@ def manage_personal_info():
         
         print("1. Change password")
         print("2. Delete account")
+        print("3. Add calories consumed per today")
+        print("4. Set calories limit")
+        print("5. See calories consumed per today")
+        print("6. See calories limit")
+        print("7. See your progress")
+        print("8. Our advice")
         print("9. Go Back")
         option = input("Enter your option: ")
         if option == "1":
@@ -146,9 +167,21 @@ def manage_personal_info():
             else:
                 print("Account not deleted")
         elif option == "3":
+            print("Are you sure you want to delete your account? (y/n): ")
+        elif option == "4":
+            googleSheetDB.set_calories_limit(input("Enter your calories limit per day: "))
+        elif option == "5":
+            print("Are you sure you want to delete your account? (y/n): ")
+        elif option == "6":
+            print("Are you sure you want to delete your account? (y/n): ")
+        elif option == "7":
+            print("Are you sure you want to delete your account? (y/n): ")
+        elif option == "8":
+            print("Are you sure you want to delete your account? (y/n): ")
+        elif option == "9":
             break
         else:
-            print("Invalid option, please type 1, 2 or 3")
+            print("Invalid option, please type 1,")
 
 def menu():
     while True:
@@ -171,7 +204,7 @@ def menu():
         elif option == "3":
             manage_personal_info()
         elif option == "4":
-            log_exit_message(googleSheetDB.username is not None)
+            log_exit_message()
             break
         else:
             print("Invalid option, please type 1, 2 or 3")

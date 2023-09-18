@@ -249,6 +249,21 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             print(f"Error finding product: {str(error)}")
         return False
 
+    def set_calories_limit(self, calories_limit):
+        """
+        Set a user's calories limit in the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for index, user in enumerate(users):
+                if user[0] == self.username:
+                    print("before")
+                    self.update_cell([index + 1, 4], calories_limit, "users")
+                    return True
+        except Exception as error:
+            print(f"Error setting calories limit: {str(error)}")
+        return False
+
 
 googleSheetDB = CaloriesTrackerGS()
 googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')
