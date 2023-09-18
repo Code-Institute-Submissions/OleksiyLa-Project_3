@@ -320,6 +320,45 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding weight: {str(error)}")
         return False
+    
+    def get_progress(self):
+        """
+        Get progress from the Google Worksheet
+        """
+        try:
+            user_worksheet = self.read_rows(self.username)
+            progress = []
+            for row in user_worksheet:
+                if row[2] != "0":
+                    progress.append(row)
+            return progress
+        except Exception as error:
+            print(f"Error getting progress: {str(error)}")
+        return False
+    
+    def calculate_overall_progress(self):
+        """
+        Calculate progress from the Google Worksheet
+        """
+        try:
+            progress = self.get_progress()
+            if len(progress) > 1:
+                first_weight = progress[0][2]
+                last_weight = progress[-1][2]
+                progress = int(first_weight) - int(last_weight)
+                print("The result shows your progress from " + progress[0][0] + "till " + progress[-1][0])
+                if progress > 0:
+                    return f"You lost {progress} kg"
+                elif progress < 0:
+                    return f"You gained {abs(progress)} kg"
+                else:
+                    return f"You didn't gain or lose weight"
+            else:
+                return "Not enough data to calculate progress"
+        except Exception as error:
+            print(f"Error calculating progress: {str(error)}")
+        return False
+    
 
 
 googleSheetDB = CaloriesTrackerGS()

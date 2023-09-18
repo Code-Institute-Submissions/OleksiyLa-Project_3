@@ -180,7 +180,7 @@ def manage_personal_info():
         elif option == "6":
             print("Your calories limit per day is " + googleSheetDB.get_calories_limit())
         elif option == "7":
-            print("Are you sure you want to delete your account? (y/n): ")
+            print(googleSheetDB.calculate_overall_progress())
         elif option == "8":
             googleSheetDB.add_weight(input("Enter your weight: "))
         elif option == "9":
