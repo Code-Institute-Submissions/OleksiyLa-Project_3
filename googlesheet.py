@@ -83,12 +83,12 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error adding worksheet: {str(error)}")
 
-    def del_worksheet(self, worksheet):
+    def del_worksheet(self, username):
         """
         Delete a worksheet from the Google Spreadsheet
         """
         try:
-            self.sheet.del_worksheet(worksheet)
+            self.sheet.del_worksheet(self.sheet.worksheet(username))
             return True
         except Exception as error:
             print(f"Error deleting worksheet: {str(error)}")
@@ -205,16 +205,16 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             print(f"Error updating password: {str(error)}")
         return False
         
-    def delete_user(self, username):
+    def delete_user(self):
         """
         Delete a user from the Google Worksheet
         """
         try:
             users = self.read_rows("users")
             for index, user in enumerate(users):
-                if user[0] == username:
+                if user[0] == self.username:
                     self.delete_row(index + 1, "users")
-                    self.del_worksheet(username)
+                    self.del_worksheet(self.username)
                     self.username = None
                     return True
         except Exception as error:

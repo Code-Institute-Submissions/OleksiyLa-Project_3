@@ -17,9 +17,10 @@ def auth():
             password = input("Enter your password: ")
             if googleSheetDB.login(username, password):
                 print(f"Welcome {username}")
-                return username
+                return True
             else:
                 print("Invalid username or password")
+                return False
         elif option == "2":
             username = input("Enter your username: ")
             password = input("Enter your password: ")
@@ -113,10 +114,19 @@ def manage_personal_info():
     while True:
         print("Type '1' to change your password")
         print("Type '2' to delete your account")
-        print("Type '3' to go back to the main menu")
+        
+        print("Type '3' to add calories consumed per today")
+        print("Type '4' to set calories limit")
+        print("Type '5' to see calories consumed per today")
+        print("Type '6' to see calories limit")
+        print("Type '7' to see your progress")
+        print("Type '8' for our advice")
+
+        print("Type '9' to go back to the main menu")
+        
         print("1. Change password")
         print("2. Delete account")
-        print("3. Go Back")
+        print("9. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             password = input("Enter your new password: ")
@@ -124,7 +134,7 @@ def manage_personal_info():
         elif option == "2":
             option = input("Are you sure you want to delete your account? (y/n): ")
             if option == "y":
-                googleSheetDB.delete_user(googleSheetDB.username)
+                googleSheetDB.delete_user()
                 break
             else:
                 print("Account not deleted")
@@ -133,11 +143,11 @@ def manage_personal_info():
         else:
             print("Invalid option, please type 1, 2 or 3")
 
-def menu(username):
-    if googleSheetDB.username:
-        log_exit_message(username)
-        return
+def menu():
     while True:
+        if googleSheetDB.username is None:
+            log_exit_message()
+            return
         print("Type '1' for CRUD operations on list of products and their respective calories per 100g table")
         print("Type '2' to calculate calories from typed food and its weight")
         print("Type '3' to access personal info")
@@ -154,7 +164,7 @@ def menu(username):
         elif option == "3":
             manage_personal_info()
         elif option == "4":
-            log_exit_message(username)
+            log_exit_message(googleSheetDB.username is not None)
             break
         else:
             print("Invalid option, please type 1, 2 or 3")
@@ -164,8 +174,7 @@ def main():
     Start the Calories Tracker App
     """
     print("Welcome to the Calories Tracker App")
-    username = auth()
-    if username:
-        menu(username)
+    if auth():
+        menu()
 
 main()
