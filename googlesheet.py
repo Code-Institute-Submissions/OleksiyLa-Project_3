@@ -191,14 +191,14 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             print(f"Error updating product: {str(error)}")
         return False
     
-    def update_password(self, username, password):
+    def update_password(self, password):
         """
         Update a user's password in the Google Worksheet
         """
         try:
             users = self.read_rows("users")
             for index, user in enumerate(users):
-                if user[0] == username:
+                if user[0] == self.username:
                     self.update_cell([index + 1, 2], password, "users")
                     return True
         except Exception as error:
