@@ -1,8 +1,12 @@
 from googlesheet import googleSheetDB
 
-def log_exit_message(username = ""):
+def log_exit_message():
+    username = googleSheetDB.username
     print("Thank you for using the Calories Tracker App")
-    print(f"Goodbye {username}")
+    if username is not None:
+        print(f"Goodbye {username}")
+    else:
+        print("Goodbye")
     
 def auth():
     while True:
