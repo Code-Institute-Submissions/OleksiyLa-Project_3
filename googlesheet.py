@@ -257,7 +257,6 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             users = self.read_rows("users")
             for index, user in enumerate(users):
                 if user[0] == self.username:
-                    print("before")
                     self.update_cell([index + 1, 4], calories_limit, "users")
                     return True
         except Exception as error:
@@ -291,6 +290,18 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         for row in self.read_rows(self.username):
             if row[0] == datetime.datetime.now().strftime("%d/%m/%Y"):
                 return row[1]
+            
+    def get_calories_limit(self):
+        """
+        Get calories limit from the Google Worksheet
+        """
+        for row in self.read_rows("users"):
+            if row[0] == self.username:
+                try:
+                    return f"{row[3]} calories"
+                except:
+                    return "not set"
+
 
 googleSheetDB = CaloriesTrackerGS()
 googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')
