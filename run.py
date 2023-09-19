@@ -23,7 +23,22 @@ def confirm(yes, no):
     else:
         print("Wrong input, please type 'y' or 'n'")
         confirm()
+
+def validate_length(data, input_message, min_length, max_length):
+    if len(data.split(" ")) > 1:
+        print("Input must not contain spaces")
+        return validate_length(input(input_message), input_message, min_length, max_length)
+    if len(data) < min_length:
+        print(f"Input must be at least {min_length} characters long")
+        return validate_length(input(input_message), input_message, min_length, max_length)
+    elif len(data) > max_length:
+        print(f"Input must be less than {max_length} characters long")
+        return validate_length(input(input_message), input_message, min_length, max_length)
+    else:
+        return data
     
+
+# main functions  
 def auth():
     while True:
         log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
@@ -38,10 +53,11 @@ def auth():
                 print("Invalid username or password")
                 return False
         elif option == "2":
-            username = input("Enter your username: ")
-            password = input("Enter your password: ")
+            username = validate_length(input("Enter your username: "), "Enter your username: ", 2, 12)
+            password = validate_length(input("Enter your password: "), "Enter your password: ", 6, 12)
             if authGS.register(username, password):
-                print("Registration successful")
+                log("Registration successful", f"Welcome {username}")
+                return True
             else:
                 print("Username already exists")
         elif option == "3":

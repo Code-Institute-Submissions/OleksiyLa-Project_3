@@ -129,6 +129,7 @@ class AuthGS(BasicGoogleSheetOperations):
             data = [username, password, current_datetime]
             self.create_row(data, "users")
             self.add_worksheet(username, 500, 20)
+            self.username = username
             return True
         except Exception as error:
             print(f"Error registering: {str(error)}")
