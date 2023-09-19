@@ -1,5 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 
+# helper functions
 def log_exit_message():
     username = authGS.username
     print("Thank you for using the Calories Tracker App")
@@ -7,14 +8,25 @@ def log_exit_message():
         print(f"Goodbye {username}")
     else:
         print("Goodbye")
+
+def log(*message):
+    message = "\n".join(message)
+    print(message)
+
+def confirm(yes, no):
+    option = input(yes).lower()
+    if option == "y" or option == "yes":
+        return True
+    elif option == "n" or option == "no":
+        print(no)
+        return False
+    else:
+        print("Wrong input, please type 'y' or 'n'")
+        confirm()
     
 def auth():
     while True:
-        print("Type '1' to login, '2' to register or '3' to exit")
-        print("Please select an option:")
-        print("1. Login")
-        print("2. Register")
-        print("3. Exit")
+        log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
         option = input("Enter your option: ")
         if option == "1":
             username = input("Enter your username: ")
@@ -40,16 +52,8 @@ def auth():
 
 def crud():
     while True:
-        print("Type '1' to create a new product")
-        print("Type '2' to read a product")
-        print("Type '3' to update a product")
-        print("Type '4' to delete a product")
-        print("Type '5' to go back to the main menu")
-        print("1. Create a new product")
-        print("2. Read a product")
-        print("3. Update a product")
-        print("4. Delete a product")
-        print("5. Go Back")
+        log("Type '1' to create a new product", "Type '2' to read a product", "Type '3' to update a product", "Type '4' to delete a product", "Type '5' to go back to the main menu")
+        log("1. Create a new product", "2. Read a product", "3. Update a product", "4. Delete a product", "5. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             isProductAdded = productListGS.add_product(input("Enter the product: "), input("Enter the calories: "))
@@ -62,9 +66,7 @@ def crud():
             for product in products:
                 print(product[0] + ": " + product[1])
         elif option == "3":
-            print("1. Update a product name")
-            print("2. Update a product calories")
-            print("3. Go Back")
+            log("1. Update a product name", "2. Update a product calories", "3. Go Back")
             option = input("Enter your option: ")
             if option == "1":
                 product = input("Enter the product name to update: ")
@@ -93,10 +95,7 @@ def crud():
 def calculate_calories():
     total_calories = 0
     while True:
-        print("Type '1' to calculate calories from typed food and its weight")
-        print("Type '2' to go back to the main menu")
-        print("1. Calculate calories")
-        print("2. Go Back")
+        log("1. Calculate calories", "2. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             product = productListGS.find_product(input("Enter the product: "))
@@ -123,10 +122,7 @@ def calculate_calories():
 
 def set_calories_limit():
     while True:
-        print("Type '1' to set calories limit")
-        print("Type '2' to go back to the main menu")
-        print("1. Set calories limit")
-        print("2. Go Back")
+        log("1. Set calories limit", "2. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             calories_limit = input("Enter your calories limit: ")
@@ -138,27 +134,7 @@ def set_calories_limit():
 
 def manage_personal_info():
     while True:
-        print("Type '1' to change your password")
-        print("Type '2' to delete your account")
-        
-        print("Type '3' to add calories consumed per today")
-        print("Type '4' to set calories limit")
-        print("Type '5' to see calories consumed per today")
-        print("Type '6' to see calories limit")
-        print("Type '7' to see your progress")
-        print("Type '8' for our advice")
-
-        print("Type '9' to go back to the main menu")
-        
-        print("1. Change password")
-        print("2. Delete account")
-        print("3. Add calories consumed per today")
-        print("4. Set calories limit")
-        print("5. See calories consumed per today")
-        print("6. See calories limit")
-        print("7. See your progress")
-        print("8. Add your weight")
-        print("9. Go Back")
+        log("1. Change password", "2. Delete account", "3. Add calories consumed per today", "4. Set calories limit", "5. See calories consumed per today", "6. See calories limit", "7. See your progress", "8. Add your weight", "9. Go Back")
         option = input("Enter your option: ")
         if option == "1":
             password = input("Enter your new password: ")
@@ -193,14 +169,7 @@ def menu():
         if authGS.username is None:
             log_exit_message()
             return
-        print("Type '1' for CRUD operations on list of products and their respective calories per 100g table")
-        print("Type '2' to calculate calories from typed food and its weight")
-        print("Type '3' to access personal info")
-        print("Type '4' to exit")
-        print("1. CRUD calories table")
-        print("2. Calculate calories")
-        print("3. Personal info")
-        print("4. Exit")
+        log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
         option = input("Enter your option: ")
         if option == "1":
             crud()

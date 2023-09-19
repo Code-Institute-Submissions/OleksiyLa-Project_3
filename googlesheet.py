@@ -190,8 +190,6 @@ class ProductListGS(BasicGoogleSheetOperations):
         try:
             products = self.read_rows("list_of_products")
             for index, prod in enumerate(products):
-                print(index)
-                print(prod)
                 if prod[0] == product:
                     self.delete_row(index + 1, "list_of_products")
                     return True
