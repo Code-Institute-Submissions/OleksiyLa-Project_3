@@ -342,18 +342,17 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         """
         try:
             data = self.get_progress()
-            print(data)
             if len(data) > 1:
                 first_weight = data[0][2]
                 last_weight = data[-1][2]
                 progress = int(first_weight) - int(last_weight)
-                print(progress)
                 first_date = str(data[0][0]).split("/")
                 last_date =  str(data[-1][0]).split("/")
-                print(first_date)
                 time_span = datetime.datetime(int(last_date[2]), int(last_date[1]), int(last_date[0])) - datetime.datetime(int(first_date[2]), int(first_date[1]), int(first_date[0]))
-                print(time_span.days)
-                print("The result shows your progress from " + data[0][0] + "to " + data[-1][0])
+                calories_list = [int(calories[1]) for calories in data]
+                average_calories = round(sum(calories_list) / int(time_span.days))
+                print("The result shows your progress from " + data[0][0] + " to " + data[-1][0])
+                print("On average you ate " + str(average_calories) + " calories a day")
                 if progress > 0:
                     return f"You lost {progress} kg in {time_span.days} days"
                 elif progress < 0:
