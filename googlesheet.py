@@ -341,25 +341,30 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         Calculate progress from the Google Worksheet
         """
         try:
-            progress = self.get_progress()
-            if len(progress) > 1:
-                first_weight = progress[0][2]
-                last_weight = progress[-1][2]
+            data = self.get_progress()
+            print(data)
+            if len(data) > 1:
+                first_weight = data[0][2]
+                last_weight = data[-1][2]
                 progress = int(first_weight) - int(last_weight)
-                print("The result shows your progress from " + progress[0][0] + "till " + progress[-1][0])
+                print(progress)
+                first_date = str(data[0][0]).split("/")
+                last_date =  str(data[-1][0]).split("/")
+                print(first_date)
+                time_span = datetime.datetime(int(last_date[2]), int(last_date[1]), int(last_date[0])) - datetime.datetime(int(first_date[2]), int(first_date[1]), int(first_date[0]))
+                print(time_span.days)
+                print("The result shows your progress from " + data[0][0] + "to " + data[-1][0])
                 if progress > 0:
-                    return f"You lost {progress} kg"
+                    return f"You lost {progress} kg in {time_span.days} days"
                 elif progress < 0:
-                    return f"You gained {abs(progress)} kg"
+                    return f"You gained {progress} kg in {time_span.days} days"
                 else:
-                    return f"You didn't gain or lose weight"
+                    return f"You didn't gain or lose weight in {time_span.days} days"
             else:
                 return "Not enough data to calculate progress"
         except Exception as error:
             print(f"Error calculating progress: {str(error)}")
         return False
-    
-
 
 googleSheetDB = CaloriesTrackerGS()
 googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')
