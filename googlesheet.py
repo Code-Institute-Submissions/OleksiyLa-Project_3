@@ -163,14 +163,14 @@ class AuthGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error deleting user: {str(error)}")
         return False
-
-class CaloriesTrackerGS(BasicGoogleSheetOperations):
+    
+class ProductListGS(BasicGoogleSheetOperations):
     """
-    Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
+    Class that implements CRUD operations with Product List Google Sheet
     """
     def __init__(self):
         super().__init__()
-    
+
     def add_product(self, product, calories):
         """
         Add a new product to the Google Worksheet
@@ -254,6 +254,13 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error finding product: {str(error)}")
         return False
+
+class CaloriesTrackerGS(BasicGoogleSheetOperations):
+    """
+    Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
+    """
+    def __init__(self):
+        super().__init__()
 
     def set_calories_limit(self, calories_limit):
         """
@@ -375,3 +382,4 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
 BasicGoogleSheetOperations.connect('creds.json', SCOPE, 'calories_tracker')
 googleSheetDB = CaloriesTrackerGS()
 authGS = AuthGS()
+productListGS = ProductListGS()

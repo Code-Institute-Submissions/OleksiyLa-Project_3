@@ -1,4 +1,4 @@
-from googlesheet import googleSheetDB, authGS
+from googlesheet import googleSheetDB, authGS, productListGS
 
 def log_exit_message():
     username = authGS.username
@@ -52,13 +52,13 @@ def crud():
         print("5. Go Back")
         option = input("Enter your option: ")
         if option == "1":
-            isProductAdded = googleSheetDB.add_product(input("Enter the product: "), input("Enter the calories: "))
+            isProductAdded = productListGS.add_product(input("Enter the product: "), input("Enter the calories: "))
             if isProductAdded:
                 print("Product added successfully")
             else:
                 print("Error adding product")
         elif option == "2":
-            products = googleSheetDB.find_products_starting_with(input("Enter the product: "))
+            products = productListGS.find_products_starting_with(input("Enter the product: "))
             for product in products:
                 print(product[0] + ": " + product[1])
         elif option == "3":
@@ -69,20 +69,20 @@ def crud():
             if option == "1":
                 product = input("Enter the product name to update: ")
                 new_product = input("Enter the new product name: ")
-                googleSheetDB.update_products(product, new_product)
+                productListGS.update_products(product, new_product)
             elif option == "2":
                 product = input("Enter the product to update: ")
                 new_calories = input("Enter the new calories: ")
-                googleSheetDB.update_products_calories(product, new_calories)
+                productListGS.update_products_calories(product, new_calories)
             elif option == "3":
                 break
         elif option == "4":
-            product = googleSheetDB.find_product(input("Enter the product to delete: "))
+            product = productListGS.find_product(input("Enter the product to delete: "))
             if product:
                 print(product[0] + ": " + product[1])
                 option = input("Are you sure you want to delete this product? (y/n): ")
                 if option == "y":
-                    googleSheetDB.delete_product(product[0])
+                    productListGS.delete_product(product[0])
                 else:
                     print("Product not deleted")
         elif option == "5":
@@ -99,7 +99,7 @@ def calculate_calories():
         print("2. Go Back")
         option = input("Enter your option: ")
         if option == "1":
-            product = googleSheetDB.find_product(input("Enter the product: "))
+            product = productListGS.find_product(input("Enter the product: "))
             if product:
                 print(product[0] + ": " + product[1])
                 weight = input("Enter the weight: ")
@@ -111,7 +111,7 @@ def calculate_calories():
                 print("Product not found")
                 option = input("Would you like to add this product to our database? (y/n): ")
                 if option == "y":
-                    isProductAdded = googleSheetDB.add_product(input("Enter the product: "), input("Enter the calories: "))
+                    isProductAdded = productListGS.add_product(input("Enter the product: "), input("Enter the calories: "))
                     if isProductAdded:
                         print("Product added successfully")
                     else:
