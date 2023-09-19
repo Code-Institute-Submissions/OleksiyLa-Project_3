@@ -1,7 +1,7 @@
-from googlesheet import googleSheetDB
+from googlesheet import googleSheetDB, authGS
 
 def log_exit_message():
-    username = googleSheetDB.username
+    username = authGS.username
     print("Thank you for using the Calories Tracker App")
     if username is not None:
         print(f"Goodbye {username}")
@@ -19,7 +19,7 @@ def auth():
         if option == "1":
             username = input("Enter your username: ")
             password = input("Enter your password: ")
-            if googleSheetDB.login(username, password):
+            if authGS.login(username, password):
                 print(f"Welcome {username}")
                 return True
             else:
@@ -28,7 +28,7 @@ def auth():
         elif option == "2":
             username = input("Enter your username: ")
             password = input("Enter your password: ")
-            if googleSheetDB.register(username, password):
+            if authGS.register(username, password):
                 print("Registration successful")
             else:
                 print("Username already exists")
@@ -162,11 +162,11 @@ def manage_personal_info():
         option = input("Enter your option: ")
         if option == "1":
             password = input("Enter your new password: ")
-            googleSheetDB.update_password(password)
+            authGS.update_password(password)
         elif option == "2":
             option = input("Are you sure you want to delete your account? (y/n): ")
             if option == "y":
-                googleSheetDB.delete_user()
+                authGS.delete_user()
                 break
             else:
                 print("Account not deleted")
@@ -190,7 +190,7 @@ def manage_personal_info():
 
 def menu():
     while True:
-        if googleSheetDB.username is None:
+        if authGS.username is None:
             log_exit_message()
             return
         print("Type '1' for CRUD operations on list of products and their respective calories per 100g table")

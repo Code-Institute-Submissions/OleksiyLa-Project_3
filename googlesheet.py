@@ -12,10 +12,9 @@ class BasicGoogleSheetOperations:
     """
     Class that implements basic CRUD operations with Google Sheet
     """
-    def __init__(self):
-        self.sheet = None
 
-    def connect(self, creds_file, scope, sheet_name):
+    @staticmethod
+    def connect(creds_file, scope, sheet_name):
         """
         Connect to Google Sheet
         """
@@ -24,7 +23,7 @@ class BasicGoogleSheetOperations:
             scoped_creds = creds.with_scopes(scope)
             gspread_client = gspread.authorize(scoped_creds)
             sheet = gspread_client.open(sheet_name)
-            self.sheet = sheet
+            BasicGoogleSheetOperations._sheet = sheet
             return True
         except Exception as error:
             print(f"Error connecting to Google Sheet: {str(error)}")
@@ -34,7 +33,7 @@ class BasicGoogleSheetOperations:
         Create a new row in the Google Worksheet
         """
         try:
-            self.sheet.worksheet(worksheet_name).append_row(data)
+            BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).append_row(data)
             return True
         except Exception as error:
             print(f"Error creating row: {str(error)}")
@@ -45,7 +44,7 @@ class BasicGoogleSheetOperations:
         Read all rows from the Google Worksheet
         """
         try:
-            rows = self.sheet.worksheet(worksheet_name).get_all_values()
+            rows = BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).get_all_values()
             return rows
         except Exception as error:
             print(f"Error reading rows: {str(error)}")
@@ -56,7 +55,7 @@ class BasicGoogleSheetOperations:
         Update a row in the Google Worksheet
         """
         try:
-            self.sheet.worksheet(worksheet_name).update_cell(to_update[0], to_update[1], updated)
+            BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).update_cell(to_update[0], to_update[1], updated)
             return True
         except Exception as error:
             print(f"Error updating row: {str(error)}")
@@ -67,7 +66,7 @@ class BasicGoogleSheetOperations:
         Delete a row from the Google Worksheet
         """
         try:
-            self.sheet.worksheet(worksheet_name).delete_row(row_number)
+            BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).delete_row(row_number)
             return True
         except Exception as error:
             print(f"Error deleting rows: {str(error)}")
@@ -78,7 +77,7 @@ class BasicGoogleSheetOperations:
         Add a new worksheet to the Google Spreadsheet
         """
         try:
-            self.sheet.add_worksheet(title=title, rows=rows, cols=cols)
+            BasicGoogleSheetOperations._sheet.add_worksheet(title=title, rows=rows, cols=cols)
             return True
         except Exception as error:
             print(f"Error adding worksheet: {str(error)}")
@@ -88,15 +87,15 @@ class BasicGoogleSheetOperations:
         Delete a worksheet from the Google Spreadsheet
         """
         try:
-            self.sheet.del_worksheet(self.sheet.worksheet(username))
+            BasicGoogleSheetOperations._sheet.del_worksheet(BasicGoogleSheetOperations._sheet.worksheet(username))
             return True
         except Exception as error:
             print(f"Error deleting worksheet: {str(error)}")
 
 
-class CaloriesTrackerGS(BasicGoogleSheetOperations):
+class AuthGS(BasicGoogleSheetOperations):
     """
-    Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
+    Class that implements AUTH operations with Google Sheet
     """
     def __init__(self):
         super().__init__()
@@ -134,6 +133,43 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error registering: {str(error)}")
         return False
+    
+    def update_password(self, password):
+        """
+        Update a user's password in the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for index, user in enumerate(users):
+                if user[0] == self.username:
+                    self.update_cell([index + 1, 2], password, "users")
+                    return True
+        except Exception as error:
+            print(f"Error updating password: {str(error)}")
+        return False
+        
+    def delete_user(self):
+        """
+        Delete a user from the Google Worksheet
+        """
+        try:
+            users = self.read_rows("users")
+            for index, user in enumerate(users):
+                if user[0] == self.username:
+                    self.delete_row(index + 1, "users")
+                    self.del_worksheet(self.username)
+                    self.username = None
+                    return True
+        except Exception as error:
+            print(f"Error deleting user: {str(error)}")
+        return False
+
+class CaloriesTrackerGS(BasicGoogleSheetOperations):
+    """
+    Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
+    """
+    def __init__(self):
+        super().__init__()
     
     def add_product(self, product, calories):
         """
@@ -189,36 +225,6 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                     return True
         except Exception as error:
             print(f"Error updating product: {str(error)}")
-        return False
-    
-    def update_password(self, password):
-        """
-        Update a user's password in the Google Worksheet
-        """
-        try:
-            users = self.read_rows("users")
-            for index, user in enumerate(users):
-                if user[0] == self.username:
-                    self.update_cell([index + 1, 2], password, "users")
-                    return True
-        except Exception as error:
-            print(f"Error updating password: {str(error)}")
-        return False
-        
-    def delete_user(self):
-        """
-        Delete a user from the Google Worksheet
-        """
-        try:
-            users = self.read_rows("users")
-            for index, user in enumerate(users):
-                if user[0] == self.username:
-                    self.delete_row(index + 1, "users")
-                    self.del_worksheet(self.username)
-                    self.username = None
-                    return True
-        except Exception as error:
-            print(f"Error deleting user: {str(error)}")
         return False
     
     def find_product(self, product):
@@ -351,7 +357,6 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                 time_span = datetime.datetime(int(last_date[2]), int(last_date[1]), int(last_date[0])) - datetime.datetime(int(first_date[2]), int(first_date[1]), int(first_date[0]))
                 calories_list = [int(calories[1]) for calories in data]
                 del calories_list[-1]
-                print(calories_list)
                 average_calories = round(sum(calories_list) / int(time_span.days))
                 print("The result shows your progress from " + data[0][0] + " to " + data[-1][0])
                 print("On average you ate " + str(average_calories) + " calories a day")
@@ -367,5 +372,6 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             print(f"Error calculating progress: {str(error)}")
         return False
 
+BasicGoogleSheetOperations.connect('creds.json', SCOPE, 'calories_tracker')
 googleSheetDB = CaloriesTrackerGS()
-googleSheetDB.connect('creds.json', SCOPE, 'calories_tracker')
+authGS = AuthGS()
