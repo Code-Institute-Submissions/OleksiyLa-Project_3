@@ -350,6 +350,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                 last_date =  str(data[-1][0]).split("/")
                 time_span = datetime.datetime(int(last_date[2]), int(last_date[1]), int(last_date[0])) - datetime.datetime(int(first_date[2]), int(first_date[1]), int(first_date[0]))
                 calories_list = [int(calories[1]) for calories in data]
+                del calories_list[-1]
+                print(calories_list)
                 average_calories = round(sum(calories_list) / int(time_span.days))
                 print("The result shows your progress from " + data[0][0] + " to " + data[-1][0])
                 print("On average you ate " + str(average_calories) + " calories a day")
