@@ -54,3 +54,23 @@ def is_number(data, input_message):
     
 def prepare_string(string):
     return string.lower().title().strip()
+
+def check_option(data, length):
+    # try:
+    exit_num = length + 1
+    option = int(data) - 1
+    if option >= 0 and option < exit_num:
+        return option
+    else:
+        print(f"Input must be between 1 and {exit_num}")
+        return check_option(is_number(input("Select an option: "), "Select an option: "), length)
+    # except ValueError:
+    #     return check_option(is_number(input("Select an option: ")), length)
+
+def select_option(*options):
+    print("\n")
+    length = len(options)
+    option = check_option(is_number(input("Select an option: "), "Select an option: "), length)
+    if int(option) == length:
+        return 'exit'
+    return options[option]

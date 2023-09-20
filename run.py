@@ -1,35 +1,17 @@
 from googlesheet import googleSheetDB, authGS, productListGS
-from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string
+from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
+from options import login, register
 
-# main functions  
+# main functions 
 def auth():
     while True:
         log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
-        option = input("Enter your option: ")
-        if option == "1":
-            username = input("Enter your username: ")
-            password = input("Enter your password: ")
-            if authGS.login(username, password):
-                clear_terminal()
-                print(f"Welcome {username}")
-                return True
-            else:
-                print("Invalid username or password")
-                return False
-        elif option == "2":
-            username = validate_length(input("Enter your username: "), "Enter your username: ", 2, 12, True)
-            password = validate_length(input("Enter your password: "), "Enter your password: ", 6, 12, True)
-            if authGS.register(username, password):
-                clear_terminal()
-                log("Registration successful", f"Welcome {username}")
-                return True
-            else:
-                print("Username already exists")
-        elif option == "3":
-            log_exit_message(authGS.username)
+        option = select_option(login, register)
+        if option == 'exit':
+            print("Goodbye")
             break
-        else:
-            print("Invalid option, please type 1, 2 or 3")
+        clear_terminal()
+        return option()
 
 def crud():
     while True:
