@@ -96,6 +96,8 @@ class AuthGS(BasicGoogleSheetOperations):
     """
     Class that implements AUTH operations with Google Sheet
     """
+    _username = None
+
     def __init__(self):
         super().__init__()
         self.username = None
@@ -109,6 +111,7 @@ class AuthGS(BasicGoogleSheetOperations):
             for user in users:
                 if user[0] == username and user[1] == password:
                     self.username = username
+                    AuthGS._username = username
                     return username
         except Exception as error:
             print(f"Error logging in: {str(error)}")
@@ -129,6 +132,7 @@ class AuthGS(BasicGoogleSheetOperations):
             self.create_row(data, "users")
             self.add_worksheet(username, 500, 20)
             self.username = username
+            AuthGS._username = username
             return True
         except Exception as error:
             print(f"Error registering: {str(error)}")
@@ -267,7 +271,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         try:
             users = self.read_rows("users")
             for index, user in enumerate(users):
-                if user[0] == self.username:
+                if user[0] == AuthGS._username:
                     self.update_cell([index + 1, 4], calories_limit, "users")
                     return True
         except Exception as error:
@@ -281,14 +285,14 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         try:
             current_datetime = datetime.datetime.now()
             current_datetime = current_datetime.strftime("%d/%m/%Y")
-            user_worksheet = self.read_rows(self.username)
+            user_worksheet = self.read_rows(AuthGS._username)
             for index, row in enumerate(user_worksheet):
                 if row[0] == current_datetime:
                     calories = int(row[1]) + int(calories)
-                    self.update_cell([index + 1, 2], calories, self.username)
+                    self.update_cell([index + 1, 2], calories, AuthGS._username)
                     return True
             data = [current_datetime, calories]
-            self.create_row(data, self.username)
+            self.create_row(data, AuthGS._username)
             return True
         except Exception as error:
             print(f"Error adding calories consumed: {str(error)}")
@@ -298,7 +302,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         """
         Get calories consumed per today from the Google Worksheet
         """
-        for row in self.read_rows(self.username):
+        for row in self.read_rows(AuthGS._username):
             if row[0] == datetime.datetime.now().strftime("%d/%m/%Y"):
                 return row[1]
 
@@ -307,7 +311,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         Get calories limit from the Google Worksheet
         """
         for row in self.read_rows("users"):
-            if row[0] == self.username:
+            if row[0] == AuthGS._username:
                 try:
                     return f"{row[3]} calories"
                 except:
@@ -320,13 +324,13 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         try:
             current_datetime = datetime.datetime.now()
             current_datetime = current_datetime.strftime("%d/%m/%Y")
-            user_worksheet = self.read_rows(self.username)
+            user_worksheet = self.read_rows(AuthGS._username)
             for index, row in enumerate(user_worksheet):
                 if row[0] == current_datetime:
-                    self.update_cell([index + 1, 3], weight, self.username)
+                    self.update_cell([index + 1, 3], weight, AuthGS._username)
                     return True
             data = [current_datetime, 0, weight]
-            self.create_row(data, self.username)
+            self.create_row(data, AuthGS._username)
             return True
         except Exception as error:
             print(f"Error adding weight: {str(error)}")
@@ -337,7 +341,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         Get progress from the Google Worksheet
         """
         try:
-            user_worksheet = self.read_rows(self.username)
+            user_worksheet = self.read_rows(AuthGS._username)
             progress = []
             for row in user_worksheet:
                 if row[2] != "0":
