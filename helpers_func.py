@@ -9,8 +9,7 @@ def clear_terminal():
     elif os.name == 'nt':
         os.system('cls')
 
-def log_exit_message():
-    username = authGS.username
+def log_exit_message(username):
     print("Thank you for using the Calories Tracker App")
     if username is not None:
         print(f"Goodbye {username}")

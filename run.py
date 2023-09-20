@@ -26,7 +26,7 @@ def auth():
             else:
                 print("Username already exists")
         elif option == "3":
-            log_exit_message()
+            log_exit_message(authGS.username)
             break
         else:
             print("Invalid option, please type 1, 2 or 3")
@@ -193,7 +193,7 @@ def manage_personal_info():
 def menu():
     while True:
         if authGS.username is None:
-            log_exit_message()
+            log_exit_message(authGS.username)
             return
         log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
         option = input("Enter your option: ")
@@ -208,7 +208,7 @@ def menu():
             manage_personal_info()
         elif option == "4":
             clear_terminal()
-            log_exit_message()
+            log_exit_message(authGS.username)
             break
         else:
             print("Invalid option, please type 1, 2 or 3")
