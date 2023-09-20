@@ -54,7 +54,9 @@ def is_number(data, input_message):
     except ValueError:
         print("Input must be a number")
         return is_number(input(input_message), input_message)
-
+    
+def prepare_string(string):
+    return string.lower().title().strip()
 
 # main functions  
 def auth():
@@ -93,22 +95,26 @@ def crud():
         if option == "1":
             if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
                 continue
-            validatedProduct = validate_length(input("Enter the product: "), "Enter the product: ", 2, 20)
+            validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
             validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
+            if productListGS.find_product(validatedProduct):
+                print(f"Product {validatedProduct} already exists")
+                continue
             isProductAdded = productListGS.add_product(validatedProduct, validatedCalories)
             if isProductAdded:
                 print("Product added successfully")
             else:
                 print("Error adding product")
         elif option == "2":
-            products = productListGS.find_products_starting_with(input("Enter the product: "))
+            validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
+            products = productListGS.find_products_starting_with(validatedProducts)
             for product in products:
                 print(product[0] + ": " + product[1])
         elif option == "3":
             log("1. Update a product name", "2. Update a product calories", "3. Go Back")
             option = input("Enter your option: ")
             if option == "1":
-                product = validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 2, 20)
+                product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 2, 20))
                 products = productListGS.find_products_starting_with(product)
                 if len(products) == 0:
                     print("Product not found")
@@ -122,7 +128,7 @@ def crud():
                     product = products[0][0]
                     if not confirm(f"Are you sure you want to update a product name of {product}? (y/n) or (yes/no): "):
                         continue
-                new_product = validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 2, 20)
+                new_product = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 2, 20))
                 is_in_db = bool(productListGS.find_product(new_product))
                 if is_in_db:
                     print(f"Product {new_product} already exists")
@@ -130,7 +136,7 @@ def crud():
                 productListGS.update_products(product, new_product)
                 print("Product " + product + " updated to " + new_product)
             elif option == "2":
-                product_input = validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 2, 20)
+                product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 2, 20))
                 products = productListGS.find_products_starting_with(product_input)
                 product = productListGS.find_product(product_input)
                 if product:
@@ -153,7 +159,7 @@ def crud():
                 clear_terminal()
                 break
         elif option == "4":
-            product = productListGS.find_product(input("Enter the product to delete: "))
+            product = productListGS.find_product(prepare_string(input("Enter the product to delete: ")))
             if product:
                 print(product[0] + ": " + product[1])
                 if not confirm(f"Are you sure you want to delete {product[0]}? (y/n) or (yes/no): "):

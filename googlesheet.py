@@ -92,7 +92,6 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error deleting worksheet: {str(error)}")
 
-
 class AuthGS(BasicGoogleSheetOperations):
     """
     Class that implements AUTH operations with Google Sheet
