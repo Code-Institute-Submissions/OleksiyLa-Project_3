@@ -1,6 +1,16 @@
 from googlesheet import googleSheetDB, authGS, productListGS
+import os
 
 # helper functions
+def clear_terminal():
+    """
+      Check the operating system and use the appropriate clear command
+    """
+    if os.name == 'posix':
+        os.system('clear')
+    elif os.name == 'nt':
+        os.system('cls')
+
 def log_exit_message():
     username = authGS.username
     print("Thank you for using the Calories Tracker App")
@@ -55,6 +65,7 @@ def auth():
             username = input("Enter your username: ")
             password = input("Enter your password: ")
             if authGS.login(username, password):
+                clear_terminal()
                 print(f"Welcome {username}")
                 return True
             else:
@@ -64,6 +75,7 @@ def auth():
             username = validate_length(input("Enter your username: "), "Enter your username: ", 2, 12, True)
             password = validate_length(input("Enter your password: "), "Enter your password: ", 6, 12, True)
             if authGS.register(username, password):
+                clear_terminal()
                 log("Registration successful", f"Welcome {username}")
                 return True
             else:
@@ -138,6 +150,7 @@ def crud():
                 productListGS.update_products_calories(product[0], new_calories)
                 print("Calories of " + product[0] + " updated to " + new_calories + " calories")
             elif option == "3":
+                clear_terminal()
                 break
         elif option == "4":
             product = productListGS.find_product(input("Enter the product to delete: "))
@@ -148,6 +161,7 @@ def crud():
                 if productListGS.delete_product(product[0]):
                     print(f"{product[0]} deleted")
         elif option == "5":
+            clear_terminal()
             break
         else:
             print("Invalid option, please type 1, 2, 3, 4 or 5")
@@ -176,6 +190,7 @@ def calculate_calories():
                     else:
                         print("Error adding product")              
         elif option == "2":
+            clear_terminal()
             break
         else:
             print("Invalid option, please type 1 or 2")
@@ -188,6 +203,7 @@ def set_calories_limit():
             calories_limit = input("Enter your calories limit: ")
             googleSheetDB.set_calories_limit(calories_limit)
         elif option == "2":
+            clear_terminal()
             break
         else:
             print("Invalid option, please type 1 or 2")
@@ -220,6 +236,7 @@ def manage_personal_info():
         elif option == "8":
             googleSheetDB.add_weight(input("Enter your weight: "))
         elif option == "9":
+            clear_terminal()
             break
         else:
             print("Invalid option, please type 1,")
@@ -232,12 +249,16 @@ def menu():
         log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
         option = input("Enter your option: ")
         if option == "1":
+            clear_terminal()
             crud()
         elif option == "2":
+            clear_terminal()
             calculate_calories()
         elif option == "3":
+            clear_terminal()
             manage_personal_info()
         elif option == "4":
+            clear_terminal()
             log_exit_message()
             break
         else:
@@ -247,6 +268,7 @@ def main():
     """
     Start the Calories Tracker App
     """
+    clear_terminal()
     print("Welcome to the Calories Tracker App")
     if auth():
         menu()
