@@ -1,8 +1,7 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register
+from options import login, register, add_new_product, read_product, update_product, delete_product
 
-# main functions 
 def auth():
     while True:
         log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
@@ -16,86 +15,11 @@ def auth():
 def crud():
     while True:
         log("1. Create a new product", "2. Read a product", "3. Update a product", "4. Delete a product", "5. Go Back")
-        option = input("Enter your option: ")
-        if option == "1":
-            if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
-                continue
-            validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
-            validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
-            if productListGS.find_product(validatedProduct):
-                print(f"Product {validatedProduct} already exists")
-                continue
-            isProductAdded = productListGS.add_product(validatedProduct, validatedCalories)
-            if isProductAdded:
-                print("Product added successfully")
-            else:
-                print("Error adding product")
-        elif option == "2":
-            validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
-            products = productListGS.find_products_starting_with(validatedProducts)
-            for product in products:
-                print(product[0] + ": " + product[1])
-        elif option == "3":
-            log("1. Update a product name", "2. Update a product calories", "3. Go Back")
-            option = input("Enter your option: ")
-            if option == "1":
-                product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 2, 20))
-                products = productListGS.find_products_starting_with(product)
-                if len(products) == 0:
-                    print("Product not found")
-                    continue
-                elif len(products) > 1:
-                    print("Multiple products found, you must select one")
-                    for product in products:
-                        print(product[0] + ": " + product[1])
-                    continue
-                else:
-                    product = products[0][0]
-                    if not confirm(f"Are you sure you want to update a product name of {product}? (y/n) or (yes/no): "):
-                        continue
-                new_product = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 2, 20))
-                is_in_db = bool(productListGS.find_product(new_product))
-                if is_in_db:
-                    print(f"Product {new_product} already exists")
-                    continue
-                productListGS.update_products(product, new_product)
-                print("Product " + product + " updated to " + new_product)
-            elif option == "2":
-                product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 2, 20))
-                products = productListGS.find_products_starting_with(product_input)
-                product = productListGS.find_product(product_input)
-                if product:
-                    if not confirm(f"Are you sure you want to update the {product[1]} calories of {product[0]}? (y/n) or (yes/no): "):
-                        continue
-                elif len(products) == 0:
-                    print("Product not found")
-                    continue
-                elif len(products) > 1:
-                    print("Multiple products found")
-                    for product in products:
-                        print(product[0] + ": " + product[1])
-                    print("You must select one product")
-                    continue
-
-                new_calories = is_number(input("Enter the new calories: "), "Enter the new calories: ")
-                productListGS.update_products_calories(product[0], new_calories)
-                print("Calories of " + product[0] + " updated to " + new_calories + " calories")
-            elif option == "3":
-                clear_terminal()
-                break
-        elif option == "4":
-            product = productListGS.find_product(prepare_string(input("Enter the product to delete: ")))
-            if product:
-                print(product[0] + ": " + product[1])
-                if not confirm(f"Are you sure you want to delete {product[0]}? (y/n) or (yes/no): "):
-                    continue
-                if productListGS.delete_product(product[0]):
-                    print(f"{product[0]} deleted")
-        elif option == "5":
+        option = select_option(add_new_product, read_product, update_product, delete_product)
+        if option == 'exit':
             clear_terminal()
             break
-        else:
-            print("Invalid option, please type 1, 2, 3, 4 or 5")
+        return option()
 
 def calculate_calories():
     total_calories = 0
