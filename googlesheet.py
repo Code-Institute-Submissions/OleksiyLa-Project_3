@@ -306,6 +306,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                     return row[1]
             except:
                 return "0"
+        return "0"
 
     def get_calories_limit(self):
         """

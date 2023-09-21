@@ -164,9 +164,10 @@ def add_consumed_calories():
     googleSheetDB.add_calories_consumed(calories_to_add)
     clear_terminal()
     calories_consumed = googleSheetDB.get_calories_consumed()
-    print("You've consumed " + calories_consumed + " calories so far")
+    print("You've consumed " + str(calories_consumed) + " calories so far")
 
 def get_consumed_calories():
+
     calories_consumed = googleSheetDB.get_calories_consumed()
     clear_terminal()
     print("You've consumed " + calories_consumed + " calories today")
