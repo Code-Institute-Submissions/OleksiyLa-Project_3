@@ -1,6 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories, get_consumed_calories, calculate_calories_limit
+from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories, get_consumed_calories, calculate_calories_limit, calculate_overall_progress, add_your_weight
 
 def auth():
     while True:
@@ -24,29 +24,11 @@ def crud():
 def manage_personal_info():
     while True:
         log("1. Change password", "2. Delete account", "3. Add calories consumed per today", "4. Set calories limit", "5. See calories consumed per today", "6. See calories limit", "7. See your progress", "8. Add your weight", "9. Go Back")
-        option = input("Enter your option: ")
-        if option == "1":
-            update_password()
-        elif option == "2":
-            if delete_account():
-                break
-        elif option == "3":
-            add_consumed_calories()
-        elif option == "4":
-            set_calories_limit()
-        elif option == "5":
-            get_consumed_calories()
-        elif option == "6":
-            calculate_calories_limit()
-        elif option == "7":
-            print(googleSheetDB.calculate_overall_progress())
-        elif option == "8":
-            googleSheetDB.add_weight(input("Enter your weight: "))
-        elif option == "9":
+        option = select_option(update_password, delete_account, add_consumed_calories, set_calories_limit, get_consumed_calories, calculate_calories_limit, calculate_overall_progress, add_your_weight)
+        if option == 'exit':
             clear_terminal()
             break
-        else:
-            print("Invalid option, please type 1,")
+        return option()
 
 def menu():
     while True:

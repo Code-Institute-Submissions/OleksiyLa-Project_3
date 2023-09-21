@@ -184,10 +184,18 @@ def calculate_calories_limit():
     calories_limit_text = "Your calories limit a day is " + calories_limit + " calories"
     consumed_calories_text = "You've consumed " + consumed_calories + " calories today"
     if calories_to_eat < 0:
-        calories_to_eat_text = f"You've consumed {calories_to_eat} calories more than your limit"
+        calories_to_eat_text = f"You've consumed {abs(calories_to_eat)} calories more than your limit"
     elif calories_to_eat == 0:
-        calories_to_eat_text = f"You've consumed {calories_to_eat} calories, you've reached your limit"
+        calories_to_eat_text = f"You've consumed {consumed_calories} calories, you've reached your limit"
     else:
         calories_to_eat_text = f"You can eat {calories_to_eat} calories more today"
     clear_terminal()
     log(calories_limit_text, consumed_calories_text, calories_to_eat_text)
+
+def calculate_overall_progress():
+    clear_terminal()
+    print(googleSheetDB.calculate_overall_progress())
+
+def add_your_weight():
+    clear_terminal()
+    googleSheetDB.add_weight(is_number(input("Enter your weight: ")))
