@@ -352,7 +352,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             return progress
         except Exception as error:
             print(f"Error getting progress: {str(error)}")
-        return False
+        return []
     
     def calculate_overall_progress(self):
         """
