@@ -312,12 +312,13 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         """
         Get calories limit from the Google Worksheet
         """
-        for index, row in enumerate(self.read_rows("users")):
+        for row in self.read_rows("users"):
             if row[0] == AuthGS._username:
                 try:
                     return row[2]
                 except:
                     return None
+        return None
           
     def add_weight(self, weight):
         """
