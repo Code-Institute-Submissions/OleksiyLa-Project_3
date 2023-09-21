@@ -115,7 +115,7 @@ def calculate_calories():
         products = productListGS.find_products_starting_with(option)
         if product:
             print(product[0] + ": " + product[1])
-            weight = input("Enter the weight in grams : ")
+            weight = is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")
             calories = int(product[1]) * int(weight) / 100
             total_calories += calories
             print(f"Calories for {product[0]} per {weight} grams : " + str(round(calories)) + " calories")
