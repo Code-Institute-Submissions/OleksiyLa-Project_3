@@ -165,3 +165,29 @@ def add_consumed_calories():
     clear_terminal()
     calories_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + calories_consumed + " calories so far")
+
+def get_consumed_calories():
+    calories_consumed = googleSheetDB.get_calories_consumed()
+    clear_terminal()
+    print("You've consumed " + calories_consumed + " calories today")
+
+def calculate_calories_limit():
+    calories_limit = googleSheetDB.get_calories_limit()
+    if calories_limit is None:
+        clear_terminal()
+        print("You haven't set your calories limit yet")
+        return
+    consumed_calories = googleSheetDB.get_calories_consumed()
+    print(calories_limit, consumed_calories)
+    calories_to_eat = int(calories_limit) - int(consumed_calories)
+    calories_to_eat_text = ""
+    calories_limit_text = "Your calories limit a day is " + calories_limit + " calories"
+    consumed_calories_text = "You've consumed " + consumed_calories + " calories today"
+    if calories_to_eat < 0:
+        calories_to_eat_text = f"You've consumed {calories_to_eat} calories more than your limit"
+    elif calories_to_eat == 0:
+        calories_to_eat_text = f"You've consumed {calories_to_eat} calories, you've reached your limit"
+    else:
+        calories_to_eat_text = f"You can eat {calories_to_eat} calories more today"
+    clear_terminal()
+    log(calories_limit_text, consumed_calories_text, calories_to_eat_text)

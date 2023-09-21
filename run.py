@@ -1,6 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories
+from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories, get_consumed_calories, calculate_calories_limit
 
 def auth():
     while True:
@@ -35,9 +35,9 @@ def manage_personal_info():
         elif option == "4":
             set_calories_limit()
         elif option == "5":
-            print("You've consumed " + googleSheetDB.get_calories_consumed() + " calories today")
+            get_consumed_calories()
         elif option == "6":
-            print("Your calories limit per day is " + googleSheetDB.get_calories_limit())
+            calculate_calories_limit()
         elif option == "7":
             print(googleSheetDB.calculate_overall_progress())
         elif option == "8":
