@@ -198,4 +198,4 @@ def calculate_overall_progress():
 
 def add_your_weight():
     clear_terminal()
-    googleSheetDB.add_weight(is_number(input("Enter your weight: ")))
+    googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
