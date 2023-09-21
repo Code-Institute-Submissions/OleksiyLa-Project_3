@@ -1,6 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account
+from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories
 
 def auth():
     while True:
@@ -31,8 +31,7 @@ def manage_personal_info():
             if delete_account():
                 break
         elif option == "3":
-            calories_consumed = input("Enter how many calories you have consumed this day: ")
-            googleSheetDB.add_calories_consumed(calories_consumed)
+            add_consumed_calories()
         elif option == "4":
             set_calories_limit()
         elif option == "5":

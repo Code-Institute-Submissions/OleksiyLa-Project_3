@@ -156,3 +156,12 @@ def delete_account():
     else:
         print("Account not deleted")
         return False
+    
+def add_consumed_calories():
+    calories_consumed = googleSheetDB.get_calories_consumed()
+    input_text = f"You have consumed " + calories_consumed + " calories today, would you like to add more calories?:"
+    calories_to_add = is_number(input(input_text), input_text)
+    googleSheetDB.add_calories_consumed(calories_to_add)
+    clear_terminal()
+    calories_consumed = googleSheetDB.get_calories_consumed()
+    print("You've consumed " + calories_consumed + " calories so far")

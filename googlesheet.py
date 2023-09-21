@@ -303,6 +303,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         for row in self.read_rows(AuthGS._username):
             if row[0] == datetime.datetime.now().strftime("%d/%m/%Y"):
                 return row[1]
+        return "0"
 
     def get_calories_limit(self):
         """
