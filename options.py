@@ -107,19 +107,19 @@ def delete_product():
 def calculate_calories():
     total_calories = 0
     while True:
-        clear_terminal()
         option = prepare_string(validate_length(input("Enter product name or (q/quit) to quit: "), "Enter product name or (q/quit) to quit: ", 1, 20))
+        clear_terminal()
         if option == "Q" or option == "Quit":
             break
         product = productListGS.find_product(option)
         products = productListGS.find_products_starting_with(option)
         if product:
             print(product[0] + ": " + product[1])
-            weight = input("Enter the weight: ")
+            weight = input("Enter the weight in grams : ")
             calories = int(product[1]) * int(weight) / 100
             total_calories += calories
-            print(f"Calories for {product[0]} per {weight}gramm : " + str(calories))
-            print(f"Sum of calories for products you have calculated: " + str(total_calories))
+            print(f"Calories for {product[0]} per {weight} grams : " + str(round(calories)) + " calories")
+            print(f"Sum of calories for products you have calculated: " + str(round(total_calories)) + " calories")
         else:
             print("Product not found")
             if len(products) > 0:
