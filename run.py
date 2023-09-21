@@ -1,6 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register, add_new_product, read_product, update_product, delete_product
+from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories
 
 def auth():
     while True:
@@ -20,35 +20,6 @@ def crud():
             clear_terminal()
             break
         return option()
-
-def calculate_calories():
-    total_calories = 0
-    while True:
-        log("1. Calculate calories", "2. Go Back")
-        option = input("Enter your option: ")
-        if option == "1":
-            product = productListGS.find_product(input("Enter the product: "))
-            if product:
-                print(product[0] + ": " + product[1])
-                weight = input("Enter the weight: ")
-                calories = int(product[1]) * int(weight) / 100
-                total_calories += calories
-                print(f"Calories for {product[0]} per {weight}gramm : " + str(calories))
-                print(f"Sum of calories for products you have calculated: " + str(total_calories))
-            else:
-                print("Product not found")
-                option = input("Would you like to add this product to our database? (y/n): ")
-                if option == "y":
-                    isProductAdded = productListGS.add_product(input("Enter the product: "), input("Enter the calories: "))
-                    if isProductAdded:
-                        print("Product added successfully")
-                    else:
-                        print("Error adding product")              
-        elif option == "2":
-            clear_terminal()
-            break
-        else:
-            print("Invalid option, please type 1 or 2")
 
 def set_calories_limit():
     while True:

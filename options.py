@@ -28,7 +28,7 @@ def register():
 def add_new_product():
     if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
         return
-    validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
+    validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
     validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
     if productListGS.find_product(validatedProduct):
         print(f"Product {validatedProduct} already exists")
@@ -40,13 +40,13 @@ def add_new_product():
         print("Error adding product")
 
 def read_product():
-    validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 2, 20))
+    validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
     products = productListGS.find_products_starting_with(validatedProducts)
     for product in products:
         print(product[0] + ": " + product[1])
 
 def update_product_name():
-    product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 2, 20))
+    product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 1, 20))
     products = productListGS.find_products_starting_with(product)
     if len(products) == 0:
         print("Product not found")
@@ -60,7 +60,7 @@ def update_product_name():
         product = products[0][0]
         if not confirm(f"Are you sure you want to update a product name of {product}? (y/n) or (yes/no): "):
             return
-    new_product = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 2, 20))
+    new_product = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 1, 20))
     is_in_db = bool(productListGS.find_product(new_product))
     if is_in_db:
         print(f"Product {new_product} already exists")
@@ -69,7 +69,7 @@ def update_product_name():
     print("Product " + product + " updated to " + new_product)
 
 def update_product_calories():
-    product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 2, 20))
+    product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 1, 20))
     products = productListGS.find_products_starting_with(product_input)
     product = productListGS.find_product(product_input)
     if product:
@@ -103,3 +103,32 @@ def delete_product():
             return
         if productListGS.delete_product(product[0]):
             print(f"{product[0]} deleted")
+
+def calculate_calories():
+    total_calories = 0
+    while True:
+        clear_terminal()
+        option = prepare_string(validate_length(input("Enter product name or (q/quit) to quit: "), "Enter product name or (q/quit) to quit: ", 1, 20))
+        if option == "Q" or option == "Quit":
+            break
+        product = productListGS.find_product(option)
+        products = productListGS.find_products_starting_with(option)
+        if product:
+            print(product[0] + ": " + product[1])
+            weight = input("Enter the weight: ")
+            calories = int(product[1]) * int(weight) / 100
+            total_calories += calories
+            print(f"Calories for {product[0]} per {weight}gramm : " + str(calories))
+            print(f"Sum of calories for products you have calculated: " + str(total_calories))
+        else:
+            print("Product not found")
+            if len(products) > 0:
+                print("Did you mean:")
+                for prod in products:
+                    print(prod[0] + ": " + prod[1])
+            if confirm(f"Would you like to add {option} to our database? (y/n): "):
+                isProductAdded = productListGS.add_product(option, input("Enter the calories: "))
+                if isProductAdded:
+                    print("Product added successfully")
+                else:
+                    print("Error adding product")              
