@@ -126,9 +126,7 @@ class AuthGS(BasicGoogleSheetOperations):
             for user in users:
                 if user[0] == username:
                     return False
-            current_datetime = datetime.datetime.now()
-            current_datetime = current_datetime.strftime("%d/%m/%Y")
-            data = [username, password, current_datetime]
+            data = [username, password]
             self.create_row(data, "users")
             self.add_worksheet(username, 500, 20)
             self.username = username
@@ -272,7 +270,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             users = self.read_rows("users")
             for index, user in enumerate(users):
                 if user[0] == AuthGS._username:
-                    self.update_cell([index + 1, 4], calories_limit, "users")
+                    self.update_cell([index + 1, 3], calories_limit, "users")
                     return True
         except Exception as error:
             print(f"Error setting calories limit: {str(error)}")

@@ -27,20 +27,20 @@ def confirm(msg):
     elif option == "n" or option == "no":
         return False
     else:
-        print("Wrong input, please type 'y' or 'n'")
+        print("Wrong input, please type ('y'/'yes') or ('n'/'no')")
         confirm(msg)
 
 def validate_length(data, input_message, min_length, max_length, isSpaceProhibited = False):
     if isSpaceProhibited:
         if len(data.split(" ")) > 1:
             print("Input must not contain spaces")
-            return validate_length(input(input_message), input_message, min_length, max_length, True)
+            return validate_length(input(input_message), input_message, min_length, max_length, isSpaceProhibited)
     if len(data) < min_length:
         print(f"Input must be at least {min_length} characters long")
-        return validate_length(input(input_message), input_message, min_length, max_length, True)
+        return validate_length(input(input_message), input_message, min_length, max_length, isSpaceProhibited)
     elif len(data) > max_length:
         print(f"Input must be less than {max_length} characters long")
-        return validate_length(input(input_message), input_message, min_length, max_length, True)
+        return validate_length(input(input_message), input_message, min_length, max_length, isSpaceProhibited)
     else:
         return data
     

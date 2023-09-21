@@ -131,4 +131,28 @@ def calculate_calories():
                 if isProductAdded:
                     print("Product added successfully")
                 else:
-                    print("Error adding product")              
+                    print("Error adding product")
+
+def set_calories_limit():
+    calories_limit = is_number(input("Enter your calories limit per day: "), "Enter your calories limit per day: ")
+    googleSheetDB.set_calories_limit(calories_limit)
+    clear_terminal()
+    print("Your new calories limit per day is " + calories_limit )
+
+def update_password():
+    input_text = "Enter your new password: "
+    new_password = validate_length(input(input_text), input_text, 6, 12, True)
+    authGS.update_password(new_password)
+    clear_terminal()
+    print("Your password has been updated")
+
+def delete_account():
+    option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
+    clear_terminal()
+    if confirm(option):
+        authGS.delete_user()
+        print("Account deleted")
+        return True
+    else:
+        print("Account not deleted")
+        return False

@@ -1,6 +1,6 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
-from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories
+from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account
 
 def auth():
     while True:
@@ -21,38 +21,20 @@ def crud():
             break
         return option()
 
-def set_calories_limit():
-    while True:
-        log("1. Set calories limit", "2. Go Back")
-        option = input("Enter your option: ")
-        if option == "1":
-            calories_limit = input("Enter your calories limit: ")
-            googleSheetDB.set_calories_limit(calories_limit)
-        elif option == "2":
-            clear_terminal()
-            break
-        else:
-            print("Invalid option, please type 1 or 2")
-
 def manage_personal_info():
     while True:
         log("1. Change password", "2. Delete account", "3. Add calories consumed per today", "4. Set calories limit", "5. See calories consumed per today", "6. See calories limit", "7. See your progress", "8. Add your weight", "9. Go Back")
         option = input("Enter your option: ")
         if option == "1":
-            password = input("Enter your new password: ")
-            authGS.update_password(password)
+            update_password()
         elif option == "2":
-            option = input("Are you sure you want to delete your account? (y/n): ")
-            if option == "y":
-                authGS.delete_user()
+            if delete_account():
                 break
-            else:
-                print("Account not deleted")
         elif option == "3":
             calories_consumed = input("Enter how many calories you have consumed this day: ")
             googleSheetDB.add_calories_consumed(calories_consumed)
         elif option == "4":
-            googleSheetDB.set_calories_limit(input("Enter your calories limit per day: "))
+            set_calories_limit()
         elif option == "5":
             print("You've consumed " + googleSheetDB.get_calories_consumed() + " calories today")
         elif option == "6":
