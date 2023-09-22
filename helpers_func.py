@@ -1,5 +1,6 @@
 import os
 
+
 def clear_terminal():
     """
       Check the operating system and use the appropriate clear command
@@ -9,6 +10,7 @@ def clear_terminal():
     elif os.name == 'nt':
         os.system('cls')
 
+
 def log_exit_message(username):
     print("Thank you for using the Calories Tracker App")
     if username is not None:
@@ -16,9 +18,11 @@ def log_exit_message(username):
     else:
         print("Goodbye")
 
+
 def log(*message):
     message = "\n".join(message)
     print(message)
+
 
 def confirm(msg):
     option = input(msg).lower()
@@ -29,6 +33,7 @@ def confirm(msg):
     else:
         print("Wrong input, please type ('y'/'yes') or ('n'/'no')")
         confirm(msg)
+
 
 def validate_length(data, input_message, min_length, max_length, isSpaceProhibited = False):
     if isSpaceProhibited:
@@ -43,7 +48,8 @@ def validate_length(data, input_message, min_length, max_length, isSpaceProhibit
         return validate_length(input(input_message), input_message, min_length, max_length, isSpaceProhibited)
     else:
         return data
-    
+
+
 def is_number(data, input_message):
     try:
         int(data)
@@ -51,9 +57,11 @@ def is_number(data, input_message):
     except ValueError:
         print("Input must be a number")
         return is_number(input(input_message), input_message)
-    
+
+
 def prepare_string(string):
     return string.lower().title().strip()
+
 
 def check_option(data, length):
     exit_num = length + 1
@@ -63,6 +71,7 @@ def check_option(data, length):
     else:
         print(f"Input must be between 1 and {exit_num}")
         return check_option(is_number(input("Select an option: "), "Select an option: "), length)
+
 
 def select_option(*options):
     print("\n")

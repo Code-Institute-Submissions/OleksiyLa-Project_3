@@ -2,11 +2,13 @@ import gspread
 from google.oauth2.service_account import Credentials
 import datetime
 
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
     ]
+
 
 class BasicGoogleSheetOperations:
     """
@@ -28,6 +30,7 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error connecting to Google Sheet: {str(error)}")
 
+
     def create_row(self, data, worksheet_name):
         """
         Create a new row in the Google Worksheet
@@ -38,6 +41,7 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error creating row: {str(error)}")
         return False
+
 
     def read_rows(self, worksheet_name):
         """
@@ -50,6 +54,7 @@ class BasicGoogleSheetOperations:
             print(f"Error reading rows: {str(error)}")
         return []
 
+
     def update_cell(self, to_update, updated, worksheet_name):
         """
         Update a row in the Google Worksheet
@@ -61,6 +66,7 @@ class BasicGoogleSheetOperations:
             print(f"Error updating row: {str(error)}")
         return False
 
+
     def delete_row(self, row_number, worksheet_name):
         """
         Delete a row from the Google Worksheet
@@ -71,7 +77,8 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error deleting rows: {str(error)}")
         return False
-    
+
+
     def add_worksheet(self, title, rows, cols):
         """
         Add a new worksheet to the Google Spreadsheet
@@ -81,6 +88,7 @@ class BasicGoogleSheetOperations:
             return True
         except Exception as error:
             print(f"Error adding worksheet: {str(error)}")
+
 
     def del_worksheet(self, username):
         """
@@ -92,15 +100,18 @@ class BasicGoogleSheetOperations:
         except Exception as error:
             print(f"Error deleting worksheet: {str(error)}")
 
+
 class AuthGS(BasicGoogleSheetOperations):
     """
     Class that implements AUTH operations with Google Sheet
     """
     _username = None
 
+
     def __init__(self):
         super().__init__()
         self.username = None
+
 
     def login(self, username, password):
         """
@@ -116,7 +127,8 @@ class AuthGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error logging in: {str(error)}")
         return False
-    
+
+
     def register(self, username, password):
         """
         Register a new user in the Google Worksheet
@@ -135,7 +147,8 @@ class AuthGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error registering: {str(error)}")
         return False
-    
+
+
     def update_password(self, password):
         """
         Update a user's password in the Google Worksheet
@@ -149,7 +162,8 @@ class AuthGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error updating password: {str(error)}")
         return False
-        
+
+
     def delete_user(self):
         """
         Delete a user from the Google Worksheet
@@ -165,13 +179,15 @@ class AuthGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error deleting user: {str(error)}")
         return False
-    
+
+
 class ProductListGS(BasicGoogleSheetOperations):
     """
     Class that implements CRUD operations with Product List Google Sheet
     """
     def __init__(self):
         super().__init__()
+
 
     def add_product(self, product, calories):
         """
@@ -184,7 +200,8 @@ class ProductListGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding product: {str(error)}")
         return False
-    
+
+
     def delete_product(self, product):
         """
         Delete a product from the Google Worksheet
@@ -198,7 +215,8 @@ class ProductListGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error deleting product: {str(error)}")
         return False
-    
+
+
     def update_products_calories(self, product, calories):
         """
         Update a product's calories in the Google Worksheet
@@ -212,7 +230,8 @@ class ProductListGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error updating product: {str(error)}")
         return False
-    
+
+
     def update_products(self, product, new_product):
         """
         Update a product in the Google Worksheet
@@ -226,7 +245,8 @@ class ProductListGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error updating product: {str(error)}")
         return False
-    
+
+
     def find_product(self, product):
         """
         Find a product in the Google Worksheet
@@ -239,7 +259,8 @@ class ProductListGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error finding product: {str(error)}")
         return False
-    
+
+
     def find_products_starting_with(self, string):
         """
         Find a product in the Google Worksheet
@@ -255,12 +276,14 @@ class ProductListGS(BasicGoogleSheetOperations):
             print(f"Error finding product: {str(error)}")
         return False
 
+
 class CaloriesTrackerGS(BasicGoogleSheetOperations):
     """
     Class that implements advanced operations with Google Sheet catered to the Calories Tracker App
     """
     def __init__(self):
         super().__init__()
+
 
     def set_calories_limit(self, calories_limit):
         """
@@ -275,7 +298,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error setting calories limit: {str(error)}")
         return False
-    
+
+
     def add_calories_consumed(self, calories):
         """
         Add calories consumed per day to the Google Worksheet
@@ -295,7 +319,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding calories consumed: {str(error)}")
         return False
-    
+
+
     def get_calories_consumed(self):
         """
         Get calories consumed per today from the Google Worksheet
@@ -308,6 +333,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                 return "0"
         return "0"
 
+
     def get_calories_limit(self):
         """
         Get calories limit from the Google Worksheet
@@ -319,7 +345,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
                 except:
                     return None
         return None
-          
+
+
     def add_weight(self, weight):
         """
         Add weight to the Google Worksheet
@@ -338,7 +365,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding weight: {str(error)}")
         return False
-    
+
+
     def get_progress(self):
         """
         Get progress from the Google Worksheet
@@ -353,7 +381,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error getting progress: {str(error)}")
         return []
-    
+
+
     def calculate_overall_progress(self):
         """
         Calculate progress from the Google Worksheet
@@ -383,6 +412,7 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error calculating progress: {str(error)}")
         return False
+
 
 BasicGoogleSheetOperations.connect('creds.json', SCOPE, 'calories_tracker')
 googleSheetDB = CaloriesTrackerGS()

@@ -1,6 +1,7 @@
 from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
 
+
 def login():
     print("Login:")
     username = input("Enter your username: ")
@@ -12,7 +13,8 @@ def login():
     else:
         print("Invalid username or password")
         return False
-    
+
+
 def register():
     print("Register:")
     username = validate_length(input("Enter your username: "), "Enter your username: ", 2, 12, True)
@@ -24,7 +26,8 @@ def register():
     else:
         print("Username already exists")
         return False
-    
+
+
 def add_new_product():
     if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
         return
@@ -39,11 +42,13 @@ def add_new_product():
     else:
         print("Error adding product")
 
+
 def read_product():
     validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
     products = productListGS.find_products_starting_with(validatedProducts)
     for product in products:
         print(product[0] + ": " + product[1])
+
 
 def update_product_name():
     product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 1, 20))
@@ -68,6 +73,7 @@ def update_product_name():
     productListGS.update_products(product, new_product)
     print("Product " + product + " updated to " + new_product)
 
+
 def update_product_calories():
     product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 1, 20))
     products = productListGS.find_products_starting_with(product_input)
@@ -88,12 +94,14 @@ def update_product_calories():
     productListGS.update_products_calories(product[0], new_calories)
     print("Calories of " + product[0] + " updated to " + new_calories + " calories")
 
+
 def update_product():
     log("1. Update a product name", "2. Update a product calories", "3. Go Back")
     option = select_option(update_product_name, update_product_calories)
     if option == 'exit':
         return 'exit'
     return option()
+
 
 def delete_product():
     product = productListGS.find_product(prepare_string(input("Enter the product to delete: ")))
@@ -103,6 +111,7 @@ def delete_product():
             return
         if productListGS.delete_product(product[0]):
             print(f"{product[0]} deleted")
+
 
 def calculate_calories():
     clear_terminal()
@@ -145,12 +154,14 @@ def set_calories_limit():
     clear_terminal()
     print("Your new calories limit per day is " + calories_limit )
 
+
 def update_password():
     input_text = "Enter your new password: "
     new_password = validate_length(input(input_text), input_text, 6, 12, True)
     authGS.update_password(new_password)
     clear_terminal()
     print("Your password has been updated")
+
 
 def delete_account():
     option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
@@ -162,7 +173,8 @@ def delete_account():
     else:
         print("Account not deleted")
         return False
-    
+
+
 def add_consumed_calories():
     calories_consumed = googleSheetDB.get_calories_consumed()
     input_text = f"You have consumed " + calories_consumed + " calories today, would you like to add more calories?:"
@@ -172,11 +184,13 @@ def add_consumed_calories():
     calories_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + str(calories_consumed) + " calories so far")
 
+
 def get_consumed_calories():
 
     calories_consumed = googleSheetDB.get_calories_consumed()
     clear_terminal()
     print("You've consumed " + calories_consumed + " calories today")
+
 
 def calculate_calories_limit():
     calories_limit = googleSheetDB.get_calories_limit()
@@ -198,9 +212,11 @@ def calculate_calories_limit():
     clear_terminal()
     log(calories_limit_text, consumed_calories_text, calories_to_eat_text)
 
+
 def calculate_overall_progress():
     clear_terminal()
     print(googleSheetDB.calculate_overall_progress())
+
 
 def add_your_weight():
     clear_terminal()

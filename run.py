@@ -2,6 +2,7 @@ from googlesheet import googleSheetDB, authGS, productListGS
 from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
 from options import login, register, add_new_product, read_product, update_product, delete_product, calculate_calories, set_calories_limit, update_password, delete_account, add_consumed_calories, get_consumed_calories, calculate_calories_limit, calculate_overall_progress, add_your_weight
 
+
 def auth():
     while True:
         log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
@@ -11,6 +12,7 @@ def auth():
             break
         clear_terminal()
         return option()
+
 
 def crud():
     clear_terminal()
@@ -22,6 +24,7 @@ def crud():
             break
         option()
 
+
 def manage_personal_info():
     clear_terminal()
     while True:
@@ -31,6 +34,7 @@ def manage_personal_info():
             clear_terminal()
             break
         option()
+
 
 def menu():
     while True:
@@ -45,6 +49,7 @@ def menu():
             break
         option()
 
+
 def main():
     """
     Start the Calories Tracker App
@@ -53,5 +58,6 @@ def main():
     print("Welcome to the Calories Tracker App")
     if auth():
         menu()
+
 
 main()
