@@ -202,9 +202,14 @@ def delete_account():
     option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
     clear_terminal()
     if confirm(option):
-        authGS.delete_user()
-        print("Account deleted")
-        return True
+        username = authGS.username
+        if authGS.delete_user():
+            print("Account deleted")
+            print(f"Good bye {username}")
+            exit()
+        else:
+            print("Error deleting account")
+            return False
     else:
         print("Account not deleted")
         return False
