@@ -3,6 +3,9 @@ from helpers_func import clear_terminal, log_exit_message, log, confirm, validat
 
 
 def login():
+    """
+    This function logs in the user to the google sheet
+    """
     print("Login:")
     username = input("Enter your username: ")
     password = input("Enter your password: ")
@@ -16,6 +19,9 @@ def login():
 
 
 def register():
+    """
+    This function registers a new user to the google sheet, if the username already exists, it will not be added
+    """
     print("Register:")
     username = validate_length(input("Enter your username: "), "Enter your username: ", 2, 12, True)
     password = validate_length(input("Enter your password: "), "Enter your password: ", 6, 12, True)
@@ -29,6 +35,9 @@ def register():
 
 
 def add_new_product():
+    """
+    This function adds a new product to the google sheet, if the product already exists, it will not be added
+    """
     if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
         return
     validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
@@ -51,6 +60,9 @@ def read_product():
 
 
 def update_product_name():
+    """
+    This function updates the name of a product from the google sheet
+    """
     product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 1, 20))
     products = productListGS.find_products_starting_with(product)
     if len(products) == 0:
@@ -75,6 +87,9 @@ def update_product_name():
 
 
 def update_product_calories():
+    """
+    This function updates the calories of a product from the google sheet
+    """
     product_input = prepare_string(validate_length(input("Enter the product name to update its calories: "), "Enter the product name to update its calories: ", 1, 20))
     products = productListGS.find_products_starting_with(product_input)
     product = productListGS.find_product(product_input)
@@ -96,6 +111,9 @@ def update_product_calories():
 
 
 def update_product():
+    """
+    This function updates a product from the google sheet, it can update the name or the calories of the product
+    """
     log("1. Update a product name", "2. Update a product calories", "3. Go Back")
     option = select_option(update_product_name, update_product_calories)
     if option == 'exit':
@@ -104,6 +122,9 @@ def update_product():
 
 
 def delete_product():
+    """
+    This function deletes a product from the google sheet
+    """
     product = productListGS.find_product(prepare_string(input("Enter the product to delete: ")))
     if product:
         print(product[0] + ": " + product[1])
@@ -114,6 +135,10 @@ def delete_product():
 
 
 def calculate_calories():
+    """
+    This function calculates the calories of the products entered by the user, 
+    if the product is not in the database, it will ask the user if he wants to add it
+    """
     clear_terminal()
     total_calories = 0
     while True:
@@ -149,6 +174,9 @@ def calculate_calories():
 
 
 def set_calories_limit():
+    """
+    This function sets the calories limit of the user per day and writes it to the google sheet
+    """
     calories_limit = is_number(input("Enter your calories limit per day: "), "Enter your calories limit per day: ")
     googleSheetDB.set_calories_limit(calories_limit)
     clear_terminal()
@@ -156,6 +184,9 @@ def set_calories_limit():
 
 
 def update_password():
+    """
+    This function updates the password of the user
+    """
     input_text = "Enter your new password: "
     new_password = validate_length(input(input_text), input_text, 6, 12, True)
     authGS.update_password(new_password)
@@ -164,6 +195,9 @@ def update_password():
 
 
 def delete_account():
+    """
+    This function deletes the account of the user
+    """
     option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
     clear_terminal()
     if confirm(option):
@@ -176,6 +210,9 @@ def delete_account():
 
 
 def add_consumed_calories():
+    """
+    This function adds the calories consumed by the user to the google sheet
+    """
     calories_consumed = googleSheetDB.get_calories_consumed()
     input_text = f"You have consumed " + calories_consumed + " calories today, would you like to add more calories?:"
     calories_to_add = is_number(input(input_text), input_text)
@@ -186,13 +223,18 @@ def add_consumed_calories():
 
 
 def get_consumed_calories():
-
+    """
+    This function prints the calories consumed by the user
+    """
     calories_consumed = googleSheetDB.get_calories_consumed()
     clear_terminal()
     print("You've consumed " + calories_consumed + " calories today")
 
 
 def calculate_calories_limit():
+    """
+    This function calculates the calories limit of the user
+    """
     calories_limit = googleSheetDB.get_calories_limit()
     if not bool(calories_limit):
         clear_terminal()
@@ -214,10 +256,16 @@ def calculate_calories_limit():
 
 
 def calculate_overall_progress():
+    """
+    This function calculates the overall progress of the user
+    """
     clear_terminal()
     print(googleSheetDB.calculate_overall_progress())
 
 
 def add_your_weight():
+    """
+    This function adds your weight to the google sheet
+    """
     clear_terminal()
     googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))

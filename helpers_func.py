@@ -3,7 +3,7 @@ import os
 
 def clear_terminal():
     """
-      Check the operating system and use the appropriate clear command
+    Check the operating system and use the appropriate clear command
     """
     if os.name == 'posix':
         os.system('clear')
@@ -12,6 +12,9 @@ def clear_terminal():
 
 
 def log_exit_message(username):
+    """
+    This function prints a goodbye message
+    """
     print("Thank you for using the Calories Tracker App")
     if username is not None:
         print(f"Goodbye {username}")
@@ -20,11 +23,17 @@ def log_exit_message(username):
 
 
 def log(*message):
+    """
+    This function takes strings as arguments and prints them in a new line
+    """
     message = "\n".join(message)
     print(message)
 
 
 def confirm(msg):
+    """
+    This function asks for confirmation, if the input is not valid, it will ask for a new input
+    """
     option = input(msg).lower()
     if option == "y" or option == "yes":
         return True
@@ -36,6 +45,11 @@ def confirm(msg):
 
 
 def validate_length(data, input_message, min_length, max_length, isSpaceProhibited = False):
+    """
+    This function checks if the input is between the min_length and max_length, 
+    if isSpaceProhibited is True, the input must not contain spaces
+    If the input is not valid, the function will ask for a new input
+    """
     if isSpaceProhibited:
         if len(data.split(" ")) > 1:
             print("Input must not contain spaces")
@@ -51,6 +65,9 @@ def validate_length(data, input_message, min_length, max_length, isSpaceProhibit
 
 
 def is_number(data, input_message):
+    """
+    This function checks if the input is a number, if not, it will ask for a new input
+    """
     try:
         int(data)
         return data
@@ -60,10 +77,16 @@ def is_number(data, input_message):
 
 
 def prepare_string(string):
+    """
+    This function takes a string and returns a string with the first letter of each word capitalized and the rest of the letters lowercase
+    """
     return string.lower().title().strip()
 
 
 def check_option(data, length):
+    """
+    This function checks if the input is between 1 and the length of the options, if not, it will ask for a new input
+    """
     exit_num = length + 1
     option = int(data) - 1
     if option >= 0 and option < exit_num:
@@ -74,6 +97,9 @@ def check_option(data, length):
 
 
 def select_option(*options):
+    """
+    This function takes functions as arguments and returns the selected function
+    """
     print("\n")
     length = len(options)
     option = check_option(is_number(input("Select an option: "), "Select an option: "), length)
