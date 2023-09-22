@@ -9,13 +9,16 @@ def auth():
     When the user logs in or register, the menu function will be displayed
     """
     while True:
-        log("Type '1' to login, '2' to register or '3' to exit", "Please select an option:", "1. Login", "2. Register", "3. Exit")
+        log("Select an option:", "1. Login", "2. Register", "3. Exit")
         option = select_option(options.login, options.register)
         if option == 'exit':
             print("Goodbye")
             break
         clear_terminal()
-        return option()
+        if option():
+            return True
+        else:
+            continue
 
 
 def crud():
