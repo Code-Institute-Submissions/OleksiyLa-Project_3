@@ -30,8 +30,9 @@ def register():
         log("Registration successful", f"Welcome {username}")
         return True
     else:
-        print("Username already exists")
-        return False
+        clear_terminal()
+        print(f"Username '{username}' already exists, try again")
+        return register()
 
 
 def add_new_product():
