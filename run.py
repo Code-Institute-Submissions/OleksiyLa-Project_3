@@ -13,7 +13,7 @@ def auth():
         option = select_option(options.login, options.register)
         if option == 'exit':
             print("Goodbye")
-            break
+            exit()
         clear_terminal()
         if option():
             return True
@@ -56,15 +56,12 @@ def menu():
     This function is the main menu of the app, it will be displayed after the user logs in
     """
     while True:
-        if authGS.username is None:
-            log_exit_message(authGS.username)
-            return
         log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
         option = select_option(crud, options.calculate_calories, manage_personal_info)
         if option == 'exit':
             clear_terminal()
             log_exit_message(authGS.username)
-            break
+            exit()
         option()
 
 
