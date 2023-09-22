@@ -2,6 +2,7 @@ from python.googlesheet import googleSheetDB, authGS, productListGS
 from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option
 
 
+# Authentication functions
 def login():
     """
     This function logs in the user to the google sheet
@@ -36,6 +37,7 @@ def register():
         return register()
 
 
+# Product table functions (CRUD)
 def add_new_product():
     """
     This function adds a new product to the google sheet, if the product already exists, it will not be added
@@ -136,6 +138,7 @@ def delete_product():
             print(f"{product[0]} deleted")
 
 
+# Personal info functions
 def calculate_calories():
     """
     This function calculates the calories of the products entered by the user, 
@@ -183,37 +186,6 @@ def set_calories_limit():
     googleSheetDB.set_calories_limit(calories_limit)
     clear_terminal()
     print("Your new calories limit per day is " + calories_limit )
-
-
-def update_password():
-    """
-    This function updates the password of the user
-    """
-    input_text = "Enter your new password: "
-    new_password = validate_length(input(input_text), input_text, 6, 12, True)
-    authGS.update_password(new_password)
-    clear_terminal()
-    print("Your password has been updated")
-
-
-def delete_account():
-    """
-    This function deletes the account of the user
-    """
-    option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
-    clear_terminal()
-    if confirm(option):
-        username = authGS.username
-        if authGS.delete_user():
-            print("Account deleted")
-            print(f"Good bye {username}")
-            exit()
-        else:
-            print("Error deleting account")
-            return False
-    else:
-        print("Account not deleted")
-        return False
 
 
 def add_consumed_calories():
@@ -278,6 +250,36 @@ def add_your_weight():
     googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
 
 
+# Account management functions
+def update_password():
+    """
+    This function updates the password of the user
+    """
+    input_text = "Enter your new password: "
+    new_password = validate_length(input(input_text), input_text, 6, 12, True)
+    authGS.update_password(new_password)
+    clear_terminal()
+    print("Your password has been updated")
+
+
+def delete_account():
+    """
+    This function deletes the account of the user
+    """
+    option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
+    clear_terminal()
+    if confirm(option):
+        username = authGS.username
+        if authGS.delete_user():
+            print("Account deleted")
+            print(f"Good bye {username}")
+            exit()
+        else:
+            print("Error deleting account")
+            return False
+    else:
+        print("Account not deleted")
+        return False
 def manage_account():
     """
     This function is the menu of the account management
