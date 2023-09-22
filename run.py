@@ -1,6 +1,6 @@
-from googlesheet import authGS
-from helpers_func import clear_terminal, log_exit_message, log, select_option
-import options
+from python.googlesheet import authGS
+from python.helpers_func import clear_terminal, log_exit_message, log, select_option
+import python.options as options
 
 
 def auth():

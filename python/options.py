@@ -1,5 +1,5 @@
-from googlesheet import googleSheetDB, authGS, productListGS
-from helpers_func import clear_terminal, log_exit_message, log, confirm, validate_length, is_number, prepare_string, select_option
+from python.googlesheet import googleSheetDB, authGS, productListGS
+from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option
 
 
 def login():
