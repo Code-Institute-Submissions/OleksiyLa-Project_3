@@ -67,27 +67,35 @@ def update_product_name():
     """
     This function updates the name of a product from the google sheet
     """
-    product = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 1, 20))
-    products = productListGS.find_products_starting_with(product)
-    if len(products) == 0:
+    product_input = prepare_string(validate_length(input("Enter the product name to update: "), "Enter the product name to update: ", 1, 20))
+    products = productListGS.find_products_starting_with(product_input)
+    product = productListGS.find_product(product_input)
+    if product:
+        if not confirm(f"Are you sure you want to update the name of {product[0]}? (y/n) or (yes/no): "):
+            return
+    elif len(products) == 0:
         print("Product not found")
         return
     elif len(products) > 1:
-        print("Multiple products found, you must select one")
+        print("Multiple products found")
         for product in products:
             print(product[0] + ": " + product[1])
+        print("You must select one product")
         return
-    else:
-        product = products[0][0]
-        if not confirm(f"Are you sure you want to update a product name of {product}? (y/n) or (yes/no): "):
+    elif len(products) == 1:
+        if confirm(f"Did you mean {products[0][0]}? (y/n) or (yes/no): "):
+            product = products[0]
+        else:
+            print(f"Product '{product_input}' not found")
             return
-    new_product = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 1, 20))
-    is_in_db = bool(productListGS.find_product(new_product))
+
+    new_product_name = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 1, 20))
+    is_in_db = bool(productListGS.find_product(new_product_name))
     if is_in_db:
-        print(f"Product {new_product} already exists")
+        print(f"Product {new_product_name} already exists")
         return
-    productListGS.update_products(product, new_product)
-    print("Product " + product + " updated to " + new_product)
+    productListGS.update_products(product[0], new_product_name)
+    print("Product " + product[0] + " updated to " + new_product_name)
 
 
 def update_product_calories():
@@ -108,6 +116,14 @@ def update_product_calories():
         for product in products:
             print(product[0] + ": " + product[1])
         print("You must select one product")
+        return
+    elif len(products) == 1:
+        if confirm(f"Did you mean {products[0][0]}? (y/n) or (yes/no): "):
+            product = products[0]
+        else:
+            print(f"Product '{product_input}' not found")
+            return
+    if not confirm(f"Are you sure you want to update the {product[1]} calories of {product[0]}? (y/n) or (yes/no): "):
         return
     new_calories = is_number(input("Enter the new calories: "), "Enter the new calories: ")
     productListGS.update_products_calories(product[0], new_calories)
