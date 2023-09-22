@@ -42,10 +42,11 @@ def add_new_product():
     """
     This function adds a new product to the google sheet, if the product already exists, it will not be added
     """
-    if not confirm("Are you sure you want to add a new product? (y/n) or (yes/no): "):
-        return
     validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
+    if not confirm(f"Are you sure you want to add a new product '{validatedProduct}'? (y/n) or (yes/no): "):
+        return
     validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
+    validatedCalories = abs(int(validatedCalories))
     if productListGS.find_product(validatedProduct):
         print(f"Product {validatedProduct} already exists")
         return
@@ -123,11 +124,10 @@ def update_product_calories():
         else:
             print(f"Product '{product_input}' not found")
             return
-    if not confirm(f"Are you sure you want to update the {product[1]} calories of {product[0]}? (y/n) or (yes/no): "):
-        return
     new_calories = is_number(input("Enter the new calories: "), "Enter the new calories: ")
-    productListGS.update_products_calories(product[0], new_calories)
-    print("Calories of " + product[0] + " updated to " + new_calories + " calories")
+    validatedCalories = abs(int(new_calories))
+    productListGS.update_products_calories(product[0], validatedCalories)
+    print("Calories of " + product[0] + " updated to " + str(validatedCalories) + " calories")
 
 
 def update_product():
@@ -145,13 +145,16 @@ def delete_product():
     """
     This function deletes a product from the google sheet
     """
-    product = productListGS.find_product(prepare_string(input("Enter the product to delete: ")))
+    product_input = prepare_string(input("Enter the product to delete: "))
+    product = productListGS.find_product(product_input)
     if product:
         print(product[0] + ": " + product[1])
         if not confirm(f"Are you sure you want to delete {product[0]}? (y/n) or (yes/no): "):
             return
         if productListGS.delete_product(product[0]):
             print(f"{product[0]} deleted")
+    else:
+        print(f"Product {product_input} not found")
 
 
 # Personal info functions
