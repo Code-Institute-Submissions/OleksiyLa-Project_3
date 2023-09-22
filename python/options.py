@@ -276,3 +276,17 @@ def add_your_weight():
     """
     clear_terminal()
     googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
+
+
+def manage_account():
+    """
+    This function is the menu of the account management
+    """
+    clear_terminal()
+    while True:
+        log("1. Change password", "2. Delete account", "3. Go Back")
+        option = select_option(update_password, delete_account)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()

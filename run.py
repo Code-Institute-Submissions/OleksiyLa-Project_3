@@ -41,9 +41,9 @@ def manage_personal_info():
     """
     clear_terminal()
     while True:
-        log("1. Change password", "2. Delete account", "3. Add calories consumed per today", "4. Set calories limit", 
-            "5. See calories consumed per today", "6. See calories limit", "7. See your progress", "8. Add your weight", "9. Go Back")
-        option = select_option(options.update_password, options.delete_account, options.add_consumed_calories, options.set_calories_limit, 
+        log("1. Add calories consumed per today", "2. Set calories limit", 
+            "3. See calories consumed per today", "4. See calories limit", "5. See your progress", "6. Add your weight", "7. Go Back")
+        option = select_option(options.add_consumed_calories, options.set_calories_limit, 
                                options.get_consumed_calories, options.calculate_calories_limit, options.calculate_overall_progress, options.add_your_weight)
         if option == 'exit':
             clear_terminal()
@@ -56,8 +56,8 @@ def menu():
     This function is the main menu of the app, it will be displayed after the user logs in
     """
     while True:
-        log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
-        option = select_option(crud, options.calculate_calories, manage_personal_info)
+        log("1. Product table", "2. Calculate calories", "3. Personal info", "4. Your account", "5. Exit")
+        option = select_option(crud, options.calculate_calories, manage_personal_info, options.manage_account)
         if option == 'exit':
             clear_terminal()
             log_exit_message(authGS.username)
