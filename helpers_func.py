@@ -70,4 +70,5 @@ def select_option(*options):
     option = check_option(is_number(input("Select an option: "), "Select an option: "), length)
     if int(option) == length:
         return 'exit'
+    clear_terminal()
     return options[option]

@@ -105,6 +105,7 @@ def delete_product():
             print(f"{product[0]} deleted")
 
 def calculate_calories():
+    clear_terminal()
     total_calories = 0
     while True:
         option = prepare_string(validate_length(input("Enter product name or (q/quit) to quit: "), "Enter product name or (q/quit) to quit: ", 1, 20))
@@ -127,11 +128,16 @@ def calculate_calories():
                 for prod in products:
                     print(prod[0] + ": " + prod[1])
             if confirm(f"Would you like to add {option} to our database? (y/n): "):
+                clear_terminal()
                 isProductAdded = productListGS.add_product(option, input("Enter the calories: "))
                 if isProductAdded:
-                    print("Product added successfully")
+                    print(f"{option} added successfully")
                 else:
                     print("Error adding product")
+            else:
+                clear_terminal()
+                print(f"{option} not added")
+
 
 def set_calories_limit():
     calories_limit = is_number(input("Enter your calories limit per day: "), "Enter your calories limit per day: ")

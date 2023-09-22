@@ -13,22 +13,24 @@ def auth():
         return option()
 
 def crud():
+    clear_terminal()
     while True:
         log("1. Create a new product", "2. Read a product", "3. Update a product", "4. Delete a product", "5. Go Back")
         option = select_option(add_new_product, read_product, update_product, delete_product)
         if option == 'exit':
             clear_terminal()
             break
-        return option()
+        option()
 
 def manage_personal_info():
+    clear_terminal()
     while True:
         log("1. Change password", "2. Delete account", "3. Add calories consumed per today", "4. Set calories limit", "5. See calories consumed per today", "6. See calories limit", "7. See your progress", "8. Add your weight", "9. Go Back")
         option = select_option(update_password, delete_account, add_consumed_calories, set_calories_limit, get_consumed_calories, calculate_calories_limit, calculate_overall_progress, add_your_weight)
         if option == 'exit':
             clear_terminal()
             break
-        return option()
+        option()
 
 def menu():
     while True:
@@ -36,22 +38,12 @@ def menu():
             log_exit_message(authGS.username)
             return
         log("1. CRUD calories table", "2. Calculate calories", "3. Personal info", "4. Exit")
-        option = input("Enter your option: ")
-        if option == "1":
-            clear_terminal()
-            crud()
-        elif option == "2":
-            clear_terminal()
-            calculate_calories()
-        elif option == "3":
-            clear_terminal()
-            manage_personal_info()
-        elif option == "4":
+        option = select_option(crud, calculate_calories, manage_personal_info)
+        if option == 'exit':
             clear_terminal()
             log_exit_message(authGS.username)
             break
-        else:
-            print("Invalid option, please type 1, 2 or 3")
+        option()
 
 def main():
     """
