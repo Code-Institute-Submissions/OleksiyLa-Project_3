@@ -56,7 +56,7 @@ def menu():
     This function is the main menu of the app, it will be displayed after the user logs in
     """
     while True:
-        log("1. Product table", "2. Calculate calories", "3. Personal info", "4. Your account", "5. Exit")
+        log("1. Product table", "2. Enter product to calculate calories", "3. Personal", "4. Your account", "5. Exit")
         option = select_option(crud, options.calculate_calories, manage_personal_info, options.manage_account)
         if option == 'exit':
             clear_terminal()

@@ -1,5 +1,5 @@
 from python.googlesheet import googleSheetDB, authGS, productListGS
-from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option
+from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option, enter_to_continue
 
 
 # Authentication functions
@@ -169,7 +169,7 @@ def calculate_calories():
         option = prepare_string(validate_length(input("Enter product name or (q/quit) to quit: "), "Enter product name or (q/quit) to quit: ", 1, 20))
         clear_terminal()
         if option == "Q" or option == "Quit":
-            break
+            return
         product = productListGS.find_product(option)
         products = productListGS.find_products_starting_with(option)
         if product:
@@ -179,22 +179,44 @@ def calculate_calories():
             total_calories += calories
             print(f"Calories for {product[0]} per {weight} grams : " + str(round(calories)) + " calories")
             print(f"Sum of calories for products you have calculated: " + str(round(total_calories)) + " calories")
+            calories_limit = googleSheetDB.get_calories_limit()
+            calories_consumed = googleSheetDB.get_calories_consumed()
+            if bool(calories_limit) and int(calories_consumed) + int(total_calories) > int(calories_limit):
+                over_limit_num = int(calories_consumed) + int(total_calories) - int(calories_limit)
+                print(f"If you add these calories, you will exceed your daily calories limit by {over_limit_num} calories")
+            if confirm(f"Would you like to add {str(round(total_calories))} calories to your daily calories? (y/n): "):
+                googleSheetDB.add_calories_consumed(round(total_calories))
+                calories_consumed = googleSheetDB.get_calories_consumed()
+                print(f"You have consumed {calories_consumed} calories today")
+                enter_to_continue()
+                return
+            else:
+                print(f"{str(round(total_calories))} calories not added")
+                enter_to_continue()
+                continue
         else:
-            print("Product not found")
-            if len(products) > 0:
-                print("Did you mean:")
+            if len(products) == 1:
+                if confirm(f"Did you mean: {products[0][0]}? (y/n) or (yes/no): "):
+                    isProductAdded = productListGS.add_product(products[0][0], abs(int(is_number(input("Enter the calories: "), "Enter the calories: "))))
+                    enter_to_continue()
+                    continue
+                else:
+                    print(f"{option} not found")
+            if len(products) > 1:
+                print("Product not found. You probably meant something from this list:")
                 for prod in products:
                     print(prod[0] + ": " + prod[1])
-            if confirm(f"Would you like to add {option} to our database? (y/n): "):
-                clear_terminal()
-                isProductAdded = productListGS.add_product(option, input("Enter the calories: "))
+                enter_to_continue()
+            if confirm(f"Would you like to add {option} to the database? (y/n): "):
+                isProductAdded = productListGS.add_product(option, abs(int(is_number(input("Enter the calories: "), "Enter the calories: "))))
                 if isProductAdded:
                     print(f"{option} added successfully")
+                    enter_to_continue()
                 else:
                     print("Error adding product")
             else:
-                clear_terminal()
                 print(f"{option} not added")
+                enter_to_continue()
 
 
 def set_calories_limit():

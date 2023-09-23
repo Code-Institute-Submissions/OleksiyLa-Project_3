@@ -107,3 +107,10 @@ def select_option(*options):
         return 'exit'
     clear_terminal()
     return options[option]
+
+def enter_to_continue():
+    """
+    This function waits for the user to press enter
+    """
+    input("Press 'Enter' to continue...")
+    clear_terminal()
