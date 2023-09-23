@@ -283,12 +283,37 @@ def calculate_calories_limit():
     log(calories_limit_text, consumed_calories_text, calories_to_eat_text)
 
 
-def calculate_overall_progress():
+def calculate_progress():
     """
-    This function calculates the overall progress of the user
+    Calculate progress from the Google Worksheet
     """
-    print(googleSheetDB.calculate_overall_progress())
-    enter_to_continue()
+    try:
+        data = googleSheetDB.get_list_of_consecutive_days()
+        if len(data) > 0:
+            last_consecutive_days = data[-1]
+            first_weight = last_consecutive_days[0][2]
+            last_weight = last_consecutive_days[-1][2]
+            progress = float(first_weight) - float(last_weight)
+            first_date = last_consecutive_days[0][0]
+            last_date =  last_consecutive_days[-1][0]
+            time_span = last_date - first_date
+            calories_list = [int(calories[1]) for calories in last_consecutive_days]
+            del calories_list[-1]
+            average_calories = round(sum(calories_list) / int(time_span.days))
+            print("The result shows your progress from " + first_date.strftime("%d/%m/%Y") + " to " + last_date.strftime("%d/%m/%Y"))
+            print("On average you ate " + str(average_calories) + " calories a day")
+            if progress > 0:
+                print(f"You lost {progress} kg in {time_span.days} days")
+            elif progress < 0:
+                print(f"You gained {progress} kg in {time_span.days} days")
+            else:
+                print(f"You didn't gain or lose weight in {time_span.days} days")
+            return data
+        else:
+            return "Not enough data to calculate progress"
+    except Exception as error:
+        print(f"Error calculating progress: {str(error)}")
+    return False
 
 
 def add_your_weight():

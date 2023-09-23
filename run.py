@@ -35,16 +35,42 @@ def crud():
         option()
 
 
-def manage_personal_info():
+def set_your_personal_data():
     """
-    This function is the menu of the personal info
+    This function is the menu that allows the user to set his personal data
     """
     clear_terminal()
     while True:
-        log("1. Add calories consumed per today", "2. Set calories limit", 
-            "3. See calories consumed per today", "4. See calories limit", "5. See your progress", "6. Add your weight", "7. Go Back")
-        option = select_option(options.add_consumed_calories, options.set_calories_limit, 
-                               options.get_consumed_calories, options.calculate_calories_limit, options.calculate_overall_progress, options.add_your_weight)
+        log("1. Set your calories limit", "2. Set your weight", "3. Add calories consumed per today", "4. Go Back")
+        option = select_option(options.set_calories_limit, options.add_your_weight, options.add_consumed_calories)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()
+
+
+def get_your_personal_data():
+    """
+    This function is the menu that allows the user to get his personal data
+    """
+    clear_terminal()
+    while True:
+        log("1. Get your calories limit", "2. Get your weight", "3. Go Back")
+        option = select_option(options.calculate_calories_limit, options.get_consumed_calories)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()
+
+
+def see_progress():
+    """
+    This function is the menu that allows the user to see his progress
+    """
+    clear_terminal()
+    while True:
+        log("1. See your progress", "2. Go Back")
+        option = select_option(options.calculate_progress)
         if option == 'exit':
             clear_terminal()
             break
@@ -56,8 +82,9 @@ def menu():
     This function is the main menu of the app, it will be displayed after the user logs in
     """
     while True:
-        log("1. Product table", "2. Enter product to calculate calories", "3. Personal", "4. Your account", "5. Exit")
-        option = select_option(crud, options.calculate_calories, manage_personal_info, options.manage_account)
+        log("1. Product table", "2. Enter product to calculate calories", "3. Get your personal data", "4. Set your personal data",
+            "5. See your progress", "6. Your account", "7. Exit")
+        option = select_option(crud, options.calculate_calories, get_your_personal_data, set_your_personal_data, see_progress, options.manage_account)
         if option == 'exit':
             clear_terminal()
             log_exit_message(authGS.username)

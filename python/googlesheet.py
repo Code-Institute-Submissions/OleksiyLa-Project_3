@@ -362,37 +362,52 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         except Exception as error:
             print(f"Error adding weight: {str(error)}")
         return False
-
-
-    def calculate_overall_progress(self):
+    
+    def convert_row_into_date(self, row):
         """
-        Calculate progress from the Google Worksheet
+        Convert row into date
+        """
+        date = row[0].split("/")
+        return datetime.datetime(int(date[2]), int(date[1]), int(date[0]))
+
+
+    def get_user_data_with_date(self):
+        """
+        Get user data with date from the Google Worksheet
         """
         try:
-            data = self.read_rows(AuthGS.username)
-            if len(data) > 1:
-                first_weight = data[0][2]
-                last_weight = data[-1][2]
-                progress = int(first_weight) - int(last_weight)
-                first_date = str(data[0][0]).split("/")
-                last_date =  str(data[-1][0]).split("/")
-                time_span = datetime.datetime(int(last_date[2]), int(last_date[1]), int(last_date[0])) - datetime.datetime(int(first_date[2]), int(first_date[1]), int(first_date[0]))
-                calories_list = [int(calories[1]) for calories in data]
-                del calories_list[-1]
-                average_calories = round(sum(calories_list) / int(time_span.days))
-                print("The result shows your progress from " + data[0][0] + " to " + data[-1][0])
-                print("On average you ate " + str(average_calories) + " calories a day")
-                if progress > 0:
-                    return f"You lost {progress} kg in {time_span.days} days"
-                elif progress < 0:
-                    return f"You gained {progress} kg in {time_span.days} days"
-                else:
-                    return f"You didn't gain or lose weight in {time_span.days} days"
-            else:
-                return "Not enough data to calculate progress"
+            user_data = self.read_rows(AuthGS.username)
+            user_data = [row for row in user_data if row[1] != '' and row[2] != '']
+            for row in user_data:
+                row[0] = self.convert_row_into_date(row)
+            return user_data
         except Exception as error:
-            print(f"Error calculating progress: {str(error)}")
+            print(f"Error getting user data with date: {str(error)}")
         return False
+    
+    def get_list_of_consecutive_days(self):
+        """
+        Get the last consecutive days from the Google Worksheet
+        """
+        try:
+            user_data = self.get_user_data_with_date()
+            lists_of_consecutive_days = []
+            consecutive_days = []
+            for row in user_data:
+                if not consecutive_days or row[0] - consecutive_days[-1][0] == datetime.timedelta(days=1):
+                    consecutive_days.append(row)
+                else:
+                    if len(consecutive_days) >= 7:
+                        lists_of_consecutive_days.append(consecutive_days[:])
+                    consecutive_days = [row]
+
+            if len(consecutive_days) >= 7:
+                lists_of_consecutive_days.append(consecutive_days[:])
+
+            return lists_of_consecutive_days
+        except Exception as error:
+            print(f"Error getting the last consecutive days: {str(error)}")
+        return []
 
 
 BasicGoogleSheetOperations.connect('creds.json', SCOPE, 'calories_tracker')
