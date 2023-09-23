@@ -364,28 +364,12 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         return False
 
 
-    def get_progress(self):
-        """
-        Get progress from the Google Worksheet
-        """
-        try:
-            user_worksheet = self.read_rows(AuthGS.username)
-            progress = []
-            for row in user_worksheet:
-                if row[2] != "0":
-                    progress.append(row)
-            return progress
-        except Exception as error:
-            print(f"Error getting progress: {str(error)}")
-        return []
-
-
     def calculate_overall_progress(self):
         """
         Calculate progress from the Google Worksheet
         """
         try:
-            data = self.get_progress()
+            data = self.read_rows(AuthGS.username)
             if len(data) > 1:
                 first_weight = data[0][2]
                 last_weight = data[-1][2]

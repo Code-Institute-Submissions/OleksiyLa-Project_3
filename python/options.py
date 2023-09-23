@@ -287,8 +287,8 @@ def calculate_overall_progress():
     """
     This function calculates the overall progress of the user
     """
-    clear_terminal()
     print(googleSheetDB.calculate_overall_progress())
+    enter_to_continue()
 
 
 def add_your_weight():
