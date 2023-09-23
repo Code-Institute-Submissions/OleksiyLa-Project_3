@@ -173,17 +173,16 @@ def calculate_calories():
         product = productListGS.find_product(option)
         products = productListGS.find_products_starting_with(option)
         if product:
-            print(product[0] + ": " + product[1])
-            weight = is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")
+            weight = abs(int(is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")))
             calories = int(product[1]) * int(weight) / 100
             total_calories += calories
             print(f"Calories for {product[0]} per {weight} grams : " + str(round(calories)) + " calories")
-            print(f"Sum of calories for products you have calculated: " + str(round(total_calories)) + " calories")
+            print(f"Sum of calories for all products you have calculated: " + str(round(total_calories)) + " calories")
             calories_limit = googleSheetDB.get_calories_limit()
             calories_consumed = googleSheetDB.get_calories_consumed()
             if bool(calories_limit) and int(calories_consumed) + int(total_calories) > int(calories_limit):
                 over_limit_num = int(calories_consumed) + int(total_calories) - int(calories_limit)
-                print(f"If you add these calories, you will exceed your daily calories limit by {over_limit_num} calories")
+                print(f"If you add these {round(total_calories)} calories, you will exceed your daily calories limit by {over_limit_num} calories")
             if confirm(f"Would you like to add {str(round(total_calories))} calories to your daily calories? (y/n): "):
                 googleSheetDB.add_calories_consumed(round(total_calories))
                 calories_consumed = googleSheetDB.get_calories_consumed()
@@ -197,9 +196,26 @@ def calculate_calories():
         else:
             if len(products) == 1:
                 if confirm(f"Did you mean: {products[0][0]}? (y/n) or (yes/no): "):
-                    isProductAdded = productListGS.add_product(products[0][0], abs(int(is_number(input("Enter the calories: "), "Enter the calories: "))))
-                    enter_to_continue()
-                    continue
+                    weight = abs(int(is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")))
+                    calories = int(products[0][1]) * int(weight) / 100
+                    total_calories += calories
+                    print(f"Calories for {products[0][0]} per {weight} grams : " + str(round(calories)) + " calories")
+                    print(f"Sum of calories for all products you have calculated: " + str(round(total_calories)) + " calories")
+                    calories_limit = googleSheetDB.get_calories_limit()
+                    calories_consumed = googleSheetDB.get_calories_consumed()
+                    if bool(calories_limit) and int(calories_consumed) + int(total_calories) > int(calories_limit):
+                        over_limit_num = int(calories_consumed) + int(total_calories) - int(calories_limit)
+                        print(f"If you add these {round(total_calories)} calories, you will exceed your daily calories limit by {over_limit_num} calories")
+                    if confirm(f"Would you like to add {str(round(total_calories))} calories to your daily calories? (y/n): "):
+                        googleSheetDB.add_calories_consumed(round(total_calories))
+                        calories_consumed = googleSheetDB.get_calories_consumed()
+                        print(f"You have consumed {calories_consumed} calories today")
+                        enter_to_continue()
+                        return
+                    else:
+                        print(f"{str(round(total_calories))} calories not added")
+                        enter_to_continue()
+                        continue
                 else:
                     print(f"{option} not found")
             if len(products) > 1:
