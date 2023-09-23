@@ -60,8 +60,13 @@ def add_new_product():
 def read_product():
     validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
     products = productListGS.find_products_starting_with(validatedProducts)
+    print("\n")
     for product in products:
-        print(product[0] + ": " + product[1])
+        print(product[0] + ": " + product[1] + " calories")
+    if len(products) == 0:
+        print("Product not found")
+    print("\n")
+    enter_to_continue()
 
 
 def update_product_name():
