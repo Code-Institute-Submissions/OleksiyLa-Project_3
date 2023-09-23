@@ -1,5 +1,5 @@
 from python.googlesheet import googleSheetDB, authGS, productListGS
-from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option, enter_to_continue
+from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option, enter_to_continue, wrapper_function
 
 
 # Authentication functions
@@ -283,37 +283,84 @@ def calculate_calories_limit():
     log(calories_limit_text, consumed_calories_text, calories_to_eat_text)
 
 
-def calculate_progress():
+def calculate_progress(data):
     """
     Calculate progress from the Google Worksheet
     """
+    first_weight = data[0][2]
+    last_weight = data[-1][2]
+    progress = float(first_weight) - float(last_weight)
+    first_date = data[0][0]
+    last_date =  data[-1][0]
+    time_span = last_date - first_date
+    calories_list = [int(calories[1]) for calories in data]
+    del calories_list[-1]
+    average_calories = round(sum(calories_list) / int(time_span.days))
+    print("The result shows your progress from " + first_date.strftime("%d/%m/%Y") + " to " + last_date.strftime("%d/%m/%Y"))
+    print("On average you ate " + str(average_calories) + " calories a day")
+    if progress > 0:
+        print(f"You lost {progress} kg in {time_span.days} days")
+    elif progress < 0:
+        print(f"You gained {progress} kg in {time_span.days} days")
+    else:
+        print(f"You didn't gain or lose weight in {time_span.days} days")
+
+
+def get_last_progress():
+    """
+    This function prints the last progress of the user
+    """
     try:
-        data = googleSheetDB.get_list_of_consecutive_days()
-        if len(data) > 0:
-            last_consecutive_days = data[-1]
-            first_weight = last_consecutive_days[0][2]
-            last_weight = last_consecutive_days[-1][2]
-            progress = float(first_weight) - float(last_weight)
-            first_date = last_consecutive_days[0][0]
-            last_date =  last_consecutive_days[-1][0]
-            time_span = last_date - first_date
-            calories_list = [int(calories[1]) for calories in last_consecutive_days]
-            del calories_list[-1]
-            average_calories = round(sum(calories_list) / int(time_span.days))
-            print("The result shows your progress from " + first_date.strftime("%d/%m/%Y") + " to " + last_date.strftime("%d/%m/%Y"))
-            print("On average you ate " + str(average_calories) + " calories a day")
-            if progress > 0:
-                print(f"You lost {progress} kg in {time_span.days} days")
-            elif progress < 0:
-                print(f"You gained {progress} kg in {time_span.days} days")
-            else:
-                print(f"You didn't gain or lose weight in {time_span.days} days")
-            return data
+        data = googleSheetDB.get_list_of_consecutive_days()[-1]
+        if data:
+            calculate_progress(data)
+            enter_to_continue()
         else:
-            return "Not enough data to calculate progress"
-    except Exception as error:
-        print(f"Error calculating progress: {str(error)}")
-    return False
+            print("Not enough data to calculate progress")
+            enter_to_continue()
+    except IndexError:
+        print("Not enough data to calculate progress")
+        enter_to_continue()
+
+
+def view_progress_by_date():
+    """
+    This function prints the progress of the user by date
+    """
+    data = googleSheetDB.get_list_of_consecutive_days()
+    clear_terminal()
+    if data:
+        list_of_functions = []
+        log_text = []
+        for index, row in enumerate(data):
+            log_text.append(f"{index + 1}. {row[0][0].strftime('%d/%m/%Y')} - {row[-1][0].strftime('%d/%m/%Y')}")
+            list_of_functions.append(wrapper_function(calculate_progress, row))
+        log_text.append(f"{len(data) + 1}. Go Back")
+        clear_terminal()
+        while True:
+            log(*log_text)
+            option = select_option(*list_of_functions)
+            if option == 'exit':
+                clear_terminal()
+                break
+            option()
+    else:
+        print("Not enough data to calculate progress")
+        enter_to_continue()
+
+
+def see_progress():
+    """
+    This function is the menu that allows the user to see his progress
+    """
+    clear_terminal()
+    while True:
+        log("1. See your last progress", "2. View your progress by date", "3. Go Back")
+        option = select_option(get_last_progress, view_progress_by_date)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()
 
 
 def add_your_weight():

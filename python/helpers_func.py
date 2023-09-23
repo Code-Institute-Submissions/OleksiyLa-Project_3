@@ -114,3 +114,12 @@ def enter_to_continue():
     """
     input("Press 'Enter' to continue...")
     clear_terminal()
+
+
+def wrapper_function(func, arg):
+    """
+    This function takes a function as an argument and returns a function that calls the function passed as an argument
+    """
+    def wrapper():
+        func(arg)
+    return wrapper

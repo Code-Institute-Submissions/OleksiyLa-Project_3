@@ -63,20 +63,6 @@ def get_your_personal_data():
         option()
 
 
-def see_progress():
-    """
-    This function is the menu that allows the user to see his progress
-    """
-    clear_terminal()
-    while True:
-        log("1. See your progress", "2. Go Back")
-        option = select_option(options.calculate_progress)
-        if option == 'exit':
-            clear_terminal()
-            break
-        option()
-
-
 def menu():
     """
     This function is the main menu of the app, it will be displayed after the user logs in
@@ -84,7 +70,7 @@ def menu():
     while True:
         log("1. Product table", "2. Enter product to calculate calories", "3. Get your personal data", "4. Set your personal data",
             "5. See your progress", "6. Your account", "7. Exit")
-        option = select_option(crud, options.calculate_calories, get_your_personal_data, set_your_personal_data, see_progress, options.manage_account)
+        option = select_option(crud, options.calculate_calories, get_your_personal_data, set_your_personal_data, options.see_progress, options.manage_account)
         if option == 'exit':
             clear_terminal()
             log_exit_message(authGS.username)
