@@ -67,6 +67,14 @@ def read_product():
         print(product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
         print(f"Product '{validatedProducts}' not found")
+        if confirm(f"Would you like to add '{validatedProducts}' to the database? (y/n) or (yes/no): "):
+            validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
+            validatedCalories = abs(int(validatedCalories))
+            isProductAdded = productListGS.add_product(validatedProducts, validatedCalories)
+            if isProductAdded:
+                print("Product added successfully")
+            else:
+                print("Error adding product")
     enter_to_continue()
 
 
