@@ -43,29 +43,30 @@ def add_new_product():
     This function adds a new product to the google sheet, if the product already exists, it will not be added
     """
     validatedProduct = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
+    if productListGS.find_product(validatedProduct):
+        print(f"Product {validatedProduct} already exists")
+        enter_to_continue()
+        return
     if not confirm(f"Are you sure you want to add a new product '{validatedProduct}'? (y/n) or (yes/no): "):
         return
     validatedCalories = is_number(input("Enter the calories: "), "Enter the calories: ")
     validatedCalories = abs(int(validatedCalories))
-    if productListGS.find_product(validatedProduct):
-        print(f"Product {validatedProduct} already exists")
-        return
     isProductAdded = productListGS.add_product(validatedProduct, validatedCalories)
     if isProductAdded:
         print("Product added successfully")
     else:
         print("Error adding product")
+    enter_to_continue()
 
 
 def read_product():
     validatedProducts = prepare_string(validate_length(input("Enter the product: "), "Enter the product: ", 1, 20))
     products = productListGS.find_products_starting_with(validatedProducts)
-    print("\n")
+    clear_terminal()
     for product in products:
         print(product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
-        print("Product not found")
-    print("\n")
+        print(f"Product '{validatedProducts}' not found")
     enter_to_continue()
 
 
@@ -81,18 +82,22 @@ def update_product_name():
             return
     elif len(products) == 0:
         print("Product not found")
+        enter_to_continue()
         return
     elif len(products) > 1:
-        print("Multiple products found")
+        print("Product not found")
+        print("Did you mean one of these products?")
         for product in products:
             print(product[0] + ": " + product[1])
         print("You must select one product")
+        enter_to_continue()
         return
     elif len(products) == 1:
         if confirm(f"Did you mean {products[0][0]}? (y/n) or (yes/no): "):
             product = products[0]
         else:
             print(f"Product '{product_input}' not found")
+            enter_to_continue()
             return
 
     new_product_name = prepare_string(validate_length(input("Enter the new product name: "), "Enter the product name to update: ", 1, 20))
@@ -102,6 +107,7 @@ def update_product_name():
         return
     productListGS.update_products(product[0], new_product_name)
     print("Product " + product[0] + " updated to " + new_product_name)
+    enter_to_continue()
 
 
 def update_product_calories():
@@ -133,6 +139,7 @@ def update_product_calories():
     validatedCalories = abs(int(new_calories))
     productListGS.update_products_calories(product[0], validatedCalories)
     print("Calories of " + product[0] + " updated to " + str(validatedCalories) + " calories")
+    enter_to_continue()
 
 
 def update_product():
@@ -160,6 +167,7 @@ def delete_product():
             print(f"{product[0]} deleted")
     else:
         print(f"Product {product_input} not found")
+    enter_to_continue()
 
 
 # Manage personal data functions
