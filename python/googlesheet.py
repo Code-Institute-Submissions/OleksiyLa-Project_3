@@ -377,7 +377,6 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             data = [current_datetime, 0, weight_in_kilograms]
             self.create_row(data, AuthGS.username)
             print("Weight added successfully")
-            print("You can check your weight history in the 'Get your weight' menu")
             return True
         except Exception as error:
             print(f"Error adding weight: {str(error)}")
