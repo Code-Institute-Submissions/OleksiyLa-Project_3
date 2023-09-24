@@ -1,5 +1,5 @@
 from python.googlesheet import authGS
-from python.helpers_func import clear_terminal, log_exit_message, log, select_option
+from python.helpers_func import clear_terminal, log_exit_message, log, select_option, confirm
 import python.options as options
 
 
@@ -73,8 +73,13 @@ def menu():
         option = select_option(crud, options.calculate_calories, get_your_personal_data, set_your_personal_data, options.see_progress, options.manage_account)
         if option == 'exit':
             clear_terminal()
-            log_exit_message(authGS.username)
-            exit()
+            if confirm(f"{authGS.username}, are you sure you want to exit? (y/n) or (yes/no): "):
+                clear_terminal()
+                log_exit_message(authGS.username)
+                exit()
+            else:
+                clear_terminal()
+                continue
         option()
 
 
