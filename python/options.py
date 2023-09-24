@@ -277,7 +277,6 @@ def add_your_weight_in_kg():
 
 
 def add_your_weight_in_lb():
-    # weight_in_kilograms = float(is_float(input("Enter your weight (lb): "), "Enter your weight (lb): ")) * 0.453592
     if googleSheetDB.add_weight(is_float(input("Enter your weight (lb): "), "Enter your weight (lb): "), "lb"):
         enter_to_continue()
     else:
@@ -374,7 +373,8 @@ def calculate_progress(data):
     """
     first_weight = data[0][2]
     last_weight = data[-1][2]
-    progress = float(first_weight) - float(last_weight)
+    progress_kg = float(first_weight) - float(last_weight)
+    progress_lb = round(progress_kg * 2.20462, 1)
     first_date = data[0][0]
     last_date =  data[-1][0]
     time_span = last_date - first_date
@@ -383,10 +383,10 @@ def calculate_progress(data):
     average_calories = round(sum(calories_list) / int(time_span.days))
     print("The result shows your progress from " + first_date.strftime("%d/%m/%Y") + " to " + last_date.strftime("%d/%m/%Y"))
     print("On average you ate " + str(average_calories) + " calories a day")
-    if progress > 0:
-        print(f"You lost {progress} kg in {time_span.days} days")
-    elif progress < 0:
-        print(f"You gained {progress} kg in {time_span.days} days")
+    if progress_kg > 0:
+        print(f"You lost {progress_kg} kg or {progress_lb} lb in {time_span.days} days")
+    elif progress_kg < 0:
+        print(f"You gained {progress_kg} kg or {progress_lb} lb in {time_span.days} days")
     else:
         print(f"You didn't gain or lose weight in {time_span.days} days")
     enter_to_continue()
