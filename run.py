@@ -55,7 +55,7 @@ def get_your_personal_data():
     """
     clear_terminal()
     while True:
-        log("1. Get your calories limit", "2. Get your weight", "3. Go Back")
+        log("1. Get your calories limit", "2. Get your calories consumed so far today", "3. Go Back")
         option = select_option(options.calculate_calories_limit, options.get_consumed_calories)
         if option == 'exit':
             clear_terminal()
