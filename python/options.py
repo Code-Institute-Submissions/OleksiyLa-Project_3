@@ -247,12 +247,15 @@ def add_consumed_calories():
     This function adds the calories consumed by the user to the google sheet
     """
     calories_consumed = googleSheetDB.get_calories_consumed()
-    input_text = f"You have consumed " + calories_consumed + " calories today, would you like to add more calories?:"
+    input_text = "You have consumed " + calories_consumed + " calories today\n"
+    input_text += "How many calories would you like to add to your consumption today?:\n"
+    input_text += "Enter the calories: "
     calories_to_add = is_number(input(input_text), input_text)
     googleSheetDB.add_calories_consumed(calories_to_add)
     clear_terminal()
     calories_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + str(calories_consumed) + " calories so far")
+    enter_to_continue()
 
 
 def get_consumed_calories():
@@ -265,6 +268,59 @@ def get_consumed_calories():
     enter_to_continue()
 
 
+def add_your_weight():
+    """
+    This function adds your weight to the google sheet
+    """
+    clear_terminal()
+    googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
+
+
+# Account management functions
+def update_password():
+    """
+    This function updates the password of the user
+    """
+    input_text = "Enter your new password: "
+    new_password = validate_length(input(input_text), input_text, 6, 12, True)
+    authGS.update_password(new_password)
+    clear_terminal()
+    print("Your password has been updated")
+
+
+def delete_account():
+    """
+    This function deletes the account of the user
+    """
+    option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
+    clear_terminal()
+    if confirm(option):
+        username = authGS.username
+        if authGS.delete_user():
+            print("Account deleted")
+            print(f"Good bye {username}")
+            exit()
+        else:
+            print("Error deleting account")
+            return False
+    else:
+        print("Account not deleted")
+        return False
+def manage_account():
+    """
+    This function is the menu of the account management
+    """
+    clear_terminal()
+    while True:
+        log("1. Change password", "2. Delete account", "3. Go Back")
+        option = select_option(update_password, delete_account)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()
+
+
+# Progress functions
 def calculate_calories_limit():
     """
     This function calculates the calories limit of the user
@@ -364,58 +420,6 @@ def see_progress():
     while True:
         log("1. See your last progress", "2. View your progress by date", "3. Go Back")
         option = select_option(get_last_progress, view_progress_by_date)
-        if option == 'exit':
-            clear_terminal()
-            break
-        option()
-
-
-def add_your_weight():
-    """
-    This function adds your weight to the google sheet
-    """
-    clear_terminal()
-    googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
-
-
-# Account management functions
-def update_password():
-    """
-    This function updates the password of the user
-    """
-    input_text = "Enter your new password: "
-    new_password = validate_length(input(input_text), input_text, 6, 12, True)
-    authGS.update_password(new_password)
-    clear_terminal()
-    print("Your password has been updated")
-
-
-def delete_account():
-    """
-    This function deletes the account of the user
-    """
-    option = "Are you sure you want to delete your account? (y/n) or (yes/no): "
-    clear_terminal()
-    if confirm(option):
-        username = authGS.username
-        if authGS.delete_user():
-            print("Account deleted")
-            print(f"Good bye {username}")
-            exit()
-        else:
-            print("Error deleting account")
-            return False
-    else:
-        print("Account not deleted")
-        return False
-def manage_account():
-    """
-    This function is the menu of the account management
-    """
-    clear_terminal()
-    while True:
-        log("1. Change password", "2. Delete account", "3. Go Back")
-        option = select_option(update_password, delete_account)
         if option == 'exit':
             clear_terminal()
             break
