@@ -270,6 +270,7 @@ def add_consumed_calories():
     This function adds the calories consumed by the user to the google sheet
     """
     calories_consumed = googleSheetDB.get_calories_consumed()
+    calories_limit = googleSheetDB.get_calories_limit()
     input_text = "You have consumed " + calories_consumed + " calories today\n"
     input_text += "How many calories would you like to add to your consumption today?:\n"
     input_text += "Enter the calories: "
@@ -278,6 +279,9 @@ def add_consumed_calories():
     clear_terminal()
     calories_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + str(calories_consumed) + " calories so far")
+    if bool(calories_limit) and int(calories_consumed) > int(calories_limit):
+        over_limit_num = int(calories_consumed) - int(calories_limit)
+        print(f"You have exceeded your daily calories limit of {calories_limit} by {over_limit_num} calories")
     enter_to_continue()
 
 
