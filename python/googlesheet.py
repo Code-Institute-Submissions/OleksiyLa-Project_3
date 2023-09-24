@@ -377,10 +377,15 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         """
         try:
             user_data = self.read_rows(AuthGS.username)
-            user_data = [row for row in user_data if row[1] != '' and row[2] != '']
-            for row in user_data:
-                row[0] = self.convert_row_into_date(row)
-            return user_data
+            if len(user_data) > 0:
+                filtered_user_data = []
+                for row in user_data:
+                    if len(row) == 3:
+                        if row[1] != '' and row[2] != '':
+                            filtered_user_data.append([self.convert_row_into_date(row), row[1], row[2]])
+                return filtered_user_data
+            else:
+                return False
         except Exception as error:
             print(f"Error getting user data with date: {str(error)}")
         return False
@@ -391,6 +396,8 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         """
         try:
             user_data = self.get_user_data_with_date()
+            if not user_data:
+                return []
             lists_of_consecutive_days = []
             consecutive_days = []
             for row in user_data:

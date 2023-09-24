@@ -309,6 +309,7 @@ def calculate_progress(data):
         print(f"You gained {progress} kg in {time_span.days} days")
     else:
         print(f"You didn't gain or lose weight in {time_span.days} days")
+    enter_to_continue()
 
 
 def get_last_progress():
@@ -316,14 +317,13 @@ def get_last_progress():
     This function prints the last progress of the user
     """
     try:
-        data = googleSheetDB.get_list_of_consecutive_days()[-1]
+        data = googleSheetDB.get_list_of_consecutive_days()
         if data:
-            calculate_progress(data)
-            enter_to_continue()
+            calculate_progress(data[-1])
         else:
             print("Not enough data to calculate progress")
             enter_to_continue()
-    except IndexError:
+    except IndexError as er:
         print("Not enough data to calculate progress")
         enter_to_continue()
 

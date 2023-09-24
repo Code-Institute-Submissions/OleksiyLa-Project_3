@@ -112,7 +112,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input("Press 'Enter' to continue...")
+    input("\nPress 'Enter' to continue...")
     clear_terminal()
 
 
