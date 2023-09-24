@@ -180,25 +180,31 @@ def delete_product():
 
 # Manage personal data functions
 def add_calculated_calories(calories, product, total_calories):
-    print(f"Calories for {product} per 100 grams : " + calories + " calories")
-    weight = abs(int(is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")))
+    print(f"Calories for {product} per 100 grams: " + calories + " calories")
+    weight = abs(int(is_number(input("Enter the weight in grams: "), "Enter the weight in grams: ")))
+    clear_terminal()
     calories = int(calories) * int(weight) / 100
-    total_calories += calories
+    total_calories["calories"] += calories
     print(f"Calories for {product} per {weight} grams : " + str(round(calories)) + " calories")
-    print(f"Sum of calories for all products you have calculated: " + str(round(total_calories)) + " calories")
+    print(f"Sum of calories for all products you have calculated: " + str(round(total_calories["calories"])) + " calories")
     calories_limit = googleSheetDB.get_calories_limit()
     calories_consumed = googleSheetDB.get_calories_consumed()
-    if bool(calories_limit) and int(calories_consumed) + int(total_calories) > int(calories_limit):
-        over_limit_num = int(calories_consumed) + int(total_calories) - int(calories_limit)
-        print(f"If you add these {round(total_calories)} calories, you will exceed your daily calories limit by {over_limit_num} calories")
-    if confirm(f"Would you like to add {str(round(total_calories))} calories to your daily calories? (y/n): "):
-        googleSheetDB.add_calories_consumed(round(total_calories))
+    if bool(calories_limit) and int(calories_consumed) + int(total_calories["calories"]) > int(calories_limit):
+        over_limit_num = int(calories_consumed) + int(total_calories["calories"]) - int(calories_limit)
+        print(f"If you add these {round(total_calories['calories'])} calories, you will exceed your daily calories limit by {over_limit_num} calories")
+    print("\n")
+    if confirm(f"Would you like to add {str(round(total_calories['calories']))} calories to your daily calories or would you like to continue?\n" +
+                "To add and quit (y/yes), to continue calculating (n/no): "):
+        googleSheetDB.add_calories_consumed(round(total_calories['calories']))
         calories_consumed = googleSheetDB.get_calories_consumed()
+        calories_limit = googleSheetDB.get_calories_limit()
+        if bool(calories_limit) and int(calories_consumed) > int(calories_limit):
+            over_limit_num = int(calories_consumed) - int(calories_limit)
+            print(f"You have exceeded your daily calories limit of {calories_limit} by {over_limit_num} calories")
         print(f"You have consumed {calories_consumed} calories today")
         enter_to_continue()
         return True
     else:
-        print(f"{str(round(total_calories))} calories not added")
         enter_to_continue()
         return False
 
@@ -209,7 +215,7 @@ def calculate_calories():
     if the product is not in the database, it will ask the user if he wants to add it
     """
     clear_terminal()
-    total_calories = 0
+    total_calories = {"calories": 0}
     while True:
         option = prepare_string(validate_length(input("Enter product name or (q/quit) to quit: "), "Enter product name or (q/quit) to quit: ", 1, 20))
         clear_terminal()
