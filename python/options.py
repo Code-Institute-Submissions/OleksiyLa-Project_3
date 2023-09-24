@@ -269,15 +269,33 @@ def get_consumed_calories():
     enter_to_continue()
 
 
+def add_your_weight_in_kg():
+    if googleSheetDB.add_weight(is_float(input("Enter your weight (kg): "), "Enter your weight (kg): "), "kg"):
+        enter_to_continue()
+    else:
+        enter_to_continue()
+
+
+def add_your_weight_in_lb():
+    # weight_in_kilograms = float(is_float(input("Enter your weight (lb): "), "Enter your weight (lb): ")) * 0.453592
+    if googleSheetDB.add_weight(is_float(input("Enter your weight (lb): "), "Enter your weight (lb): "), "lb"):
+        enter_to_continue()
+    else:
+        enter_to_continue()
+
+
 def add_your_weight():
     """
     This function adds your weight to the google sheet
     """
     clear_terminal()
-    if googleSheetDB.add_weight(is_float(input("Enter your weight: "), "Enter your weight: ")):
-        enter_to_continue()
-    else:
-        enter_to_continue()
+    while True:
+        log("1. Add your weight in kilograms (kg)", "2. Add your weight in pounds (lb)", "3. Go Back")
+        option = select_option(add_your_weight_in_kg, add_your_weight_in_lb)
+        if option == 'exit':
+            clear_terminal()
+            break
+        option()
 
 
 # Account management functions

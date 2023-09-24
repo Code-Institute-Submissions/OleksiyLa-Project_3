@@ -344,10 +344,16 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
         return None
 
 
-    def add_weight(self, weight):
+    def add_weight(self, weight, unit):
         """
         Add weight to the Google Worksheet
         """
+        if unit == "kg":
+            weight_in_kilograms = round(float(weight), 1)
+            prev_weight = 1
+        if unit == "lb":
+            weight_in_kilograms = round(float(weight) * 0.453592, 1)
+            prev_weight = 2.20462
         try:
             current_datetime = datetime.datetime.now()
             current_datetime = current_datetime.strftime("%d/%m/%Y")
@@ -355,20 +361,21 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             for index, row in enumerate(user_worksheet):
                 if row[0] == current_datetime:
                     if len(row) == 3:
-                        if row[2] == weight:
-                            print(f"You already added this weight of {weight} today")
+                        prev_weight = round(prev_weight * float(row[2]), 1)
+                        if round(float(row[2]), 1) == weight_in_kilograms:
+                            print(f"You already added this weight of {weight} {unit} today")
                             return True
-                        if confirm(f"You already added {row[2]} today, do you want to update it to {weight}? ('y'/'yes') or ('n'/'no'): "):
-                            if self.update_cell([index + 1, 3], weight, AuthGS.username):
-                                print(f"Weight updated to {weight} successfully")
+                        if confirm(f"You already added {prev_weight} {unit} today, do you want to update it to {weight} {unit}? ('y'/'yes') or ('n'/'no'): "):
+                            if self.update_cell([index + 1, 3], weight_in_kilograms, AuthGS.username):
+                                print(f"Weight updated to {weight} {unit} successfully")
                         else:
-                            print(f"Weight of {row[2]} not updated")
+                            print(f"Weight of {prev_weight} {unit} not updated")
                     else:
-                        if self.update_cell([index + 1, 3], weight, AuthGS.username):
+                        if self.update_cell([index + 1, 3], weight_in_kilograms, AuthGS.username):
                             print("Weight added successfully")
                             print("You can check your weight history in the 'Get your weight' menu")
                     return True
-            data = [current_datetime, 0, weight]
+            data = [current_datetime, 0, weight_in_kilograms]
             self.create_row(data, AuthGS.username)
             print("Weight added successfully")
             print("You can check your weight history in the 'Get your weight' menu")
