@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
-
+from python.helpers_func import confirm, enter_to_continue, clear_terminal
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -354,10 +354,24 @@ class CaloriesTrackerGS(BasicGoogleSheetOperations):
             user_worksheet = self.read_rows(AuthGS.username)
             for index, row in enumerate(user_worksheet):
                 if row[0] == current_datetime:
-                    self.update_cell([index + 1, 3], weight, AuthGS.username)
+                    if len(row) == 3:
+                        if row[2] == weight:
+                            print(f"You already added this weight of {weight} today")
+                            return True
+                        if confirm(f"You already added {row[2]} today, do you want to update it to {weight}? ('y'/'yes') or ('n'/'no'): "):
+                            if self.update_cell([index + 1, 3], weight, AuthGS.username):
+                                print(f"Weight updated to {weight} successfully")
+                        else:
+                            print(f"Weight of {row[2]} not updated")
+                    else:
+                        if self.update_cell([index + 1, 3], weight, AuthGS.username):
+                            print("Weight added successfully")
+                            print("You can check your weight history in the 'Get your weight' menu")
                     return True
             data = [current_datetime, 0, weight]
             self.create_row(data, AuthGS.username)
+            print("Weight added successfully")
+            print("You can check your weight history in the 'Get your weight' menu")
             return True
         except Exception as error:
             print(f"Error adding weight: {str(error)}")

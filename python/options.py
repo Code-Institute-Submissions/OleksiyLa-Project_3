@@ -162,7 +162,7 @@ def delete_product():
         print(f"Product {product_input} not found")
 
 
-# Personal info functions
+# Manage personal data functions
 def add_calculated_calories(calories, product, total_calories):
     print(f"Calories for {product} per 100 grams : " + calories + " calories")
     weight = abs(int(is_number(input("Enter the weight in grams : "), "Enter the weight in grams : ")))
@@ -240,6 +240,7 @@ def set_calories_limit():
     googleSheetDB.set_calories_limit(calories_limit)
     clear_terminal()
     print("Your new calories limit per day is " + calories_limit )
+    enter_to_continue()
 
 
 def add_consumed_calories():
@@ -273,7 +274,10 @@ def add_your_weight():
     This function adds your weight to the google sheet
     """
     clear_terminal()
-    googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: "))
+    if googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: ")):
+        enter_to_continue()
+    else:
+        enter_to_continue()
 
 
 # Account management functions
