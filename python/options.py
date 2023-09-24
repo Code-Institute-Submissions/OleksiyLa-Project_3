@@ -1,5 +1,5 @@
 from python.googlesheet import googleSheetDB, authGS, productListGS
-from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option, enter_to_continue, wrapper_function
+from python.helpers_func import clear_terminal, log, confirm, validate_length, is_number, prepare_string, select_option, enter_to_continue, wrapper_function, is_float
 
 
 # Authentication functions
@@ -274,7 +274,7 @@ def add_your_weight():
     This function adds your weight to the google sheet
     """
     clear_terminal()
-    if googleSheetDB.add_weight(is_number(input("Enter your weight: "), "Enter your weight: ")):
+    if googleSheetDB.add_weight(is_float(input("Enter your weight: "), "Enter your weight: ")):
         enter_to_continue()
     else:
         enter_to_continue()

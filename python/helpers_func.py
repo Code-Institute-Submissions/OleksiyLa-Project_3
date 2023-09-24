@@ -72,8 +72,23 @@ def is_number(data, input_message):
         int(data)
         return data
     except ValueError:
-        print("Input must be a number")
+        print("Input must be an integer")
         return is_number(input(input_message), input_message)
+    
+
+def is_float(data, input_message):
+    """
+    This function checks if the input is a float or an integer, if not, it will ask for a new input
+    """
+    try:
+        float_data = float(data)
+        if str(int(float_data)) == data:
+            return data
+        else:
+            return round(float_data, 1)
+    except ValueError:
+        print("Input must be a number")
+        return is_float(input(input_message), input_message)
 
 
 def prepare_string(string):
