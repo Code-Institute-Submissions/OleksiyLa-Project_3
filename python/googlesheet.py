@@ -27,7 +27,7 @@ class BasicGoogleSheetOperations:
             sheet = gspread_client.open(sheet_name)
             BasicGoogleSheetOperations._sheet = sheet
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error connecting to Google Sheet: {str(error)}")
 
 
@@ -38,7 +38,7 @@ class BasicGoogleSheetOperations:
         try:
             BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).append_row(data)
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error creating row: {str(error)}")
         return False
 
@@ -50,7 +50,7 @@ class BasicGoogleSheetOperations:
         try:
             rows = BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).get_all_values()
             return rows
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error reading rows: {str(error)}")
         return []
 
@@ -62,7 +62,7 @@ class BasicGoogleSheetOperations:
         try:
             BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).update_cell(to_update[0], to_update[1], updated)
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error updating row: {str(error)}")
         return False
 
@@ -74,7 +74,7 @@ class BasicGoogleSheetOperations:
         try:
             BasicGoogleSheetOperations._sheet.worksheet(worksheet_name).delete_row(row_number)
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error deleting rows: {str(error)}")
         return False
 
@@ -86,7 +86,7 @@ class BasicGoogleSheetOperations:
         try:
             BasicGoogleSheetOperations._sheet.add_worksheet(title=title, rows=rows, cols=cols)
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error adding worksheet: {str(error)}")
 
 
@@ -97,7 +97,7 @@ class BasicGoogleSheetOperations:
         try:
             BasicGoogleSheetOperations._sheet.del_worksheet(BasicGoogleSheetOperations._sheet.worksheet(username))
             return True
-        except Exception as error:
+        except ConnectionError as error:
             print(f"Error deleting worksheet: {str(error)}")
 
 
