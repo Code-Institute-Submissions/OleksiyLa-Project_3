@@ -286,8 +286,17 @@ def get_consumed_calories():
     This function prints the calories consumed by the user
     """
     calories_consumed = googleSheetDB.get_calories_consumed()
+    calories_limit = googleSheetDB.get_calories_limit()
     clear_terminal()
-    print("You've consumed " + calories_consumed + " calories today")
+    if bool(calories_limit):
+        over_limit_num = int(calories_consumed) - int(calories_limit)
+        if int(calories_consumed) > int(calories_limit):
+            print(f"You have exceeded your daily calories limit of {calories_limit} by {over_limit_num} calories")
+        elif int(calories_consumed) == int(calories_limit):
+            print(f"You have reached your daily calories limit of {calories_limit} calories")
+        else:
+            print(f"To reach your daily calories limit you still have {int(calories_limit) - int(calories_consumed)} calories to consume today")
+    print("You've consumed " + calories_consumed + " calories so far today")
     enter_to_continue()
 
 
