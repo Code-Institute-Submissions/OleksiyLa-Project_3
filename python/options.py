@@ -262,6 +262,7 @@ def get_consumed_calories():
     calories_consumed = googleSheetDB.get_calories_consumed()
     clear_terminal()
     print("You've consumed " + calories_consumed + " calories today")
+    enter_to_continue()
 
 
 def calculate_calories_limit():
@@ -286,6 +287,7 @@ def calculate_calories_limit():
         calories_to_eat_text = f"You can eat {calories_to_eat} calories more today"
     clear_terminal()
     log(calories_limit_text, consumed_calories_text, calories_to_eat_text)
+    enter_to_continue()
 
 
 def calculate_progress(data):
