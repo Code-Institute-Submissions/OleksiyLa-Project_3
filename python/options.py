@@ -360,7 +360,7 @@ def add_consumed_calories():
     print(f"\n {OK}Add consumed calories:{Q}\n ")
     cal_consumed = googleSheetDB.get_calories_consumed()
     cal_limit = googleSheetDB.get_calories_limit()
-    txt = " You have consumed " + cal_consumed + " calories today\n "
+    txt = " You have consumed " + cal_consumed + " calories today\n"
     txt += " How many more calories have you consumed today?:"
     txt += "\n Enter the calories: \n "
     cal_to_add = helpers.is_number(input(txt), txt)
@@ -425,7 +425,7 @@ def add_your_weight():
     """
     helpers.clear_terminal()
     while True:
-        print(f"\n{OK}Add your weight{Q}\n")
+        print(f"\n {OK}Add your weight{Q}\n")
         helpers.log(" 1. Add your weight in kilograms (kg)",
                     " 2. Add your weight in pounds (lb)",
                     " 3. Go Back")
@@ -582,7 +582,7 @@ def view_progress_by_date():
         for index, row in enumerate(data):
             first_date = row[0][0].strftime('%d/%m/%Y')
             last_date = row[-1][0].strftime('%d/%m/%Y')
-            log_text.append(f"{index + 1}. {first_date} - {last_date}")
+            log_text.append(f" {index + 1}. {first_date} - {last_date}")
             list_of_functions.append(
                 helpers.wrapper_function(calculate_progress, row))
         log_text.append(f" {len(data) + 1}. Go Back")
