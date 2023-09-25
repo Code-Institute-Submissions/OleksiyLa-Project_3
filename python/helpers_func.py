@@ -21,16 +21,16 @@ def log_exit_message(username):
     """
     print("\nThank you for using the Calories Tracker App")
     if username is not None:
-        print(f"\n Goodbye {username}\n")
+        print(f"\n Goodbye {username}\n ")
     else:
-        print("\n Goodbye\n")
+        print("\n Goodbye\n ")
 
 
 def log(*message):
     """
     This function takes strings as arguments and prints them in a new line
     """
-    message = "\n".join(message)
+    message = "\n ".join(message)
     print(message)
 
 
@@ -156,7 +156,7 @@ def select_option(*options):
     This function takes functions as arguments
     and returns the selected function
     """
-    print("\n")
+    print("\n ")
     length = len(options)
     option = check_option(is_number(input(" Select an option: "),
                                     " Select an option: "), length)
@@ -170,7 +170,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input(f"\n Press {OK}'Enter'{Q} to continue...\n")
+    input(f"\n Press {OK}'Enter'{Q} to continue...\n ")
     clear_terminal()
 
 
