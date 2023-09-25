@@ -150,8 +150,8 @@ def update_product_calories():
     products = productListGS.find_products_starting_with(product_input)
     prod = productListGS.find_product(product_input)
     if prod:
-        conf_txt = "Are you sure you want to update the calories of "
-        conf_txt += f"{prod[0]}? the {prod[1]} calories of {prod[0]}? "
+        conf_txt = f"Are you sure you want to update {prod[1]} "
+        conf_txt += f" calories of {prod[0]}? "
         if not helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
             return
     elif len(products) == 0:
@@ -471,7 +471,7 @@ def calculate_calories_limit():
         txt = f"You've consumed {abs(cal_to_eat)} cal more than your limit"
     elif cal_to_eat == 0:
         txt = f"You've consumed {consumed_cal}"
-        + " calories, you've reached your limit"
+        txt += " calories, you've reached your limit"
     else:
         txt = f"You can eat {cal_to_eat} calories more today"
     helpers.clear_terminal()
@@ -495,8 +495,8 @@ def calculate_progress(data):
         del cal_list[-1]
         avr_cal = round(sum(cal_list) / int(days))
         print("The result shows your progress from " +
-            first_date.strftime("%d/%m/%Y") + " to "
-            + last_date.strftime("%d/%m/%Y"))
+              first_date.strftime("%d/%m/%Y") + " to "
+              + last_date.strftime("%d/%m/%Y"))
         print("On average you ate " + str(avr_cal) + " calories a day")
         if kg > 0:
             print(f"You lost {kg} kg or {lb} lb in {days} days")
