@@ -42,7 +42,7 @@ def register():
                                        pass_txt, 6, 12, True)
     if authGS.register(username, password):
         helpers.clear_terminal()
-        helpers.log(f"\n {OK}Registration successful{Q}\n ",
+        helpers.log(f"\n {OK}Registration successful{Q}\n",
                     f" {OK}Welcome {username}{Q}\n ")
         return True
     else:
@@ -200,7 +200,7 @@ def update_product():
     This function updates a product from the google sheet,
     it can update the name or the calories of the product
     """
-    print(f"\n {OK}Update product{Q}\n ")
+    print(f"\n {OK}Update product{Q}\n")
     helpers.log(" 1. Update a product name",
                 " 2. Update a product calories",
                 " 3. Go Back")
@@ -425,7 +425,7 @@ def add_your_weight():
     """
     helpers.clear_terminal()
     while True:
-        print(f"\n{OK}Add your weight, selcet:{Q}\n ")
+        print(f"\n{OK}Add your weight{Q}\n")
         helpers.log(" 1. Add your weight in kilograms (kg)",
                     " 2. Add your weight in pounds (lb)",
                     " 3. Go Back")
@@ -480,7 +480,7 @@ def manage_account():
     """
     helpers.clear_terminal()
     while True:
-        print(f"\n {OK}Manage your account{Q}\n ")
+        print(f"\n {OK}Manage your account{Q}\n")
         helpers.log(" 1. Change password", " 2. Delete account", " 3. Go Back")
         option = helpers.select_option(update_password, delete_account)
         if option == 'exit':
@@ -588,7 +588,7 @@ def view_progress_by_date():
         log_text.append(f" {len(data) + 1}. Go Back")
         helpers.clear_terminal()
         while True:
-            print(f"\n {OK}Calculate progress{Q}\n ")
+            print(f"\n {OK}Calculate progress{Q}\n")
             helpers.log(*log_text)
             option = helpers.select_option(*list_of_functions)
             if option == 'exit':
@@ -609,7 +609,7 @@ def see_progress():
     """
     helpers.clear_terminal()
     while True:
-        print(f"\n{OK}Calculate your progress{Q}\n ")
+        print(f"\n{OK}Calculate your progress{Q}\n")
         helpers.log(" 1. See your last progress",
                     " 2. View your progress by date",
                     " 3. Go Back")
