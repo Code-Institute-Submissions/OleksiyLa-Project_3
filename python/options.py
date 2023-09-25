@@ -251,13 +251,13 @@ def add_calculated_calories(calories, product, total_cal):
     if bool(cal_limit) and cal_sum > int(cal_limit):
         over_limit_num = cal_sum - int(cal_limit)
         txt = f"\n If you add these {round(total_cal['calories'])} cal, "
-        txt += F"you will {ER}exceed your daily calories limit{Q} "
+        txt += f"you will {ER}exceed your daily calories limit{Q} "
         print(txt + f"by {over_limit_num} cal\n ")
     print("\n ")
     conf_txt = f" Would you like to add {str(round(total_cal['calories']))} "
     conf_txt += "calories to your daily calories or"
     conf_txt += " would you like to continue?"
-    conf_txt += "\n To add and quit {OK}(y/yes){Q}, "
+    conf_txt += f"\n To add and quit {OK}(y/yes){Q}, "
     conf_txt += f"to continue calculating {OK}(n/no){Q}: \n "
     if helpers.confirm(conf_txt):
         googleSheetDB.add_calories_consumed(round(total_cal['calories']))
@@ -265,8 +265,8 @@ def add_calculated_calories(calories, product, total_cal):
         cal_limit = googleSheetDB.get_calories_limit()
         if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
             over_limit_num = int(cal_consumed) - int(cal_limit)
-            print(f"\n {ER}You have exceeded your daily calories limit of"
-                  f" {cal_limit} by {over_limit_num} calories{Q}\n ")
+            print(f"\n {ER}You have exceeded your daily calories limit of{Q}"
+                  f"{ER} {cal_limit} by {over_limit_num} calories{Q}\n ")
         print(f"\n You have consumed {cal_consumed} calories today")
         helpers.enter_to_continue()
         return True
@@ -317,7 +317,7 @@ def calculate_calories():
                 print(f"\n {ER}Product not found.{Q}\n ")
                 print(" You probably meant something from this list:\n ")
                 for prod in products:
-                    print(prod[0] + ": " + prod[1] + " calories")
+                    print(" " + prod[0] + ": " + prod[1] + " calories")
                 helpers.enter_to_continue()
             else:
                 print(f"{ER}\n Product not found.{Q}\n ")
