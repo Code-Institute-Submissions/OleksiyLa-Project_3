@@ -45,9 +45,8 @@ def confirm(msg):
     elif option == "n" or option == "no":
         return False
     else:
-        txt = f"{ER}Wrong input, please type {Q}"
-        txt += f"{OK}('y'/'yes') or ('n'/'no'){Q}"
-        print(txt)
+        print(f"{ER}Wrong input, please type {Q}"
+              f"{OK}('y'/'yes') or ('n'/'no'){Q}")
         return confirm(msg)
 
 

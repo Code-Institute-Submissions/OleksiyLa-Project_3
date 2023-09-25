@@ -85,7 +85,6 @@ def read_product():
         input("Enter the product name: "),
         "Enter the product name: ", 1, 20))
     products = productListGS.find_products_starting_with(valid_products)
-    helpers.clear_terminal()
     for product in products:
         print(product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
@@ -262,8 +261,8 @@ def add_calculated_calories(calories, product, total_cal):
         cal_limit = googleSheetDB.get_calories_limit()
         if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
             over_limit_num = int(cal_consumed) - int(cal_limit)
-            txt = f"\n{ER}You have exceeded your daily calories limit of "
-            print(txt + f"{cal_limit} by {over_limit_num} calories{Q}\n")
+            print(f"\n{ER}You have exceeded your daily calories limit of"
+                  f"{cal_limit} by {over_limit_num} calories{Q}\n")
         print(f"\nYou have consumed {cal_consumed} calories today")
         helpers.enter_to_continue()
         return True
@@ -368,8 +367,8 @@ def add_consumed_calories():
     print("You've consumed " + str(cal_consumed) + " calories so far")
     if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
         over_limit_num = int(cal_consumed) - int(cal_limit)
-        txt = F"You have {ER}exceeded your daily calories limit{Q} of "
-        print(txt + f"{cal_limit} by {over_limit_num} calories")
+        print(f"You have {ER}exceeded your daily calories limit{Q} of "
+              f"{cal_limit} by {over_limit_num} calories")
     helpers.enter_to_continue()
 
 
@@ -383,15 +382,15 @@ def get_consumed_calories():
     if bool(cal_limit):
         over_limit_num = int(cal_consumed) - int(cal_limit)
         if int(cal_consumed) > int(cal_limit):
-            txt = f"You have {ER}exceeded your daily calories limit{Q} of "
-            print(txt + f"{cal_limit} by {over_limit_num} calories")
+            print(f"You have {ER}exceeded your daily calories limit{Q} of "
+                  f"{cal_limit} by {over_limit_num} calories")
         elif int(cal_consumed) == int(cal_limit):
-            txt = "You have reached your daily calories limit of "
-            print(txt + f"{cal_limit} calories")
+            print("You have reached your daily calories limit of "
+                  f"{cal_limit} calories")
         else:
             cal_to_eat = int(cal_limit) - int(cal_consumed)
-            txt = "To reach your daily calories limit you still have "
-            print(txt + f"{OK}{str(cal_to_eat)} calories to consume today{Q}")
+            print("To reach your daily calories limit you still have "
+                  f"{OK}{str(cal_to_eat)} calories to consume today{Q}")
     print("You've consumed " + cal_consumed + " calories so far today")
     helpers.enter_to_continue()
 

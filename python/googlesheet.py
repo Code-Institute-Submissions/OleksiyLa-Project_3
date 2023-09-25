@@ -353,9 +353,8 @@ class CaloriesTrackerGS(BasicGS):
                     if len(row) == 3 and row[2] != '':
                         prev_weight = round(prev_weight * float(row[2]), 1)
                         if round(float(row[2]), 1) == weight_in_kilograms:
-                            txt = "You already added this weight of "
-                            txt += f"{weight} {unit} today"
-                            print(txt)
+                            print("You already added this weight of "
+                                  f"{weight} {unit} today")
                             return True
                         txt = f"You already added {prev_weight} {unit} today\n"
                         txt += f"Do you want to update it to {weight} {unit}?"
@@ -368,8 +367,8 @@ class CaloriesTrackerGS(BasicGS):
                                 txt += f"{OK}{weight} {unit} successfully{Q}"
                                 print(txt)
                         else:
-                            txt = f"{ER}Weight of {prev_weight} {unit}{Q}"
-                            print(txt + f"{ER} not updated{Q}")
+                            print(f"{ER}Weight of {prev_weight} {unit}{Q}"
+                                  f"{ER} not updated{Q}")
                     else:
                         if self.update_cell([index + 1, 3],
                                             weight_in_kilograms,
