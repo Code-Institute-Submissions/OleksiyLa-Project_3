@@ -30,7 +30,7 @@ def log(*message):
     """
     This function takes strings as arguments and prints them in a new line
     """
-    message = "\n ".join(message)
+    message = "\n".join(message)
     print(message)
 
 
