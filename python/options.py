@@ -8,8 +8,11 @@ def login():
     This function logs in the user to the google sheet
     """
     print("Login:")
-    username = helpers.validate_length(input("Enter your username: "),
-                                       "Enter your username: ", 2, 12, True)
+    username = helpers.validate_length(
+        helpers.is_not_number(
+            input("Enter your username: "),
+            "Enter your username: "),
+        "Enter your username: ", 2, 12, True)
     password = helpers.validate_length(input("Enter your password: "),
                                        "Enter your password: ", 6, 12, True)
     if authGS.login(username, password):
@@ -28,8 +31,11 @@ def register():
     if the username already exists, it will not be added
     """
     print("Register:")
-    username = helpers.validate_length(input("Enter your username: "),
-                                       "Enter your username: ", 2, 12, True)
+    username = helpers.validate_length(
+        helpers.is_not_number(
+            input("Enter your username: "),
+            "Enter your username: "),
+        "Enter your username: ", 2, 12, True)
     password = helpers.validate_length(input("Enter your password: "),
                                        "Enter your password: ", 6, 12, True)
     if authGS.register(username, password):

@@ -98,6 +98,19 @@ def is_float(data, input_message):
         return is_float(input(input_message), input_message)
 
 
+def is_not_number(data, input_message):
+    """
+    This function checks if the input is a number,
+    if it is, it will ask for a new input
+    """
+    try:
+        float(data)
+        print("Input must not be a number")
+        return is_not_number(input(input_message), input_message)
+    except ValueError:
+        return data
+
+
 def prepare_string(string):
     """
     This function takes a string and returns a string with the first
