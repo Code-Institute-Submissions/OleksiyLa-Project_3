@@ -45,7 +45,9 @@ def confirm(msg):
     elif option == "n" or option == "no":
         return False
     else:
-        print(f"{ER}Wrong input, please type {Q}{OK}('y'/'yes') or ('n'/'no'){Q}")
+        txt = f"{ER}Wrong input, please type {Q}"
+        txt += f"{OK}('y'/'yes') or ('n'/'no'){Q}"
+        print(txt)
         return confirm(msg)
 
 
@@ -100,7 +102,7 @@ def is_float(data, input_message):
     except ValueError:
         print(f"{ER}Input must be a number{Q}")
         return is_float(input(input_message), input_message)
-    
+
 
 def validate_username(data, input_message):
     """

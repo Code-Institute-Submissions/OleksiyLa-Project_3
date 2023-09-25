@@ -359,12 +359,14 @@ class CaloriesTrackerGS(BasicGS):
                             return True
                         txt = f"You already added {prev_weight} {unit} today\n"
                         txt += f"Do you want to update it to {weight} {unit}?"
-                        if confirm(txt + f" {OK}('y'/'yes') or ('n'/'no'):{Q} "):
+                        txt += f" {OK}('y'/'yes') or ('n'/'no'):{Q} "
+                        if confirm(txt):
                             if self.update_cell([index + 1, 3],
                                                 weight_in_kilograms,
                                                 AuthGS.username):
                                 txt = f"{OK}Weight updated to {Q}"
-                                print(txt + f"{OK}{weight} {unit} successfully{Q}")
+                                txt += f"{OK}{weight} {unit} successfully{Q}"
+                                print(txt)
                         else:
                             txt = f"{ER}Weight of {prev_weight} {unit}{Q}"
                             print(txt + f"{ER} not updated{Q}")
