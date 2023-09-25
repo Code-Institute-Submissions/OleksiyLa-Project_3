@@ -14,7 +14,7 @@ def auth():
     """
     while True:
         print(f"Please, {OK}login{Q} or {OK}register{Q}\n")
-        helpers.log("1. Login", "2. Register", "3. Exit")
+        helpers.log(" 1. Login", " 2. Register", " 3. Exit")
         option = helpers.select_option(options.login, options.register)
         if option == 'exit':
             print("Goodbye")
@@ -33,8 +33,8 @@ def crud():
     while True:
         helpers.clear_terminal()
         print(f"\n{OK}Manage calories table{Q}\n")
-        helpers.log("1. Create a new product", "2. Read a product",
-                    "3. Update a product", "4. Delete a product", "5. Go Back")
+        helpers.log(" 1. Create a new product", " 2. Read a product",
+                    " 3. Update a product", " 4. Delete a product", "5. Go Back")
         option = helpers.select_option(options.add_new_product,
                                        options.read_product,
                                        options.update_product,
@@ -52,8 +52,8 @@ def set_your_personal_data():
     while True:
         helpers.clear_terminal()
         print(f"\n{OK}Set your personal data{Q}\n")
-        helpers.log("1. Set your calories limit", "2. Set your weight",
-                    "3. Add calories consumed per today", "4. Go Back")
+        helpers.log(" 1. Set your calories limit", " 2. Set your weight",
+                    " 3. Add calories consumed per today", " 4. Go Back")
         option = helpers.select_option(options.set_calories_limit,
                                        options.add_your_weight,
                                        options.add_consumed_calories)
@@ -70,8 +70,8 @@ def get_your_personal_data():
     while True:
         helpers.clear_terminal()
         print(f"\n{OK}Get your personal data{Q}\n")
-        helpers.log("1. Get your calories limit",
-                    "2. Get your calories consumed so far today", "3. Go Back")
+        helpers.log(" 1. Get your calories limit",
+                    " 2. Get your calories consumed so far today", "3. Go Back")
         option = helpers.select_option(options.calculate_calories_limit,
                                        options.get_consumed_calories)
         if option == 'exit':
@@ -87,13 +87,13 @@ def menu():
     """
     while True:
         print(f"\n{OK}Main menu{Q}\n")
-        helpers.log("1. Product table",
-                    "2. Enter product to calculate calories",
-                    "3. Get your personal data",
-                    "4. Set your personal data",
-                    "5. See your progress",
-                    "6. Your account",
-                    "7. Exit")
+        helpers.log(" 1. Product table",
+                    " 2. Enter product to calculate calories",
+                    " 3. Get your personal data",
+                    " 4. Set your personal data",
+                    " 5. See your progress",
+                    " 6. Your account",
+                    " 7. Exit")
         option = helpers.select_option(crud,
                                        options.calculate_calories,
                                        get_your_personal_data,
@@ -102,7 +102,7 @@ def menu():
                                        options.manage_account)
         if option == 'exit':
             helpers.clear_terminal()
-            conf_text = "\nAre you sure you want to exit? "
+            conf_text = "\n Are you sure you want to exit? "
             conf_text += f"{OK}(y/n) or (yes/no):{Q} "
             if helpers.confirm(conf_text):
                 helpers.clear_terminal()
@@ -119,7 +119,7 @@ def main():
     Start the Calories Tracker App
     """
     helpers.clear_terminal()
-    print(f"{OK}\nWelcome to the Calories Tracker App{Q}\n")
+    print(f"{OK}\n Welcome to the Calories Tracker App{Q}\n")
     if auth():
         menu()
 

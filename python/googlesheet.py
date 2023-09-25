@@ -353,31 +353,31 @@ class CaloriesTrackerGS(BasicGS):
                     if len(row) == 3 and row[2] != '':
                         prev_weight = round(prev_weight * float(row[2]), 1)
                         if round(float(row[2]), 1) == weight_in_kilograms:
-                            print("You already added this weight of "
+                            print(" You already added this weight of "
                                   f"{weight} {unit} today")
                             return True
-                        txt = f"You already added {prev_weight} {unit} today\n"
-                        txt += f"Do you want to update it to {weight} {unit}?"
+                        txt = f" You already added {prev_weight} {unit} today\n"
+                        txt += f" Do you want to update it to {weight} {unit}?"
                         txt += f" {OK}('y'/'yes') or ('n'/'no'):{Q} "
                         if confirm(txt):
                             if self.update_cell([index + 1, 3],
                                                 weight_in_kilograms,
                                                 AuthGS.username):
-                                txt = f"{OK}Weight updated to {Q}"
+                                txt = f" {OK}Weight updated to {Q}"
                                 txt += f"{OK}{weight} {unit} successfully{Q}"
                                 print(txt)
                         else:
-                            print(f"{ER}Weight of {prev_weight} {unit}{Q}"
+                            print(f" {ER}Weight of {prev_weight} {unit}{Q}"
                                   f"{ER} not updated{Q}")
                     else:
                         if self.update_cell([index + 1, 3],
                                             weight_in_kilograms,
                                             AuthGS.username):
-                            print(f"{OK}Weight added successfully{Q}")
+                            print(f" {OK}Weight added successfully{Q}")
                     return True
             data = [current_datetime, 0, weight_in_kilograms]
             self.create_row(data, AuthGS.username)
-            print(f"{OK}Weight added successfully{Q}")
+            print(f" {OK}Weight added successfully{Q}")
             return True
         except Exception as error:
             print(f"Error adding weight: {str(error)}")

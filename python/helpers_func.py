@@ -21,9 +21,9 @@ def log_exit_message(username):
     """
     print("\nThank you for using the Calories Tracker App")
     if username is not None:
-        print(f"\nGoodbye {username}\n")
+        print(f"\n Goodbye {username}\n")
     else:
-        print("\nGoodbye\n")
+        print("\n Goodbye\n")
 
 
 def log(*message):
@@ -45,7 +45,7 @@ def confirm(msg):
     elif option == "n" or option == "no":
         return False
     else:
-        print(f"{ER}Wrong input, please type {Q}"
+        print(f" {ER}Wrong input, please type {Q}"
               f"{OK}('y'/'yes') or ('n'/'no'){Q}")
         return confirm(msg)
 
@@ -59,15 +59,15 @@ def validate_length(data, input_message, min_length,
     """
     if isSpaceProhibited:
         if len(data.split(" ")) > 1:
-            print(f"{ER}rInput must not contain spaces{Q}")
+            print(f" {ER}Input must not contain spaces{Q}")
             return validate_length(input(input_message), input_message,
                                    min_length, max_length, isSpaceProhibited)
     if len(data) < min_length:
-        print(f"{ER}Input must be at least {min_length} characters long{Q}")
+        print(f" {ER}Input must be at least {min_length} characters long{Q}")
         return validate_length(input(input_message), input_message, min_length,
                                max_length, isSpaceProhibited)
     elif len(data) > max_length:
-        print(f"{ER}Input must be less than {max_length} characters long{Q}")
+        print(f" {ER}Input must be less than {max_length} characters long{Q}")
         return validate_length(input(input_message), input_message, min_length,
                                max_length, isSpaceProhibited)
     else:
@@ -83,7 +83,7 @@ def is_number(data, input_message):
         int(data)
         return data
     except ValueError:
-        print(f"{ER}Input must be an integer{Q}")
+        print(f" {ER}Input must be an integer{Q}")
         return is_number(input(input_message), input_message)
 
 
@@ -99,7 +99,7 @@ def is_float(data, input_message):
         else:
             return round(float_data, 1)
     except ValueError:
-        print(f"{ER}Input must be a number{Q}")
+        print(f" {ER}Input must be a number{Q}")
         return is_float(input(input_message), input_message)
 
 
@@ -110,19 +110,19 @@ def validate_username(data, input_message):
     """
     data = data.strip()
     if data == "":
-        print(f"{ER}Username must not be empty{Q}")
+        print(f" {ER}Username must not be empty{Q}")
         return validate_username(input(input_message), input_message)
     elif len(data.split(" ")) > 1:
-        print(f"{ER}Username must not contain spaces{Q}")
+        print(f" {ER}Username must not contain spaces{Q}")
         return validate_username(input(input_message), input_message)
     elif len(data) < 2:
-        print(f"{ER}Username must be at least 2 characters long{Q}")
+        print(f" {ER}Username must be at least 2 characters long{Q}")
         return validate_username(input(input_message), input_message)
     elif len(data) > 20:
-        print(f"{ER}Username must be less than 20 characters long{Q}")
+        print(f" {ER}Username must be less than 20 characters long{Q}")
         return validate_username(input(input_message), input_message)
     elif data[0].isdigit():
-        print(f"{ER}Username must not start with a number{Q}")
+        print(f" {ER}Username must not start with a number{Q}")
         return validate_username(input(input_message), input_message)
     else:
         return data
@@ -146,9 +146,9 @@ def check_option(data, length):
     if option >= 0 and option < exit_num:
         return option
     else:
-        print(f"{ER}Input must be between 1 and {exit_num}{Q}")
-        return check_option(is_number(input("Select an option: "),
-                                      "Select an option: "), length)
+        print(f" {ER}Input must be between 1 and {exit_num}{Q}")
+        return check_option(is_number(input(" Select an option: "),
+                                      " Select an option: "), length)
 
 
 def select_option(*options):
@@ -158,8 +158,8 @@ def select_option(*options):
     """
     print("\n")
     length = len(options)
-    option = check_option(is_number(input("Select an option: "),
-                                    "Select an option: "), length)
+    option = check_option(is_number(input(" Select an option: "),
+                                    " Select an option: "), length)
     if int(option) == length:
         return 'exit'
     clear_terminal()
@@ -170,7 +170,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input(f"\nPress {OK}'Enter'{Q} to continue...\n")
+    input(f"\n Press {OK}'Enter'{Q} to continue...\n")
     clear_terminal()
 
 
