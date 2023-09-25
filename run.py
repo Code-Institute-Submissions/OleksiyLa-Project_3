@@ -2,6 +2,9 @@ from python.googlesheet import authGS
 import python.helpers_func as helpers
 import python.options as options
 
+OK = '\033[92m'
+Q = '\033[0m'
+
 
 def auth():
     """
@@ -95,7 +98,7 @@ def menu():
                                        options.manage_account)
         if option == 'exit':
             helpers.clear_terminal()
-            conf_text = "Are you sure you want to exit? (y/n) or (yes/no): "
+            conf_text = f"Are you sure you want to exit? {OK}(y/n) or (yes/no):{Q} "
             if helpers.confirm(conf_text):
                 helpers.clear_terminal()
                 helpers.log_exit_message(authGS.username)
@@ -111,7 +114,7 @@ def main():
     Start the Calories Tracker App
     """
     helpers.clear_terminal()
-    print("Welcome to the Calories Tracker App")
+    print(f"{OK}Welcome to the Calories Tracker App{Q}")
     if auth():
         menu()
 

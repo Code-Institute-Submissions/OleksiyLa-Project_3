@@ -21,7 +21,7 @@ def login():
                                        "Enter your password: ", 6, 12, True)
     if authGS.login(username, password):
         helpers.clear_terminal()
-        print(f"Welcome {username}")
+        print(f"{OK}Welcome {username}{Q}")
         return True
     else:
         helpers.clear_terminal()
@@ -178,7 +178,8 @@ def update_product_calories():
         if helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} "):
             prod = products[0]
         else:
-            print(f"Product '{product_input}' not found")
+            print(f"{ER}Product '{product_input}' not found{Q}")
+            helpers.enter_to_continue()
             return
     new_calories = helpers.is_number(input("Enter the new calories: "),
                                      "Enter the new calories: ")
@@ -214,7 +215,7 @@ def delete_product():
     if product:
         print(product[0] + ": " + product[1])
         conf_txt = f"Are you sure you want to delete {product[0]}? "
-        if not helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
+        if not helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} "):
             return
         if productListGS.delete_product(product[0]):
             print(f"{OK}{product[0]} deleted{Q}")
@@ -291,7 +292,7 @@ def calculate_calories():
         else:
             if len(products) == 1:
                 if helpers.confirm(
-                  f"Did you mean: {products[0][0]}? (y/n) or (yes/no): "):
+                  f"Did you mean: {products[0][0]}? {OK}(y/n) or (yes/no):{Q} "):
                     if add_calculated_calories(products[0][1],
                                                products[0][0],
                                                total_calories):
@@ -307,7 +308,7 @@ def calculate_calories():
                     print(prod[0] + ": " + prod[1])
                 helpers.enter_to_continue()
                 conf_txt = f"Would you like to add {option} to the database?"
-            if helpers.confirm(f"{conf_txt} (y/n) or (yes/no): "):
+            if helpers.confirm(f"{conf_txt} {OK}(y/n) or (yes/no):{Q} "):
                 isProductAdded = productListGS.add_product(
                     option, abs(int(helpers.is_number(
                         input("Enter the calories: "),
