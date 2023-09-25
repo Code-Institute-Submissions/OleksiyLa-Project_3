@@ -34,7 +34,7 @@ def crud():
         helpers.clear_terminal()
         print(f"\n {OK}Manage calories table{Q}\n")
         helpers.log(" 1. Create a new product", " 2. Read a product",
-                    " 3. Update a product", " 4. Delete a product", "5. Go Back")
+                    " 3. Update a product", " 4. Delete a product", " 5. Go Back")
         option = helpers.select_option(options.add_new_product,
                                        options.read_product,
                                        options.update_product,
@@ -71,7 +71,7 @@ def get_your_personal_data():
         helpers.clear_terminal()
         print(f"\n {OK}Get your personal data{Q}\n")
         helpers.log(" 1. Get your calories limit",
-                    " 2. Get your calories consumed so far today", "3. Go Back")
+                    " 2. Get your calories consumed so far today", " 3. Go Back")
         option = helpers.select_option(options.calculate_calories_limit,
                                        options.get_consumed_calories)
         if option == 'exit':

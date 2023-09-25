@@ -90,7 +90,7 @@ def read_product():
         " Enter the product name: \n ", 1, 20))
     products = productListGS.find_products_starting_with(valid_products)
     for product in products:
-        print(product[0] + ": " + product[1] + " calories")
+        print(" " + product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
         print(f" {ER}Product '{valid_products}' not found{Q}")
         conf_txt = f" Would you like to add '{valid_products}' to the database?"
@@ -129,7 +129,7 @@ def update_product_name():
         print(f" {ER}Product not found{Q}")
         print(" Did you mean one of these products?")
         for prod in products:
-            print(prod[0] + ": " + prod[1])
+            print(" " + prod[0] + ": " + prod[1] + " calories")
         print(" You must select one product")
         helpers.enter_to_continue()
         return
@@ -175,7 +175,7 @@ def update_product_calories():
     elif len(products) > 1:
         print(f" {ER}Multiple products found{Q}")
         for prod in products:
-            print(prod[0] + ": " + prod[1])
+            print(" " + prod[0] + ": " + prod[1] + " calories")
         print(f" {ER}You must select one product{Q}")
         return
     elif len(products) == 1:
@@ -220,7 +220,7 @@ def delete_product():
         input(" Enter the product to delete: \n "))
     product = productListGS.find_product(product_input)
     if product:
-        print(product[0] + ": " + product[1])
+        print(" " + product[0] + ": " + product[1] + "calories")
         conf_txt = f" Are you sure you want to delete {product[0]}? "
         if not helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} \n "):
             return
