@@ -10,7 +10,8 @@ def auth():
     When the user logs in or register, the menu function will be displayed
     """
     while True:
-        helpers.log("Select an option:", "1. Login", "2. Register", "3. Exit")
+        print("Select an option:")
+        helpers.log("1. Login", "2. Register", "3. Exit")
         option = helpers.select_option(options.login, options.register)
         if option == 'exit':
             print("Goodbye")

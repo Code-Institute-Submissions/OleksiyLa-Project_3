@@ -1,5 +1,9 @@
 import os
 
+ER = '\033[91m'
+OK = '\033[92m'
+Q = '\033[0m'
+
 
 def clear_terminal():
     """
@@ -41,7 +45,7 @@ def confirm(msg):
     elif option == "n" or option == "no":
         return False
     else:
-        print("Wrong input, please type ('y'/'yes') or ('n'/'no')")
+        print(f"{ER}Wrong input, please type {Q}{OK}('y'/'yes') or ('n'/'no'){Q}")
         confirm(msg)
 
 
@@ -54,15 +58,15 @@ def validate_length(data, input_message, min_length,
     """
     if isSpaceProhibited:
         if len(data.split(" ")) > 1:
-            print("Input must not contain spaces")
+            print(f"{ER}rInput must not contain spaces{Q}")
             return validate_length(input(input_message), input_message,
                                    min_length, max_length, isSpaceProhibited)
     if len(data) < min_length:
-        print(f"Input must be at least {min_length} characters long")
+        print(f"{ER}Input must be at least {min_length} characters long{Q}")
         return validate_length(input(input_message), input_message, min_length,
                                max_length, isSpaceProhibited)
     elif len(data) > max_length:
-        print(f"Input must be less than {max_length} characters long")
+        print(f"{ER}Input must be less than {max_length} characters long{Q}")
         return validate_length(input(input_message), input_message, min_length,
                                max_length, isSpaceProhibited)
     else:
@@ -78,7 +82,7 @@ def is_number(data, input_message):
         int(data)
         return data
     except ValueError:
-        print("Input must be an integer")
+        print(f"{ER}Input must be an integer{Q}")
         return is_number(input(input_message), input_message)
 
 
@@ -94,7 +98,7 @@ def is_float(data, input_message):
         else:
             return round(float_data, 1)
     except ValueError:
-        print("Input must be a number")
+        print(f"{ER}Input must be a number{Q}")
         return is_float(input(input_message), input_message)
 
 
@@ -105,7 +109,7 @@ def is_not_number(data, input_message):
     """
     try:
         float(data)
-        print("Input must not be a number")
+        print(f"{ER}Input must not be a number{Q}")
         return is_not_number(input(input_message), input_message)
     except ValueError:
         return data
@@ -153,7 +157,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input("\nPress 'Enter' to continue...")
+    input(f"\nPress {OK}'Enter'{Q} to continue...")
     clear_terminal()
 
 

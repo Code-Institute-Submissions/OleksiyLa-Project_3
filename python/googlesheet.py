@@ -9,6 +9,10 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
+ER = '\033[91m'
+OK = '\033[92m'
+Q = '\033[0m'
+
 
 class BasicGS:
     """
@@ -355,24 +359,24 @@ class CaloriesTrackerGS(BasicGS):
                             return True
                         txt = f"You already added {prev_weight} {unit} today,"
                         txt += f" do you want to update it to {weight} {unit}?"
-                        if confirm(txt + " ('y'/'yes') or ('n'/'no'): "):
+                        if confirm(txt + f" {OK}('y'/'yes') or ('n'/'no'):{Q} "):
                             if self.update_cell([index + 1, 3],
                                                 weight_in_kilograms,
                                                 AuthGS.username):
-                                txt = "Weight updated to "
-                                print(txt + f"{weight} {unit} successfully")
+                                txt = f"{OK}Weight updated to {Q}"
+                                print(txt + f"{OK}{weight} {unit} successfully{Q}")
                         else:
-                            txt = f"Weight of {prev_weight} {unit}"
-                            print(txt + " not updated")
+                            txt = f"{ER}Weight of {prev_weight} {unit}{Q}"
+                            print(txt + f"{ER} not updated{Q}")
                     else:
                         if self.update_cell([index + 1, 3],
                                             weight_in_kilograms,
                                             AuthGS.username):
-                            print("Weight added successfully")
+                            print(f"{OK}Weight added successfully{Q}")
                     return True
             data = [current_datetime, 0, weight_in_kilograms]
             self.create_row(data, AuthGS.username)
-            print("Weight added successfully")
+            print(f"{OK}Weight added successfully{Q}")
             return True
         except Exception as error:
             print(f"Error adding weight: {str(error)}")

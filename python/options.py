@@ -1,6 +1,10 @@
 from python.googlesheet import googleSheetDB, authGS, productListGS
 import python.helpers_func as helpers
 
+ER = '\033[91m'
+OK = '\033[92m'
+Q = '\033[0m'
+
 
 # Authentication functions
 def login():
@@ -21,7 +25,7 @@ def login():
         return True
     else:
         helpers.clear_terminal()
-        print("Invalid username or password")
+        print(f"{ER}Invalid username or password{Q}")
         return False
 
 
@@ -40,11 +44,11 @@ def register():
                                        "Enter your password: ", 6, 12, True)
     if authGS.register(username, password):
         helpers.clear_terminal()
-        helpers.log("Registration successful", f"Welcome {username}")
+        helpers.log(f"{OK}Registration successful{Q}", f"Welcome {username}")
         return True
     else:
         helpers.clear_terminal()
-        print(f"Username '{username}' already exists, try again")
+        print(f"{ER}Username '{username}' already exists, try again{Q}")
         return register()
 
 
@@ -58,11 +62,11 @@ def add_new_product():
         helpers.validate_length(input("Enter the product: "),
                                 "Enter the product: ", 1, 20))
     if productListGS.find_product(valid_product):
-        print(f"Product {valid_product} already exists")
+        print(f"{ER}Product {valid_product} already exists{Q}")
         helpers.enter_to_continue()
         return
     conf_text = f"Are you sure you want to add a new product '{valid_product}'"
-    if not helpers.confirm(conf_text + "? (y/n) or (yes/no): "):
+    if not helpers.confirm(conf_text + f"? {OK}(y/n) or (yes/no):{Q} "):
         return
     valid_calories = helpers.is_number(input("Enter the calories: "),
                                        "Enter the calories: ")
@@ -70,9 +74,9 @@ def add_new_product():
     isProductAdded = productListGS.add_product(valid_product,
                                                valid_calories)
     if isProductAdded:
-        print("Product added successfully")
+        print(f"{OK}Product added successfully{Q}")
     else:
-        print("Error adding product")
+        print(f"{ER}Error adding product{Q}")
     helpers.enter_to_continue()
 
 
@@ -85,18 +89,18 @@ def read_product():
     for product in products:
         print(product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
-        print(f"Product '{valid_products}' not found")
+        print(f"{ER}Product '{valid_products}' not found{Q}")
         conf_txt = f"Would you like to add '{valid_products}' to the database?"
-        if helpers.confirm(conf_txt + " (y/n) or (yes/no): "):
+        if helpers.confirm(conf_txt + f" {OK}(y/n) or (yes/no):{Q} "):
             valid_calories = helpers.is_number(input("Enter the calories: "),
                                                "Enter the calories: ")
             valid_calories = abs(int(valid_calories))
             isProductAdded = productListGS.add_product(valid_products,
                                                        valid_calories)
             if isProductAdded:
-                print("Product added successfully")
+                print(f"{OK}Product added successfully{Q}")
             else:
-                print("Error adding product")
+                print("{ER}Error adding product{Q}")
     helpers.enter_to_continue()
 
 
@@ -111,14 +115,14 @@ def update_product_name():
     prod = productListGS.find_product(product_input)
     if prod:
         conf_txt = f"Are you sure you want to update the name of {prod[0]}? "
-        if not helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
+        if not helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no){Q}: "):
             return
     elif len(products) == 0:
-        print("Product not found")
+        print(f"{ER}Product not found{Q}")
         helpers.enter_to_continue()
         return
     elif len(products) > 1:
-        print("Product not found")
+        print(f"{ER}Product not found{Q}")
         print("Did you mean one of these products?")
         for prod in products:
             print(prod[0] + ": " + prod[1])
@@ -127,10 +131,10 @@ def update_product_name():
         return
     elif len(products) == 1:
         conf_txt = f"Did you mean {products[0][0]}? "
-        if helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
+        if helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} "):
             prod = products[0]
         else:
-            print(f"Product '{product_input}' not found")
+            print(f"{OK}Product '{product_input}' not found{Q}")
             helpers.enter_to_continue()
             return
 
@@ -139,10 +143,10 @@ def update_product_name():
         "Enter the product name to update: ", 1, 20))
     is_in_db = bool(productListGS.find_product(new_product_name))
     if is_in_db:
-        print(f"Product {new_product_name} already exists")
+        print(f"{ER}Product {new_product_name} already exists{Q}")
         return
     productListGS.update_products(prod[0], new_product_name)
-    print("Product " + prod[0] + " updated to " + new_product_name)
+    print(f"{OK}Product {prod[0]} updated to {new_product_name}{Q}")
     helpers.enter_to_continue()
 
 
@@ -158,20 +162,20 @@ def update_product_calories():
     if prod:
         conf_txt = f"Are you sure you want to update {prod[1]} "
         conf_txt += f" calories of {prod[0]}? "
-        if not helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
+        if not helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} "):
             return
     elif len(products) == 0:
-        print("Product not found")
+        print(f"{ER}Product not found{Q}")
         return
     elif len(products) > 1:
-        print("Multiple products found")
+        print(f"{ER}Multiple products found{Q}")
         for prod in products:
             print(prod[0] + ": " + prod[1])
-        print("You must select one product")
+        print(f"{ER}You must select one product{Q}")
         return
     elif len(products) == 1:
         conf_txt = f"Did you mean {products[0][0]}? "
-        if helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
+        if helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} "):
             prod = products[0]
         else:
             print(f"Product '{product_input}' not found")
@@ -180,8 +184,8 @@ def update_product_calories():
                                      "Enter the new calories: ")
     valid_calories = abs(int(new_calories))
     productListGS.update_products_calories(prod[0], valid_calories)
-    print("Calories of " + prod[0] +
-          " updated to " + str(valid_calories) + " calories")
+    txt = f"{OK}Calories of {prod[0]} updated to {valid_calories} calories{Q}"
+    print(txt)
     helpers.enter_to_continue()
 
 
@@ -213,9 +217,9 @@ def delete_product():
         if not helpers.confirm(conf_txt + "(y/n) or (yes/no): "):
             return
         if productListGS.delete_product(product[0]):
-            print(f"{product[0]} deleted")
+            print(f"{OK}{product[0]} deleted{Q}")
     else:
-        print(f"Product {product_input} not found")
+        print(f"{ER}Product {product_input} not found{Q}")
     helpers.enter_to_continue()
 
 
@@ -239,7 +243,7 @@ def add_calculated_calories(calories, product, total_cal):
     if bool(cal_limit) and cal_sum > int(cal_limit):
         over_limit_num = cal_sum - int(cal_limit)
         txt = f"If you add these {round(total_cal['calories'])} cal, "
-        txt += "you will exceed your daily calories limit "
+        txt += F"you will {ER}exceed your daily calories limit{Q} "
         print(txt + f"by {over_limit_num} cal")
     print("\n")
     conf_txt = f"Would you like to add {str(round(total_cal['calories']))} "
@@ -252,7 +256,7 @@ def add_calculated_calories(calories, product, total_cal):
         cal_limit = googleSheetDB.get_calories_limit()
         if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
             over_limit_num = int(cal_consumed) - int(cal_limit)
-            txt = "You have exceeded your daily calories limit of "
+            txt = F"You have {ER}exceeded your daily calories limit{Q} of "
             print(txt + f"{cal_limit} by {over_limit_num} calories")
         print(f"You have consumed {cal_consumed} calories today")
         helpers.enter_to_continue()
@@ -309,12 +313,12 @@ def calculate_calories():
                         input("Enter the calories: "),
                         "Enter the calories: "))))
                 if isProductAdded:
-                    print(f"{option} added successfully")
+                    print(f"{OK}{option} added successfully{Q}")
                     helpers.enter_to_continue()
                 else:
                     print("Error adding product")
             else:
-                print(f"{option} not added")
+                print(f"{ER}{option} not added{Q}")
                 helpers.enter_to_continue()
 
 
@@ -348,7 +352,7 @@ def add_consumed_calories():
     print("You've consumed " + str(cal_consumed) + " calories so far")
     if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
         over_limit_num = int(cal_consumed) - int(cal_limit)
-        txt = "You have exceeded your daily calories limit of "
+        txt = F"You have {ER}exceeded your daily calories limit{Q} of "
         print(txt + f"{cal_limit} by {over_limit_num} calories")
     helpers.enter_to_continue()
 
@@ -363,7 +367,7 @@ def get_consumed_calories():
     if bool(cal_limit):
         over_limit_num = int(cal_consumed) - int(cal_limit)
         if int(cal_consumed) > int(cal_limit):
-            txt = "You have exceeded your daily calories limit of "
+            txt = f"You have {ER}exceeded your daily calories limit{Q} of "
             print(txt + f"{cal_limit} by {over_limit_num} calories")
         elif int(cal_consumed) == int(cal_limit):
             txt = "You have reached your daily calories limit of "
@@ -371,7 +375,7 @@ def get_consumed_calories():
         else:
             cal_to_eat = int(cal_limit) - int(cal_consumed)
             txt = "To reach your daily calories limit you still have "
-            print(txt + str(cal_to_eat) + "calories to consume today")
+            print(txt + f"{OK}{str(cal_to_eat)} calories to consume today{Q}")
     print("You've consumed " + cal_consumed + " calories so far today")
     helpers.enter_to_continue()
 
@@ -421,26 +425,26 @@ def update_password():
                                            input_text, 6, 12, True)
     authGS.update_password(new_password)
     helpers.clear_terminal()
-    print("Your password has been updated")
+    print(f"{OK}Your password has been updated{Q}")
 
 
 def delete_account():
     """
     This function deletes the account of the user
     """
-    txt = "Are you sure you want to delete your account? (y/n) or (yes/no): "
+    txt = f"Are you sure you want to delete your account? {OK}(y/n) or (yes/no):{Q} "
     helpers.clear_terminal()
     if helpers.confirm(txt):
         username = authGS.username
         if authGS.delete_user():
-            print("Account deleted")
+            print(f"{OK}Account deleted{Q}")
             print(f"Good bye {username}")
             exit()
         else:
             print("Error deleting account")
             return False
     else:
-        print("Account not deleted")
+        print(f"{ER}Account not deleted{Q}")
         return False
 
 
@@ -474,12 +478,12 @@ def calculate_calories_limit():
     cal_limit_text = "Your calories limit a day is " + cal_limit + " calories"
     consumed_cal_text = "You've consumed " + consumed_cal + " calories today"
     if cal_to_eat < 0:
-        txt = f"You've consumed {abs(cal_to_eat)} cal more than your limit"
+        txt = f"{ER}You've consumed {abs(cal_to_eat)} cal more than your limit{Q}"
     elif cal_to_eat == 0:
         txt = f"You've consumed {consumed_cal}"
-        txt += " calories, you've reached your limit"
+        txt +=f" calories, {ER}you've reached your limit{Q}"
     else:
-        txt = f"You can eat {cal_to_eat} calories more today"
+        txt = f"{OK}You can eat {cal_to_eat} calories more today{Q}"
     helpers.clear_terminal()
     helpers.log(cal_limit_text, consumed_cal_text, txt)
     helpers.enter_to_continue()
@@ -524,10 +528,10 @@ def get_last_progress():
         if data:
             calculate_progress(data[-1])
         else:
-            print("Not enough data to calculate progress")
+            print(f"{ER}Not enough data to calculate progress{Q}")
             helpers.enter_to_continue()
     except IndexError as er:
-        print("Not enough data to calculate progress")
+        print(f"{ER}Not enough data to calculate progress{Q}")
         helpers.enter_to_continue()
 
 
@@ -556,7 +560,7 @@ def view_progress_by_date():
                 break
             option()
     else:
-        print("Not enough data to calculate progress")
+        print(f"{ER}Not enough data to calculate progress{Q}")
         helpers.enter_to_continue()
 
 
