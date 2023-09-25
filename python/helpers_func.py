@@ -46,7 +46,7 @@ def confirm(msg):
         return False
     else:
         print(f"{ER}Wrong input, please type {Q}{OK}('y'/'yes') or ('n'/'no'){Q}")
-        confirm(msg)
+        return confirm(msg)
 
 
 def validate_length(data, input_message, min_length,
