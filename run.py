@@ -102,7 +102,8 @@ def menu():
                                        options.manage_account)
         if option == 'exit':
             helpers.clear_terminal()
-            conf_text = f"\nAre you sure you want to exit? {OK}(y/n) or (yes/no):{Q} "
+            conf_text = "\nAre you sure you want to exit? "
+            conf_text += f"{OK}(y/n) or (yes/no):{Q} "
             if helpers.confirm(conf_text):
                 helpers.clear_terminal()
                 helpers.log_exit_message(authGS.username)

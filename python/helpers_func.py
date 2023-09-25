@@ -19,11 +19,11 @@ def log_exit_message(username):
     """
     This function prints a goodbye message
     """
-    print("Thank you for using the Calories Tracker App")
+    print("\nThank you for using the Calories Tracker App")
     if username is not None:
-        print(f"Goodbye {username}")
+        print(f"\nGoodbye {username}\n")
     else:
-        print("Goodbye")
+        print("\nGoodbye\n")
 
 
 def log(*message):
