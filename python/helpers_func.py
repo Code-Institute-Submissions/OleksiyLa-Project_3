@@ -100,18 +100,30 @@ def is_float(data, input_message):
     except ValueError:
         print(f"{ER}Input must be a number{Q}")
         return is_float(input(input_message), input_message)
+    
 
-
-def is_not_number(data, input_message):
+def validate_username(data, input_message):
     """
-    This function checks if the input is a number,
-    if it is, it will ask for a new input
+    This function checks if the username is valid,
+    if not, it will ask for a new input
     """
-    try:
-        float(data)
-        print(f"{ER}Input must not be a number{Q}")
-        return is_not_number(input(input_message), input_message)
-    except ValueError:
+    data = data.strip()
+    if data == "":
+        print(f"{ER}Username must not be empty{Q}")
+        return validate_username(input(input_message), input_message)
+    elif len(data.split(" ")) > 1:
+        print(f"{ER}Username must not contain spaces{Q}")
+        return validate_username(input(input_message), input_message)
+    elif len(data) < 2:
+        print(f"{ER}Username must be at least 2 characters long{Q}")
+        return validate_username(input(input_message), input_message)
+    elif len(data) > 20:
+        print(f"{ER}Username must be less than 20 characters long{Q}")
+        return validate_username(input(input_message), input_message)
+    elif data[0].isdigit():
+        print(f"{ER}Username must not start with a number{Q}")
+        return validate_username(input(input_message), input_message)
+    else:
         return data
 
 

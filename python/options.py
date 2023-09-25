@@ -11,14 +11,11 @@ def login():
     """
     This function logs in the user to the google sheet
     """
-    print("Login:")
-    username = helpers.validate_length(
-        helpers.is_not_number(
-            input("Enter your username: "),
-            "Enter your username: "),
-        "Enter your username: ", 2, 12, True)
-    password = helpers.validate_length(input("Enter your password: "),
-                                       "Enter your password: ", 6, 12, True)
+    print("\n{OK}Login:{Q}")
+    username = helpers.validate_username(input("\nEnter your username: "),
+                                         "\nEnter your username: ")
+    password = helpers.validate_length(input("\nEnter your password: "),
+                                       "\nEnter your password: ", 6, 12, True)
     if authGS.login(username, password):
         helpers.clear_terminal()
         print(f"{OK}Welcome {username}{Q}")
@@ -34,21 +31,18 @@ def register():
     This function registers a new user to the google sheet,
     if the username already exists, it will not be added
     """
-    print("Register:")
-    username = helpers.validate_length(
-        helpers.is_not_number(
-            input("Enter your username: "),
-            "Enter your username: "),
-        "Enter your username: ", 2, 12, True)
-    password = helpers.validate_length(input("Enter your password: "),
-                                       "Enter your password: ", 6, 12, True)
+    print(f"\n{OK}Register:{Q}")
+    username = helpers.validate_username(input("\nEnter your username: "),
+                                         "\nEnter your username: ")
+    password = helpers.validate_length(input("\nEnter your password: "),
+                                       "\nEnter your password: ", 6, 12, True)
     if authGS.register(username, password):
         helpers.clear_terminal()
-        helpers.log(f"{OK}Registration successful{Q}", f"Welcome {username}")
+        helpers.log(f"\n{OK}Registration successful{Q}\n", f"Welcome {username}\n")
         return True
     else:
         helpers.clear_terminal()
-        print(f"{ER}Username '{username}' already exists, try again{Q}")
+        print(f"{ER}\nUsername '{username}' already exists, try again{Q}\n")
         return register()
 
 
@@ -226,40 +220,40 @@ def delete_product():
 
 # Manage personal data functions
 def add_calculated_calories(calories, product, total_cal):
-    print(f"Calories for {product} per 100 grams: " +
-          calories + " calories")
+    print(f"\nCalories for {product} per 100 grams: " +
+          calories + " calories\n")
     weight = abs(int(helpers.is_number(
-        input("Enter the weight in grams: "),
-        "Enter the weight in grams: ")))
+        input("\nEnter the weight in grams: "),
+        "\nEnter the weight in grams: ")))
     helpers.clear_terminal()
     calories = int(calories) * int(weight) / 100
     total_cal["calories"] += calories
-    print(f"Calories for {product} per {weight} grams : "
+    print(f"\nCalories for {product} per {weight} grams : "
           + str(round(calories)) + " calories")
-    print(f"Sum of calories for all products you have calculated: "
+    print(f"\nSum of calories for all products you have calculated: "
           + str(round(total_cal["calories"])) + " calories")
     cal_limit = googleSheetDB.get_calories_limit()
     cal_consumed = googleSheetDB.get_calories_consumed()
     cal_sum = int(cal_consumed) + int(total_cal["calories"])
     if bool(cal_limit) and cal_sum > int(cal_limit):
         over_limit_num = cal_sum - int(cal_limit)
-        txt = f"If you add these {round(total_cal['calories'])} cal, "
+        txt = f"\nIf you add these {round(total_cal['calories'])} cal, "
         txt += F"you will {ER}exceed your daily calories limit{Q} "
-        print(txt + f"by {over_limit_num} cal")
+        print(txt + f"by {over_limit_num} cal\n")
     print("\n")
-    conf_txt = f"Would you like to add {str(round(total_cal['calories']))} "
+    conf_txt = f"\nWould you like to add {str(round(total_cal['calories']))} "
     if helpers.confirm(
         conf_txt
         + "calories to your daily calories or would you like to continue?"
-          + "\nTo add and quit (y/yes), to continue calculating (n/no): "):
+          + f"To add and quit {OK}(y/yes){Q}, to continue calculating {OK}(n/no){Q}: "):
         googleSheetDB.add_calories_consumed(round(total_cal['calories']))
         cal_consumed = googleSheetDB.get_calories_consumed()
         cal_limit = googleSheetDB.get_calories_limit()
         if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
             over_limit_num = int(cal_consumed) - int(cal_limit)
-            txt = F"You have {ER}exceeded your daily calories limit{Q} of "
-            print(txt + f"{cal_limit} by {over_limit_num} calories")
-        print(f"You have consumed {cal_consumed} calories today")
+            txt = f"\n{ER}You have exceeded your daily calories limit of "
+            print(txt + f"{cal_limit} by {over_limit_num} calories{Q}\n")
+        print(f"\nYou have consumed {cal_consumed} calories today")
         helpers.enter_to_continue()
         return True
     else:
@@ -276,15 +270,17 @@ def calculate_calories():
     helpers.clear_terminal()
     total_calories = {"calories": 0}
     while True:
+        txt = "\nCalculate calories\n"
+        txt += f"\nEnter {OK}product name{Q} or {OK}(q/quit){Q} to quit: "
         option = helpers.prepare_string(helpers.validate_length(
-            input("Enter product name or (q/quit) to quit: "),
-            "Enter product name or (q/quit) to quit: ", 1, 20))
+            input(txt), txt, 1, 20))
         helpers.clear_terminal()
         if option == "Q" or option == "Quit":
             return
         product = productListGS.find_product(option)
         products = productListGS.find_products_starting_with(option)
         if product:
+            print(f"\n{OK}Product found{Q}")
             if add_calculated_calories(product[1], product[0], total_calories):
                 return
             else:
@@ -292,7 +288,7 @@ def calculate_calories():
         else:
             if len(products) == 1:
                 if helpers.confirm(
-                  f"Did you mean: {products[0][0]}? {OK}(y/n) or (yes/no):{Q} "):
+                  f"\nDid you mean: {products[0][0]}? {OK}(y/n) or (yes/no):{Q} \n"):
                     if add_calculated_calories(products[0][1],
                                                products[0][0],
                                                total_calories):
@@ -300,26 +296,29 @@ def calculate_calories():
                     else:
                         continue
                 else:
-                    print(f"{option} not found")
+                    print(f"\n{option} not found")
             if len(products) > 1:
-                print("Product not found. "
-                      + "You probably meant something from this list:")
+                print(f"\n{ER}Product not found.{Q}\n")
+                print("You probably meant something from this list:\n")
                 for prod in products:
                     print(prod[0] + ": " + prod[1])
                 helpers.enter_to_continue()
-                conf_txt = f"Would you like to add {option} to the database?"
+            else:
+                print(f"{ER}\nProduct not found.{Q}\n")
+                helpers.enter_to_continue()
+            conf_txt = f"\nWould you like to add {option} to the database?"
             if helpers.confirm(f"{conf_txt} {OK}(y/n) or (yes/no):{Q} "):
                 isProductAdded = productListGS.add_product(
                     option, abs(int(helpers.is_number(
-                        input("Enter the calories: "),
-                        "Enter the calories: "))))
+                        input("\nEnter the calories: "),
+                        "\nEnter the calories: "))))
                 if isProductAdded:
-                    print(f"{OK}{option} added successfully{Q}")
+                    print(f"\n{OK}{option} added successfully{Q}")
                     helpers.enter_to_continue()
                 else:
                     print("Error adding product")
             else:
-                print(f"{ER}{option} not added{Q}")
+                print(f"\n{ER}{option} not added{Q}")
                 helpers.enter_to_continue()
 
 
