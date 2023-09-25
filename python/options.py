@@ -65,7 +65,7 @@ def add_new_product():
         print(f" {ER}Product {valid_product} already exists{Q}")
         helpers.enter_to_continue()
         return
-    conf_text = f" Are you sure you want to add a new product '{valid_product}'"
+    conf_text = f" Are you sure you want to add a new product {valid_product}"
     if not helpers.confirm(conf_text + f"? {OK}(y/n) or (yes/no):{Q} "):
         return
     valid_calories = helpers.is_number(input(" Enter the calories: \n "),
@@ -93,10 +93,11 @@ def read_product():
         print(" " + product[0] + ": " + product[1] + " calories")
     if len(products) == 0:
         print(f" {ER}Product '{valid_products}' not found{Q}")
-        conf_txt = f" Would you like to add '{valid_products}' to the database?"
-        if helpers.confirm(conf_txt + f" {OK}(y/n) or (yes/no):{Q} "):
-            valid_calories = helpers.is_number(input(" Enter the calories: \n "),
-                                               " Enter the calories: \n ")
+        conf_txt = f"Would you like to add '{valid_products}' to the database?"
+        if helpers.confirm(" " + conf_txt + f" {OK}(y/n) or (yes/no):{Q} "):
+            valid_calories = helpers.is_number(
+                input(" Enter the calories: \n "),
+                " Enter the calories: \n ")
             valid_calories = abs(int(valid_calories))
             isProductAdded = productListGS.add_product(valid_products,
                                                        valid_calories)

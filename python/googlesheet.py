@@ -356,8 +356,8 @@ class CaloriesTrackerGS(BasicGS):
                             print(" You already added this weight of "
                                   f"{weight} {unit} today")
                             return True
-                        txt = f" You already added {prev_weight} {unit} today\n"
-                        txt += f" Do you want to update it to {weight} {unit}?"
+                        txt = f" You already added {prev_weight}{unit} today\n"
+                        txt += f" Do you want to update it to {weight}{unit}?"
                         txt += f" {OK}('y'/'yes') or ('n'/'no'):{Q} "
                         if confirm(txt):
                             if self.update_cell([index + 1, 3],
