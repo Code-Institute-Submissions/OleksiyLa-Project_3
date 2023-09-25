@@ -30,8 +30,8 @@ def crud():
     """
     This function is the menu of the CRUD operations
     """
-    helpers.clear_terminal()
     while True:
+        helpers.clear_terminal()
         print(f"\n{OK}Manage calories table{Q}\n")
         helpers.log("1. Create a new product", "2. Read a product",
                     "3. Update a product", "4. Delete a product", "5. Go Back")
@@ -49,8 +49,8 @@ def set_your_personal_data():
     """
     This function is the menu that allows the user to set his personal data
     """
-    helpers.clear_terminal()
     while True:
+        helpers.clear_terminal()
         print(f"\n{OK}Set your personal data{Q}\n")
         helpers.log("1. Set your calories limit", "2. Set your weight",
                     "3. Add calories consumed per today", "4. Go Back")
@@ -67,8 +67,8 @@ def get_your_personal_data():
     """
     This function is the menu that allows the user to get his personal data
     """
-    helpers.clear_terminal()
     while True:
+        helpers.clear_terminal()
         print(f"\n{OK}Get your personal data{Q}\n")
         helpers.log("1. Get your calories limit",
                     "2. Get your calories consumed so far today", "3. Go Back")

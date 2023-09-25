@@ -38,7 +38,7 @@ def register():
                                        "\nEnter your password: ", 6, 12, True)
     if authGS.register(username, password):
         helpers.clear_terminal()
-        helpers.log(f"\n{OK}Registration successful{Q}\n", f"Welcome {username}\n")
+        helpers.log(f"\n{OK}Registration successful{Q}\n", f"{OK}Welcome {username}{Q}\n")
         return True
     else:
         helpers.clear_terminal()
@@ -250,10 +250,10 @@ def add_calculated_calories(calories, product, total_cal):
         txt += F"you will {ER}exceed your daily calories limit{Q} "
         print(txt + f"by {over_limit_num} cal\n")
     print("\n")
-    conf_txt = f"\nWould you like to add {str(round(total_cal['calories']))} "
+    conf_txt = f"Would you like to add {str(round(total_cal['calories']))} "
     if helpers.confirm(
         conf_txt
-        + "calories to your daily calories or would you like to continue?"
+        + "calories to your daily calories or would you like to continue?\n"
           + f"To add and quit {OK}(y/yes){Q}, to continue calculating {OK}(n/no){Q}: "):
         googleSheetDB.add_calories_consumed(round(total_cal['calories']))
         cal_consumed = googleSheetDB.get_calories_consumed()
@@ -359,6 +359,7 @@ def add_consumed_calories():
     cal_to_add = helpers.is_number(input(txt), txt)
     googleSheetDB.add_calories_consumed(abs(int(cal_to_add)))
     helpers.clear_terminal()
+    print(f"\n{OK}Adding daily intake{Q}\n")
     cal_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + str(cal_consumed) + " calories so far")
     if bool(cal_limit) and int(cal_consumed) > int(cal_limit):
@@ -439,8 +440,8 @@ def update_password():
     new_password = helpers.validate_length(input(input_text),
                                            input_text, 6, 12, True)
     authGS.update_password(new_password)
-    helpers.clear_terminal()
     print(f"{OK}Your password has been updated{Q}")
+    helpers.enter_to_continue()
 
 
 def delete_account():
@@ -449,18 +450,20 @@ def delete_account():
     """
     print(f"\n{OK}Delete your account{Q}\n")
     txt = f"Are you sure you want to delete your account? {OK}(y/n) or (yes/no):{Q} "
-    helpers.clear_terminal()
     if helpers.confirm(txt):
         username = authGS.username
         if authGS.delete_user():
-            print(f"{OK}Account deleted{Q}")
-            print(f"Good bye {username}")
+            helpers.clear_terminal()
+            print(f"\n{OK}Account deleted{Q}")
+            print(f"\nGood bye {username}\n")
             exit()
         else:
             print("Error deleting account")
+            helpers.enter_to_continue()
             return False
     else:
         print(f"{ER}Account not deleted{Q}")
+        helpers.enter_to_continue()
         return False
 
 
@@ -546,10 +549,14 @@ def get_last_progress():
         if data:
             calculate_progress(data[-1])
         else:
-            print(f"{ER}Not enough data to calculate progress{Q}")
+            print(f"\n{OK}Calculate progress{Q}\n")
+            print(f"\n{ER}Not enough data to calculate progress{Q}")
+            print(f"{ER}Weight and calories intake data must be provided, at least 7 consecutive days{Q}\n")
             helpers.enter_to_continue()
-    except IndexError as er:
-        print(f"{ER}Not enough data to calculate progress{Q}")
+    except IndexError:
+        print(f"\n{OK}Calculate progress{Q}\n")
+        print(f"\n{ER}Not enough data to calculate progress{Q}")
+        print(f"{ER}Weight and calories intake data must be provided, at least 7 consecutive days{Q}\n")
         helpers.enter_to_continue()
 
 
@@ -579,7 +586,9 @@ def view_progress_by_date():
                 break
             option()
     else:
-        print(f"{ER}Not enough data to calculate progress{Q}")
+        print(f"\n{OK}Calculate progress{Q}\n")
+        print(f"\n{ER}Not enough data to calculate progress{Q}")
+        print(f"{ER}Weight and calories intake data must be provided, at least 7 consecutive days{Q}\n")
         helpers.enter_to_continue()
 
 
@@ -590,7 +599,6 @@ def see_progress():
     helpers.clear_terminal()
     while True:
         print(f"\n{OK}Calculate your progress{Q}\n")
-        print("Weight and calories intake data must be provided, at least 7 consecutive days\n")
         helpers.log("1. See your last progress",
                     "2. View your progress by date",
                     "3. Go Back")

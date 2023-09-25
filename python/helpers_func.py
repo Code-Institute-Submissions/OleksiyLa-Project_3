@@ -145,7 +145,7 @@ def check_option(data, length):
     if option >= 0 and option < exit_num:
         return option
     else:
-        print(f"Input must be between 1 and {exit_num}")
+        print(f"{ER}Input must be between 1 and {exit_num}{Q}")
         return check_option(is_number(input("Select an option: "),
                                       "Select an option: "), length)
 
