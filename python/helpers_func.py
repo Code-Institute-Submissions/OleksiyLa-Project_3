@@ -170,7 +170,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input(f"\nPress {OK}'Enter'{Q} to continue...")
+    input(f"\nPress {OK}'Enter'{Q} to continue...\n")
     clear_terminal()
 
 
