@@ -11,14 +11,14 @@ def login():
     """
     This function logs in the user to the google sheet
     """
-    print("\n{OK}Login:{Q}")
+    print(f"\n{OK}Login:{Q}")
     username = helpers.validate_username(input("\nEnter your username: "),
                                          "\nEnter your username: ")
     password = helpers.validate_length(input("\nEnter your password: "),
                                        "\nEnter your password: ", 6, 12, True)
     if authGS.login(username, password):
         helpers.clear_terminal()
-        print(f"{OK}Welcome {username}{Q}")
+        print(f"\n{OK}Welcome {username}{Q}")
         return True
     else:
         helpers.clear_terminal()
@@ -52,6 +52,7 @@ def add_new_product():
     This function adds a new product to the google sheet,
     if the product already exists, it will not be added
     """
+    print(f"\n{OK}Add new product:{Q}\n")
     valid_product = helpers.prepare_string(
         helpers.validate_length(input("Enter the product: "),
                                 "Enter the product: ", 1, 20))
@@ -75,9 +76,13 @@ def add_new_product():
 
 
 def read_product():
+    """
+    This function reads a product from the google sheet
+    """
+    print(f"\n{OK}Read product:{Q}\n")
     valid_products = helpers.prepare_string(helpers.validate_length(
-        input("Enter the product: "),
-        "Enter the product: ", 1, 20))
+        input("Enter the product name: "),
+        "Enter the product name: ", 1, 20))
     products = productListGS.find_products_starting_with(valid_products)
     helpers.clear_terminal()
     for product in products:
@@ -102,9 +107,10 @@ def update_product_name():
     """
     This function updates the name of a product from the google sheet
     """
+    print(f"\n{OK}Update product name:{Q}\n")
     product_input = helpers.prepare_string(
-        helpers.validate_length(input("Enter the product name to update: "),
-                                "Enter the product name to update: ", 1, 20))
+        helpers.validate_length(input("Enter the product name: "),
+                                "Enter the product name: ", 1, 20))
     products = productListGS.find_products_starting_with(product_input)
     prod = productListGS.find_product(product_input)
     if prod:
@@ -148,6 +154,7 @@ def update_product_calories():
     """
     This function updates the calories of a product from the google sheet
     """
+    print(f"\n{OK}Update product calories:{Q}\n")
     product_input = helpers.prepare_string(helpers.validate_length(
         input("Enter the product name to update its calories: "),
         "Enter the product name to update its calories: ", 1, 20))
@@ -189,6 +196,7 @@ def update_product():
     This function updates a product from the google sheet,
     it can update the name or the calories of the product
     """
+    print(f"\n{OK}Update product, select:{Q}\n")
     helpers.log("1. Update a product name",
                 "2. Update a product calories",
                 "3. Go Back")
@@ -203,6 +211,7 @@ def delete_product():
     """
     This function deletes a product from the google sheet
     """
+    print(f"\n{OK}Delete product:{Q}\n")
     product_input = helpers.prepare_string(
         input("Enter the product to delete: "))
     product = productListGS.find_product(product_input)
@@ -270,7 +279,7 @@ def calculate_calories():
     helpers.clear_terminal()
     total_calories = {"calories": 0}
     while True:
-        txt = "\nCalculate calories\n"
+        txt = f"\n{OK}Calculate calories{Q}\n"
         txt += f"\nEnter {OK}product name{Q} or {OK}(q/quit){Q} to quit: "
         option = helpers.prepare_string(helpers.validate_length(
             input(txt), txt, 1, 20))
@@ -327,6 +336,7 @@ def set_calories_limit():
     This function sets the calories limit of the user
     per day and writes it to the google sheet
     """
+    print(f"\n{OK}Set calories limit:{Q}\n")
     calories_limit = helpers.is_number(
         input("Enter your calories limit per day: "),
         "Enter your calories limit per day: ")
@@ -340,13 +350,14 @@ def add_consumed_calories():
     """
     This function adds the calories consumed by the user to the google sheet
     """
+    print(f"\n{OK}Add consumed calories:{Q}\n")
     cal_consumed = googleSheetDB.get_calories_consumed()
     cal_limit = googleSheetDB.get_calories_limit()
     txt = "You have consumed " + cal_consumed + " calories today\n"
     txt += "How many more calories have you consumed today?:"
     txt += "\nEnter the calories: "
     cal_to_add = helpers.is_number(input(txt), txt)
-    googleSheetDB.add_calories_consumed(cal_to_add)
+    googleSheetDB.add_calories_consumed(abs(int(cal_to_add)))
     helpers.clear_terminal()
     cal_consumed = googleSheetDB.get_calories_consumed()
     print("You've consumed " + str(cal_consumed) + " calories so far")
@@ -361,9 +372,9 @@ def get_consumed_calories():
     """
     This function prints the calories consumed by the user
     """
+    print(f"\n{OK}Get consumed calories:{Q}\n")
     cal_consumed = googleSheetDB.get_calories_consumed()
     cal_limit = googleSheetDB.get_calories_limit()
-    helpers.clear_terminal()
     if bool(cal_limit):
         over_limit_num = int(cal_consumed) - int(cal_limit)
         if int(cal_consumed) > int(cal_limit):
@@ -381,6 +392,7 @@ def get_consumed_calories():
 
 
 def add_your_weight_in_kg():
+    print(f"\n{OK}Add your weight in KG:{Q}\n")
     if googleSheetDB.add_weight(helpers.is_float(
         input("Enter your weight (kg): "),
             "Enter your weight (kg): "), "kg"):
@@ -390,6 +402,7 @@ def add_your_weight_in_kg():
 
 
 def add_your_weight_in_lb():
+    print(f"\n{OK}Add your weight in LB:{Q}\n")
     if googleSheetDB.add_weight(helpers.is_float(
         input("Enter your weight (lb): "),
             "Enter your weight (lb): "), "lb"):
@@ -404,6 +417,7 @@ def add_your_weight():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Add your weight, selcet:{Q}\n")
         helpers.log("1. Add your weight in kilograms (kg)",
                     "2. Add your weight in pounds (lb)",
                     "3. Go Back")
@@ -420,6 +434,7 @@ def update_password():
     """
     This function updates the password of the user
     """
+    print(f"\n{OK}Update your password{Q}\n")
     input_text = "Enter your new password: "
     new_password = helpers.validate_length(input(input_text),
                                            input_text, 6, 12, True)
@@ -432,6 +447,7 @@ def delete_account():
     """
     This function deletes the account of the user
     """
+    print(f"\n{OK}Delete your account{Q}\n")
     txt = f"Are you sure you want to delete your account? {OK}(y/n) or (yes/no):{Q} "
     helpers.clear_terminal()
     if helpers.confirm(txt):
@@ -454,6 +470,7 @@ def manage_account():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Manage your account, select{Q}\n")
         helpers.log("1. Change password", "2. Delete account", "3. Go Back")
         option = helpers.select_option(update_password, delete_account)
         if option == 'exit':
@@ -462,14 +479,13 @@ def manage_account():
         option()
 
 
-# Progress functions
 def calculate_calories_limit():
     """
     This function calculates the calories limit of the user
     """
+    print(f"\n{OK}Your calories limit{Q}\n")
     cal_limit = googleSheetDB.get_calories_limit()
     if not bool(cal_limit):
-        helpers.clear_terminal()
         print("You haven't set your calories limit yet")
         return
     consumed_cal = googleSheetDB.get_calories_consumed()
@@ -484,16 +500,18 @@ def calculate_calories_limit():
         txt +=f" calories, {ER}you've reached your limit{Q}"
     else:
         txt = f"{OK}You can eat {cal_to_eat} calories more today{Q}"
-    helpers.clear_terminal()
     helpers.log(cal_limit_text, consumed_cal_text, txt)
     helpers.enter_to_continue()
 
+
+# Progress functions
 
 def calculate_progress(data):
     """
     Calculate progress from the Google Worksheet
     """
     try:
+        print(f"\n{OK}Calculate your progress{Q}\n")
         first_weight = data[0][2]
         last_weight = data[-1][2]
         kg = float(first_weight) - float(last_weight)
@@ -553,6 +571,7 @@ def view_progress_by_date():
         log_text.append(f"{len(data) + 1}. Go Back")
         helpers.clear_terminal()
         while True:
+            print(f"\n{OK}Calculate progress{Q}\n")
             helpers.log(*log_text)
             option = helpers.select_option(*list_of_functions)
             if option == 'exit':
@@ -570,6 +589,8 @@ def see_progress():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Calculate your progress{Q}\n")
+        print("Weight and calories intake data must be provided, at least 7 consecutive days\n")
         helpers.log("1. See your last progress",
                     "2. View your progress by date",
                     "3. Go Back")

@@ -13,7 +13,7 @@ def auth():
     When the user logs in or register, the menu function will be displayed
     """
     while True:
-        print("Select an option:")
+        print(f"Please, {OK}login{Q} or {OK}register{Q}\n")
         helpers.log("1. Login", "2. Register", "3. Exit")
         option = helpers.select_option(options.login, options.register)
         if option == 'exit':
@@ -32,6 +32,7 @@ def crud():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Manage calories table{Q}\n")
         helpers.log("1. Create a new product", "2. Read a product",
                     "3. Update a product", "4. Delete a product", "5. Go Back")
         option = helpers.select_option(options.add_new_product,
@@ -50,6 +51,7 @@ def set_your_personal_data():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Set your personal data{Q}\n")
         helpers.log("1. Set your calories limit", "2. Set your weight",
                     "3. Add calories consumed per today", "4. Go Back")
         option = helpers.select_option(options.set_calories_limit,
@@ -67,6 +69,7 @@ def get_your_personal_data():
     """
     helpers.clear_terminal()
     while True:
+        print(f"\n{OK}Get your personal data{Q}\n")
         helpers.log("1. Get your calories limit",
                     "2. Get your calories consumed so far today", "3. Go Back")
         option = helpers.select_option(options.calculate_calories_limit,
@@ -83,6 +86,7 @@ def menu():
     it will be displayed after the user logs in
     """
     while True:
+        print(f"\n{OK}Main menu{Q}\n")
         helpers.log("1. Product table",
                     "2. Enter product to calculate calories",
                     "3. Get your personal data",
@@ -98,7 +102,7 @@ def menu():
                                        options.manage_account)
         if option == 'exit':
             helpers.clear_terminal()
-            conf_text = f"Are you sure you want to exit? {OK}(y/n) or (yes/no):{Q} "
+            conf_text = f"\nAre you sure you want to exit? {OK}(y/n) or (yes/no):{Q} "
             if helpers.confirm(conf_text):
                 helpers.clear_terminal()
                 helpers.log_exit_message(authGS.username)
@@ -114,7 +118,7 @@ def main():
     Start the Calories Tracker App
     """
     helpers.clear_terminal()
-    print(f"{OK}Welcome to the Calories Tracker App{Q}")
+    print(f"{OK}\nWelcome to the Calories Tracker App{Q}\n")
     if auth():
         menu()
 
