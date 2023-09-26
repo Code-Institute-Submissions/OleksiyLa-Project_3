@@ -18,8 +18,8 @@ def login():
     username = helpers.validate_username(input(user_txt),
                                          user_txt)
     pass_txt = "\n Enter your password: \n "
-    password = helpers.validate_length(input(pass_txt),
-                                       pass_txt, 6, 12, True)
+    password = helpers.get_validated_password(
+        pass_txt, 6, 12)
     if authGS.login(username, password):
         helpers.clear_terminal()
         print(f"\n {OK}Welcome {username}{Q}")
@@ -40,8 +40,8 @@ def register():
     username = helpers.validate_username(input(user_txt),
                                          user_txt)
     pass_txt = "\n Enter your password: \n "
-    password = helpers.validate_length(input(pass_txt),
-                                       pass_txt, 6, 12, True)
+    password = helpers.get_validated_password(
+        pass_txt, 6, 12)
     hashed_password = helpers.hash_password(password)
     hex_encoded_password = binascii.hexlify(hashed_password).decode('utf-8')
     if authGS.register(username, hex_encoded_password):

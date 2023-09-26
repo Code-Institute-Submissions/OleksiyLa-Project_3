@@ -1,5 +1,6 @@
 import os
 import bcrypt
+import pwinput
 
 ER = '\033[91m'
 OK = '\033[92m'
@@ -71,6 +72,25 @@ def validate_length(data, input_message, min_length,
         print(f" {ER}Input must be less than {max_length} characters long{Q}")
         return validate_length(input(input_message), input_message, min_length,
                                max_length, isSpaceProhibited)
+    else:
+        return data
+
+
+def get_validated_password(input_message, min_length, max_length):
+    """
+    This function checks if the password is valid,
+    if not, it will ask for a new input
+    """
+    data = pwinput.pwinput(input_message)
+    if len(data.split(" ")) > 1:
+        print(f" {ER}Input must not contain spaces{Q}")
+        return get_validated_password(input_message, min_length, max_length)
+    elif len(data) < min_length:
+        print(f" {ER}Input must be at least {min_length} characters long{Q}")
+        return get_validated_password(input_message, min_length, max_length)
+    elif len(data) > max_length:
+        print(f" {ER}Input must be less than {max_length} characters long{Q}")
+        return get_validated_password(input_message, min_length, max_length)
     else:
         return data
 
