@@ -282,7 +282,7 @@ They should be prompted to enter the product's unique identifier that is the nam
     - I can input my daily weight, and the app records and displays this data, showing trends over time if I track my weight and calories for at least seven consecutive days.
 
   - __Data Privacy:__ 
-    - The app secures my password by hashing it using the bcrypt library.
+    - To enhance security, the application employs a multi-layered approach. It not only securely stores hashed passwords in the database but also ensures that user passwords are concealed during input, with asterisks masking the characters as they are entered.
 
   - __User Account Management:__
     - I can change my password or delete my account, along with all the data associated with it.
