@@ -324,6 +324,7 @@ def calculate_calories():
             else:
                 print(f"{ER}\n Product not found.{Q}\n ")
                 helpers.enter_to_continue()
+            print(f"{OK}\n Add product{Q}\n ")
             conf_txt = f"\n Would you like to add {option} to the database?"
             if helpers.confirm(f"{conf_txt} {OK}(y/n) or (yes/no):{Q} \n "):
                 isProductAdded = productListGS.add_product(
