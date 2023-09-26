@@ -222,7 +222,7 @@ def delete_product():
         input(" Enter the product to delete: \n "))
     product = productListGS.find_product(product_input)
     if product:
-        print(" " + product[0] + ": " + product[1] + "calories")
+        print(" " + product[0] + ": " + product[1] + " calories")
         conf_txt = f" Are you sure you want to delete {product[0]}? "
         if not helpers.confirm(conf_txt + f"{OK}(y/n) or (yes/no):{Q} \n "):
             return
@@ -328,8 +328,8 @@ def calculate_calories():
             if helpers.confirm(f"{conf_txt} {OK}(y/n) or (yes/no):{Q} \n "):
                 isProductAdded = productListGS.add_product(
                     option, abs(int(helpers.is_number(
-                        input("\n Enter the calories: \n "),
-                        "\n Enter the calories: \n "))))
+                        input("\n Enter the calories per 100g: \n "),
+                        "\n Enter the calories per 100g: \n "))))
                 if isProductAdded:
                     print(f"\n {OK}{option} added successfully{Q}")
                     helpers.enter_to_continue()
