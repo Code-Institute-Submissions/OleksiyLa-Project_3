@@ -107,6 +107,9 @@ Calories Tracker is a terminal-based application designed to put the user in con
 ![Responsive website on different devices](./README/images/terminal/login_password.png)
 
 ### Product table menu
+
+![Responsive website on different devices](./README/images/terminal/cal_table.png)
+
 - Add Product:
  - This option allows the user to input details for a new product, such as product name and its calories. Once the user provides the information, the application validates and then adds the product to the Google Sheet.
 
@@ -121,7 +124,6 @@ The application retrieves and displays the product details from the Google Sheet
 - Update Product:
  - Users can select this option to update the information of an existing product.
 They should be prompted to enter the product's unique identifier that is the name of a product and then update the desired fields (name or calories). The changes are reflected in the Google Sheet.
-
 
 - Delete Product:
  - This option allows the user to remove a product from the product table. Users should provide the name of the product they want to delete. The application removes the corresponding product entry from the Google Sheet.
