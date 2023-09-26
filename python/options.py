@@ -505,6 +505,7 @@ def calculate_calories_limit():
     cal_limit = googleSheetDB.get_calories_limit()
     if not bool(cal_limit):
         print(" You haven't set your calories limit yet")
+        helpers.enter_to_continue()
         return
     consumed_cal = googleSheetDB.get_calories_consumed()
     cal_to_eat = int(cal_limit) - int(consumed_cal)
