@@ -131,9 +131,8 @@ def main():
     """
     Start the Calories Tracker App
     """
-    print("\n\n")
+    print("\n")
     print(ascii_art)
-    print("\n\n")
     helpers.enter_to_continue()
     print(f"{OK}\n Welcome to the Calories Tracker App{Q}\n ")
     if auth():
