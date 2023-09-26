@@ -58,13 +58,13 @@ Calories Tracker is a terminal-based application designed to put the user in con
 
   <details><summary>Get personal data menu</summary>
 
-    ![Get personal data menu flowchart](./README/images/flow_chart/get_personal_dat -drawio.png)
+    ![Get personal data menu flowchart](./README/images/flow_chart/get_personal_data.drawio.png)
 
   </details>
 
   <details><summary>Set personal data menu</summary>
 
-    ![Set personal data menu flowchart](./README/images/flow_chart/set_personal_dat -drawio.png)
+    ![Set personal data menu flowchart](./README/images/flow_chart/set_personal_data.drawio.png)
 
   </details>
 
