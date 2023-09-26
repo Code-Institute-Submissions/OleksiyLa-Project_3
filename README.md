@@ -111,27 +111,27 @@ Calories Tracker is a terminal-based application designed to put the user in con
 ![Responsive website on different devices](./README/images/terminal/cal_table.png)
 
 - Add Product:
- - This option allows the user to input details for a new product, such as product name and its calories. Once the user provides the information, the application validates and then adds the product to the Google Sheet.
+  - This option allows the user to input details for a new product, such as product name and its calories. Once the user provides the information, the application validates and then adds the product to the Google Sheet.
 
 ![Responsive website on different devices](./README/images/terminal/add_prod_red.png)
 
 - Read Product:
- - Users can choose this option to view product information. They can search for a product by entering its name.
+  - Users can choose this option to view product information. They can search for a product by entering its name.
 The application retrieves and displays the product details from the Google Sheet.
 
 ![Responsive website on different devices](./README/images/terminal/read_product.png)
 
 - Update Product:
- - Users can select this option to update the information of an existing product.
+  - Users can select this option to update the information of an existing product.
 They should be prompted to enter the product's unique identifier that is the name of a product and then update the desired fields (name or calories). The changes are reflected in the Google Sheet.
 
 - Delete Product:
- - This option allows the user to remove a product from the product table. Users should provide the name of the product they want to delete. The application removes the corresponding product entry from the Google Sheet.
+  - This option allows the user to remove a product from the product table. Users should provide the name of the product they want to delete. The application removes the corresponding product entry from the Google Sheet.
 
 ![Responsive website on different devices](./README/images/terminal/delete_prod.png)
 
 - Go back:
- - Selecting this option exits the product table menu and goes back to the main menu.
+  - Selecting this option exits the product table menu and goes back to the main menu.
 
 ![Responsive website on different devices](./README/images/terminal/cal_table.png)
 
@@ -340,6 +340,8 @@ They should be prompted to enter the product's unique identifier that is the nam
   The application was tested using the Python linter, and no errors were found.
 
   ![Responsive website on different devices](./README/images/tests/python_linter.png)
+
+  ![Responsive website on different devices](./README/images/tests/run_file.png)
 
 ## Features to add
   - To enhance the calorie tracker app, we can create a custom dish table. Unlike the product table, this new table will calculate product calories in units.
