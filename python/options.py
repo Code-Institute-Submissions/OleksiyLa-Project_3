@@ -1,3 +1,5 @@
+import binascii
+
 from python.googlesheet import googleSheetDB, authGS, productListGS
 import python.helpers_func as helpers
 
@@ -23,7 +25,7 @@ def login():
         print(f"\n {OK}Welcome {username}{Q}")
         return True
     else:
-        helpers.clear_terminal()
+        # helpers.clear_terminal()
         print(f" {ER}Invalid username or password{Q}")
         return False
 
@@ -40,7 +42,9 @@ def register():
     pass_txt = "\n Enter your password: \n "
     password = helpers.validate_length(input(pass_txt),
                                        pass_txt, 6, 12, True)
-    if authGS.register(username, password):
+    hashed_password = helpers.hash_password(password)
+    hex_encoded_password = binascii.hexlify(hashed_password).decode('utf-8')
+    if authGS.register(username, hex_encoded_password):
         helpers.clear_terminal()
         helpers.log(f"\n {OK}Registration successful{Q}\n",
                     f" {OK}Welcome {username}{Q}\n ")

@@ -1,4 +1,5 @@
 import os
+import bcrypt
 
 ER = '\033[91m'
 OK = '\033[92m'
@@ -196,3 +197,11 @@ def wrapper_function(func, arg):
     def wrapper():
         func(arg)
     return wrapper
+
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password
+
+def verify_password(input_password, hashed_password):
+    return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password)

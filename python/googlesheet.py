@@ -1,7 +1,9 @@
+import binascii
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime, timedelta
-from python.helpers_func import confirm
+
+from python.helpers_func import confirm, verify_password
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -118,7 +120,8 @@ class AuthGS(BasicGS):
         try:
             users = self.read_rows("users")
             for user in users:
-                if user[0] == username and user[1] == password:
+                stored_password_bytes = binascii.unhexlify(user[1].encode('utf-8'))
+                if user[0] == username and verify_password(password, stored_password_bytes):
                     AuthGS.username = username
                     return username
         except Exception as error:
