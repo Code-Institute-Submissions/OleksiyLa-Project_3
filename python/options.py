@@ -68,8 +68,9 @@ def add_new_product():
     conf_text = f" Are you sure you want to add a new product {valid_product}"
     if not helpers.confirm(conf_text + f"? {OK}(y/n) or (yes/no):{Q} "):
         return
-    valid_calories = helpers.is_number(input(" Enter the calories: \n "),
-                                       " Enter the calories: \n ")
+    valid_calories = helpers.is_number(
+        input(" Enter the calories per 100g: \n "),
+        " Enter the calories per 100g: \n ")
     valid_calories = abs(int(valid_calories))
     isProductAdded = productListGS.add_product(valid_product,
                                                valid_calories)
@@ -84,7 +85,7 @@ def read_product():
     """
     This function reads a product from the google sheet
     """
-    print(f"\n {OK}Read product:{Q}\n ")
+    print(f"\n {OK}Read product calories per 100g:{Q}\n ")
     valid_products = helpers.prepare_string(helpers.validate_length(
         input(" Enter the product name: \n "),
         " Enter the product name: \n ", 1, 20))
@@ -159,7 +160,7 @@ def update_product_calories():
     """
     This function updates the calories of a product from the google sheet
     """
-    print(f"\n {OK}Update product calories:{Q}\n ")
+    print(f"\n {OK}Update product calories per 100g:{Q}\n ")
     product_input = helpers.prepare_string(helpers.validate_length(
         input(" Enter the product name to update its calories: \n "),
         " Enter the product name to update its calories: \n ", 1, 20))
@@ -349,7 +350,6 @@ def set_calories_limit():
         input(" Enter your calories limit per day: \n "),
         " Enter your calories limit per day: \n ")
     googleSheetDB.set_calories_limit(calories_limit)
-    helpers.clear_terminal()
     print(" Your new calories limit per day is " + calories_limit)
     helpers.enter_to_continue()
 
