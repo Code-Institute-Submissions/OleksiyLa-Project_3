@@ -207,7 +207,7 @@ They should be prompted to enter the product's unique identifier that is the nam
   - If the user selects "See Progress for Consecutive Days," the application checks the available consecutive tracking data and generates options based on the number of days tracked.
   - The application displays a list of options, each representing a consecutive tracking period, starting from the earliest recorded date and ending with the most recent recorded date.
   - The user can select a specific tracking period (e.g., "See Progress from Date A to Date B") to view progress for that period.
-  - If the user has tracked data for 20 days and forgot to track on the 21st day but continued tracking on subsequent days, the application will generate options for progress analysis for each consecutive period.
+  - In the tracking app, users log their weight and calorie intake. If they track for seven consecutive days, the app calculates their progress for that initial seven-day period. For each additional consecutive day they track, the time span for progress calculation increases. However, if they miss tracking for at least one day, a new record is created, but they retain access to their first record. This allows them to view their progress for the initial seven-day period, as well as for any additional consecutive days they track.
   - Each option displays the average calorie intake and weight loss or gain for the selected period.
 
 ![Responsive website on different devices](./README/images/terminal/progress_periods_menu.png)
