@@ -95,6 +95,8 @@ Calories Tracker is a terminal-based application designed to put the user in con
 
 ## Features
 
+![Responsive website on different devices](./README/images/terminal/main_menu.png)
+
 ### User Registration and Login:
 - To use the application, users are required to either register a new account or log in with their existing credentials.
 - During registration, users provide a unique username and a password of their choice.
@@ -128,6 +130,8 @@ They should be prompted to enter the product's unique identifier that is the nam
 
 - Go back:
  - Selecting this option exits the product table menu and goes back to the main menu.
+
+![Responsive website on different devices](./README/images/terminal/cal_table.png)
 
 ### Calculate Calories:
 
@@ -175,6 +179,8 @@ They should be prompted to enter the product's unique identifier that is the nam
   - If the user selects "Add Weight," the application allows the user to input their weight for the day. The application can store this data for historical tracking, allowing users to monitor their weight changes over time.
 
 ![Responsive website on different devices](./README/images/terminal/add_kg_lb.png)
+
+![Responsive website on different devices](./README/images/terminal/add_weight.png)
 
 #### Log Calories Consumed Today:
 
@@ -235,6 +241,7 @@ They should be prompted to enter the product's unique identifier that is the nam
   - Verified that users can log in with their registered credentials.
   - Verified that login fails with incorrect credentials.
   - Verified that the application handles errors gracefully and provides informative messages.
+
 
 #### Change Password
   - Verified that users can change their password.
