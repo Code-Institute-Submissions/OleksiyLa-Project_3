@@ -1,7 +1,7 @@
 # Calories Tracker
 Calories Tracker is a terminal-based application designed to put the user in control of their diet and overall well-being. With a comprehensive set of features, it empowers users to make informed dietary choices, set personalized calorie limits, and track their progress over time. From exploring an extensive product database to recording daily intake and weight, this application simplifies every aspect of calorie management.
 
-![Responsive website on different devices](./README/images/terminal/auth.png)
+![Responsive website on different devices](./README/images/terminal/first_page.png)
 
 ## Planning & Development
 - __Target audience__
@@ -102,20 +102,29 @@ Calories Tracker is a terminal-based application designed to put the user in con
 - Passwords are securely hashed before being stored in the application's database. Hashing ensures that user passwords are protected and not stored in plain text, enhancing security.
 - This feature ensures that the application can track and store user progress accurately over time while maintaining the security of user account information with a minimal registration process.
 
+![Responsive website on different devices](./README/images/terminal/login_password.png)
+
 ### Product table menu
 - Add Product:
  - This option allows the user to input details for a new product, such as product name and its calories. Once the user provides the information, the application validates and then adds the product to the Google Sheet.
+
+![Responsive website on different devices](./README/images/terminal/add_prod_red.png)
 
 - Read Product:
  - Users can choose this option to view product information. They can search for a product by entering its name.
 The application retrieves and displays the product details from the Google Sheet.
 
+![Responsive website on different devices](./README/images/terminal/read_product.png)
+
 - Update Product:
  - Users can select this option to update the information of an existing product.
 They should be prompted to enter the product's unique identifier that is the name of a product and then update the desired fields (name or calories). The changes are reflected in the Google Sheet.
 
+
 - Delete Product:
  - This option allows the user to remove a product from the product table. Users should provide the name of the product they want to delete. The application removes the corresponding product entry from the Google Sheet.
+
+![Responsive website on different devices](./README/images/terminal/delete_prod.png)
 
 - Go back:
  - Selecting this option exits the product table menu and goes back to the main menu.
@@ -130,9 +139,15 @@ They should be prompted to enter the product's unique identifier that is the nam
 - It then offers the user the option to add these calories to their daily intake record in the Google Sheet.
 - If the user selects "Yes," the application adds the calories consumed to the daily intake record and returns to the main menu.
 - If the user selects "No," the application keeps calculating and allows the user to search for another product.
-- The application also keeps track of the calories from previous calculations, so the user can continue adding multiple products to their daily intake record without losing previous dat -
+- The application also keeps track of the calories from previous calculations, so the user can continue adding multiple products to their daily intake record without losing previous data
+
+![Responsive website on different devices](./README/images/terminal/calc.png)
+
+![Responsive website on different devices](./README/images/terminal/calc_cal.png)
 
 ### Get personal data
+
+![Responsive website on different devices](./README/images/terminal/get_personal_menu.png)
 
 #### Get Calories Limit
   - If the user selects "Get Calories Limit," the application checks if a calories limit is set for the user.
@@ -140,10 +155,14 @@ They should be prompted to enter the product's unique identifier that is the nam
   - It also shows how many calories have been consumed today.
   - Additionally, it provides information on whether the user has exceeded the calorie limit and by how many calories, or how many calories are needed to reach the set limit.
 
+![Responsive website on different devices](./README/images/terminal/get_cal_limit.png)
+
 ####  Get Calories Consumed Today:
 
   - If the user selects "Get Calories Consumed Today," the application displays the total calories consumed for the current day.
   - Additionally, it provides information on whether the user has exceeded the calorie limit and by how many calories, or how many calories are needed to reach the set limit.
+
+![Responsive website on different devices](./README/images/terminal/get_cal_limit.png)
 
 ### Set Personal Data
 
@@ -155,6 +174,8 @@ They should be prompted to enter the product's unique identifier that is the nam
 
   - If the user selects "Add Weight," the application allows the user to input their weight for the day. The application can store this data for historical tracking, allowing users to monitor their weight changes over time.
 
+![Responsive website on different devices](./README/images/terminal/add_kg_lb.png)
+
 #### Log Calories Consumed Today:
 
   - If the user selects "Log Calories Consumed Today," the application prompts the user to enter the number of calories they've consumed for the current day.
@@ -163,10 +184,14 @@ They should be prompted to enter the product's unique identifier that is the nam
 
 ### See Progress
 
+![Responsive website on different devices](./README/images/terminal/progress_menu.png)
+
 #### Last Progress:
   - If the user selects "See Last Progress," the application checks if there is enough data for calculating progress.
   - If there is not enough consecutive data (e.g., less than 7 days), the application displays a message indicating that there isn't enough data to calculate progress.
   - If there is enough consecutive data, the application calculates and displays the average calorie intake for those consecutive days and the amount of weight lost during that period.
+
+![Responsive website on different devices](./README/images/terminal/spec_progress.png)
 
 #### Progress for Consecutive Days
   - If the user selects "See Progress for Consecutive Days," the application checks the available consecutive tracking data and generates options based on the number of days tracked.
@@ -174,6 +199,8 @@ They should be prompted to enter the product's unique identifier that is the nam
   - The user can select a specific tracking period (e.g., "See Progress from Date A to Date B") to view progress for that period.
   - If the user has tracked data for 20 days and forgot to track on the 21st day but continued tracking on subsequent days, the application will generate options for progress analysis for each consecutive period.
   - Each option displays the average calorie intake and weight loss or gain for the selected period.
+
+![Responsive website on different devices](./README/images/terminal/progress_periods_menu.png)
 
 ### User Account:
 
@@ -188,6 +215,8 @@ They should be prompted to enter the product's unique identifier that is the nam
   - The application then displays a goodbye message.
   - After displaying the goodbye message, the application exits, bringing the user back to the terminal prompt.
 
+![Responsive website on different devices](./README/images/terminal/account.png)
+
 ### Colors
 
 #### Color-Coding for Success:
@@ -195,6 +224,7 @@ They should be prompted to enter the product's unique identifier that is the nam
 
 #### Color-Coding for Errors:
   - If an error occurs, such as an incorrect input or product not found, the application displays a message in red to indicate an error.
+
 
 ## Testing
 
@@ -329,3 +359,7 @@ They should be prompted to enter the product's unique identifier that is the nam
   - Click "View" When Deployed to access the live application.
 
 ## Credits
+  - ASCII Art text generator: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+  - Thanks to my mentor, Richard Wells, for his guidance, support and the idea to mask password input and use pwinput for that.
+  - Draw.io was used to create the setup of objects diagram "objects.drawio.png"
+  - Code Institute for providing the template. The template gave me a mock terminal to display my game via a webpage.
