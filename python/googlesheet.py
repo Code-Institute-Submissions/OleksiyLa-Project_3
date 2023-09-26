@@ -120,8 +120,10 @@ class AuthGS(BasicGS):
         try:
             users = self.read_rows("users")
             for user in users:
-                stored_password_bytes = binascii.unhexlify(user[1].encode('utf-8'))
-                if user[0] == username and verify_password(password, stored_password_bytes):
+                stored_password_bytes = binascii.unhexlify(
+                    user[1].encode('utf-8'))
+                if user[0] == username and verify_password(
+                        password, stored_password_bytes):
                     AuthGS.username = username
                     return username
         except Exception as error:

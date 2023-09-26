@@ -64,7 +64,7 @@ def add_new_product():
     print(f"\n {OK}Add new product:{Q}\n ")
     valid_product = helpers.prepare_string(
         helpers.validate_product(input(" Enter the product: \n "),
-                                " Enter the product: \n "))
+                                 " Enter the product: \n "))
     if productListGS.find_product(valid_product):
         print(f" {ER}Product {valid_product} already exists{Q}")
         helpers.enter_to_continue()
@@ -92,7 +92,7 @@ def read_product():
     print(f"\n {OK}Read product calories per 100g:{Q}\n ")
     valid_products = helpers.prepare_string(
         helpers.validate_product(input(" Enter the product name: \n "),
-                                " Enter the product name: \n "))
+                                 " Enter the product name: \n "))
     products = productListGS.find_products_starting_with(valid_products)
     for product in products:
         print(" " + product[0] + ": " + product[1] + " calories")
@@ -120,7 +120,7 @@ def update_product_name():
     print(f"\n{OK}Update product name:{Q}\n ")
     product_input = helpers.prepare_string(
         helpers.validate_product(input(" Enter the product name: \n "),
-                                " Enter the product name: \n "))
+                                 " Enter the product name: \n "))
     products = productListGS.find_products_starting_with(product_input)
     prod = productListGS.find_product(product_input)
     if prod:
@@ -151,7 +151,7 @@ def update_product_name():
     new_product_name = helpers.prepare_string(
         helpers.validate_product(
             input(" Enter the new product name: \n "),
-                " Enter the new product name: \n "))
+            " Enter the new product name: \n "))
     is_in_db = bool(productListGS.find_product(new_product_name))
     if is_in_db:
         print(f" {ER}Product {new_product_name} already exists{Q}")

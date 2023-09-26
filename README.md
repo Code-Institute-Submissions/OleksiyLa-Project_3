@@ -310,7 +310,7 @@ They should be prompted to enter the product's unique identifier that is the nam
   - Enter a unique app name.
   - Click on the "Create app" button
   - Navigate to the settings tab and scroll down to the "Config Vars" section.
-  - Click the button labelled "Reveal Config Vars" and enter the "key" as port, the "value" as 8000 and click the "add" button.
+  - Click the button labelled "Reveal Config Vars" and enter the "key" as PORT, the "value" as 8000 and click the "add" button.
   - Click the button labelled "Reveal Config Vars" and enter the "key" as CREDS, the "value" from creds file and click the "add" button.
   - Scroll down to the buildpacks section of the settings page and click the button labeled " add buildpack," select "Python," and click "Save Changes", then do the following steps again but choose "NodeJS".
   - The buildpacks must be in the correct order.
