@@ -29,7 +29,7 @@ Calorie Tracker is a terminal-based application designed to put the user in cont
     - Product Table Management: The app allows me to edit product names and their calorie counts, as well as add new products or delete existing ones within the product table.
 
 - __Flow chart__
-  - This flowchart illustrates the functionality and user interactions of the Calories Tracker App.
+  - This flowchart illustrates the functionality and user interactions of the Calories Tracker App. The flowchart was created during the planning stage, but the actual project is a bit more complex.
 
   <br>
   <details><summary>Auth</summary>
@@ -38,7 +38,6 @@ Calorie Tracker is a terminal-based application designed to put the user in cont
 
   </details>
 
-  <br>
   <details><summary>Main menu</summary>
 
     ![Main menu flowchart](./README/images/flow_chart/menu.png)
@@ -48,6 +47,18 @@ Calorie Tracker is a terminal-based application designed to put the user in cont
   <details><summary>Product table</summary>
 
     ![Product table flowchart](./README/images/flow_chart/product_menu.drawio.png)
+
+  </details>
+
+  <details><summary>Calculate menu</summary>
+
+    ![Calculate menu flowchart](./README/images/flow_chart/calculate_menu.drawio.png)
+
+  </details>
+
+  <details><summary>Get personal data menu</summary>
+
+    ![Get personal data menu flowchart](./README/images/flow_chart/get_personal_data.drawio.png)
 
   </details>
 
