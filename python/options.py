@@ -25,8 +25,8 @@ def login():
         print(f"\n {OK}Welcome {username}{Q}")
         return True
     else:
-        # helpers.clear_terminal()
         print(f" {ER}Invalid username or password{Q}")
+        helpers.enter_to_continue()
         return False
 
 
@@ -52,6 +52,7 @@ def register():
     else:
         helpers.clear_terminal()
         print(f"{ER}\n Username '{username}' already exists, try again{Q}\n ")
+        helpers.enter_to_continue()
         return register()
 
 
