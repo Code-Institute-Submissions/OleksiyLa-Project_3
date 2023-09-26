@@ -162,8 +162,8 @@ def check_option(data, length):
         return option
     else:
         print(f" {ER}Input must be between 1 and {exit_num}{Q}")
-        return check_option(is_number(input(" Select an option: "),
-                                      " Select an option: "), length)
+        return check_option(is_number(input(" Select an option:\n "),
+                                      " Select an option:\n "), length)
 
 
 def select_option(*options):
@@ -173,8 +173,8 @@ def select_option(*options):
     """
     print("\n ")
     length = len(options)
-    option = check_option(is_number(input(" Select an option:\n"),
-                                    " Select an option:\n"), length)
+    option = check_option(is_number(input(" Select an option:\n "),
+                                    " Select an option:\n "), length)
     if int(option) == length:
         return 'exit'
     clear_terminal()
@@ -185,7 +185,7 @@ def enter_to_continue():
     """
     This function waits for the user to press enter
     """
-    input(f"\n Press {OK}'Enter'{Q} to continue...\n")
+    input(f"\n Press {OK}'Enter'{Q} to continue...\n ")
     clear_terminal()
 
 
