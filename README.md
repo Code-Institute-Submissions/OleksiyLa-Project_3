@@ -34,7 +34,20 @@ Calorie Tracker is a terminal-based application designed to put the user in cont
   <br>
   <details><summary>Auth</summary>
 
-    ![Auth flowchart](./README/images/)
+    ![Auth flowchart](./README/images/flow_chart/auth.png)
+
+  </details>
+
+  <br>
+  <details><summary>Main menu</summary>
+
+    ![Main menu flowchart](./README/images/flow_chart/menu.png)
+
+  </details>
+
+  <details><summary>Product table</summary>
+
+    ![Product table flowchart](./README/images/flow_chart/product_table.png)
 
   </details>
 
