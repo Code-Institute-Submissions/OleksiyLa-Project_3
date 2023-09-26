@@ -451,9 +451,11 @@ def update_password():
     This function updates the password of the user
     """
     print(f"\n {OK}Update your password{Q}\n ")
-    input_text = " Enter your new password: \n "
-    new_password = helpers.validate_length(input(input_text),
-                                           input_text, 6, 12, True)
+    txt = " Are you sure you want to change your password? "
+    if helpers.confirm(txt + f"{OK}(y/n) or (yes/no):{Q} \n "):
+        input_text = " Enter your new password: \n "
+        new_password = helpers.get_validated_password(
+          input_text, 6, 12)
     authGS.update_password(new_password)
     print(f" {OK}Your password has been updated{Q}")
     helpers.enter_to_continue()
