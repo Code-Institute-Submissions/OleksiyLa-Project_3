@@ -528,6 +528,7 @@ def calculate_progress(data):
         last_weight = data[-1][2]
         kg = float(first_weight) - float(last_weight)
         lb = round(kg * 2.20462, 1)
+        kg = round(kg, 1)
         first_date = data[0][0]
         last_date = data[-1][0]
         days = (last_date - first_date).days
