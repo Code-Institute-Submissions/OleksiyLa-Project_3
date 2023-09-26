@@ -201,6 +201,8 @@ They should be prompted to enter the product's unique identifier that is the nam
 
 ![Responsive website on different devices](./README/images/terminal/spec_progress.png)
 
+![Responsive website on different devices](./README/images/terminal/calc_progress_no_data.png)
+
 #### Progress for Consecutive Days
   - If the user selects "See Progress for Consecutive Days," the application checks the available consecutive tracking data and generates options based on the number of days tracked.
   - The application displays a list of options, each representing a consecutive tracking period, starting from the earliest recorded date and ending with the most recent recorded date.

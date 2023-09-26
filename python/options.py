@@ -619,7 +619,7 @@ def see_progress():
     """
     helpers.clear_terminal()
     while True:
-        print(f"\n{OK}Calculate your progress{Q}\n")
+        print(f"\n {OK}Calculate your progress{Q}\n")
         helpers.log(" 1. See your last progress",
                     " 2. View your progress by date",
                     " 3. Go Back")
