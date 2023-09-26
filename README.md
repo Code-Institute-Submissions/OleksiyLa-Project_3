@@ -294,3 +294,23 @@ They should be prompted to enter the product's unique identifier that is the nam
   The application was tested using the Python linter, and no errors were found.
 
   ![Responsive website on different devices](./README/images/tests/python_linter.png)
+
+## Features to add
+  - To enhance the calorie tracker app, we can create a custom dish table. Unlike the product table, this new table will calculate product calories in units.
+  - Furthermore, we can improve the app by adding nutrition values for products.
+  - Additionally, the app could provide personalized advice on calorie limits. This could be achieved by gathering user data such as age, weight, height, sex, and activity level, and then adjusting recommendations based on data from the user like daily weight tracking and daily calorie intake.
+
+## Deployment
+  - Sign up for a Heroku account.
+  - Use Template from Code Institute.
+  - Prepare requirements.txt file listing the Python dependencies for your project using the pip3 freeze > requirements.txt command.
+  - Push the Project on GitHub:
+  - Configure Heroku Settings, access Heroku dashboard, go to settings, and configure the necessary settings
+  - Adding the Python and Node.js buildpacks.
+  - Setting environment variables (including port and credentials).
+  - Click the "Deploy" option in the Heroku dashboard.
+  - Connect Heroku and GitHub
+  - Deploy on Heroku, trigger the deployment process in Heroku, either by manually initiating a deploy or by setting up automatic deployments.
+  - Click "View" When Deployed to access the live application.
+
+## Credits
