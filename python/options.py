@@ -454,10 +454,14 @@ def update_password():
     txt = " Are you sure you want to change your password? "
     if helpers.confirm(txt + f"{OK}(y/n) or (yes/no):{Q} \n "):
         input_text = " Enter your new password: \n "
-        new_password = helpers.get_validated_password(
+        new_pass = helpers.get_validated_password(
           input_text, 6, 12)
-    authGS.update_password(new_password)
-    print(f" {OK}Your password has been updated{Q}")
+        new_pass = helpers.hash_password(new_pass)
+        new_pass = binascii.hexlify(new_pass).decode('utf-8')
+        authGS.update_password(new_pass)
+        print(f" {OK}Your password has been updated{Q}")
+    else:
+        print(f" {ER}Your password has not been updated{Q}")
     helpers.enter_to_continue()
 
 
