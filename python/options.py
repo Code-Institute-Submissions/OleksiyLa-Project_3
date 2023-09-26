@@ -59,8 +59,8 @@ def add_new_product():
     """
     print(f"\n {OK}Add new product:{Q}\n ")
     valid_product = helpers.prepare_string(
-        helpers.validate_length(input(" Enter the product: \n "),
-                                " Enter the product: \n ", 1, 20))
+        helpers.validate_product(input(" Enter the product: \n "),
+                                " Enter the product: \n "))
     if productListGS.find_product(valid_product):
         print(f" {ER}Product {valid_product} already exists{Q}")
         helpers.enter_to_continue()
@@ -86,9 +86,9 @@ def read_product():
     This function reads a product from the google sheet
     """
     print(f"\n {OK}Read product calories per 100g:{Q}\n ")
-    valid_products = helpers.prepare_string(helpers.validate_length(
-        input(" Enter the product name: \n "),
-        " Enter the product name: \n ", 1, 20))
+    valid_products = helpers.prepare_string(
+        helpers.validate_product(input(" Enter the product name: \n "),
+                                " Enter the product name: \n "))
     products = productListGS.find_products_starting_with(valid_products)
     for product in products:
         print(" " + product[0] + ": " + product[1] + " calories")
@@ -115,8 +115,8 @@ def update_product_name():
     """
     print(f"\n{OK}Update product name:{Q}\n ")
     product_input = helpers.prepare_string(
-        helpers.validate_length(input(" Enter the product name: \n "),
-                                " Enter the product name: \n ", 1, 20))
+        helpers.validate_product(input(" Enter the product name: \n "),
+                                " Enter the product name: \n "))
     products = productListGS.find_products_starting_with(product_input)
     prod = productListGS.find_product(product_input)
     if prod:
@@ -144,9 +144,10 @@ def update_product_name():
             helpers.enter_to_continue()
             return
 
-    new_product_name = helpers.prepare_string(helpers.validate_length(
-        input(" Enter the new product name: \n "),
-        " Enter the product name to update: \n ", 1, 20))
+    new_product_name = helpers.prepare_string(
+        helpers.validate_product(
+            input(" Enter the new product name: \n "),
+                " Enter the new product name: \n "))
     is_in_db = bool(productListGS.find_product(new_product_name))
     if is_in_db:
         print(f" {ER}Product {new_product_name} already exists{Q}")
@@ -161,9 +162,9 @@ def update_product_calories():
     This function updates the calories of a product from the google sheet
     """
     print(f"\n {OK}Update product calories per 100g:{Q}\n ")
-    product_input = helpers.prepare_string(helpers.validate_length(
+    product_input = helpers.prepare_string(helpers.validate_product(
         input(" Enter the product name to update its calories: \n "),
-        " Enter the product name to update its calories: \n ", 1, 20))
+        " Enter the product name to update its calories: \n "))
     products = productListGS.find_products_starting_with(product_input)
     prod = productListGS.find_product(product_input)
     if prod:
@@ -218,8 +219,9 @@ def delete_product():
     This function deletes a product from the google sheet
     """
     print(f"\n{OK} Delete product:{Q}\n ")
-    product_input = helpers.prepare_string(
-        input(" Enter the product to delete: \n "))
+    product_input = helpers.prepare_string(helpers.validate_product(
+        input(" Enter the product to delete: \n "),
+        " Enter the product to delete: \n "))
     product = productListGS.find_product(product_input)
     if product:
         print(" " + product[0] + ": " + product[1] + " calories")

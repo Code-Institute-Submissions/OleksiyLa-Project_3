@@ -128,6 +128,20 @@ def validate_username(data, input_message):
         return data
 
 
+def validate_product(data, input_message):
+    """
+    This function checks if the product is valid,
+    if not, it will ask for a new input
+    """
+    data = data.strip()
+    data = validate_length(data, input_message, 1, 20)
+    for char in data:
+        if char.isdigit():
+            print(f" {ER}Product must not contain numbers{Q}")
+            return validate_product(input(input_message), input_message)
+    return data
+
+
 def prepare_string(string):
     """
     This function takes a string and returns a string with the first
