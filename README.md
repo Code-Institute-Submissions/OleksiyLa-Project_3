@@ -58,13 +58,13 @@ Calories Tracker is a terminal-based application designed to put the user in con
 
   <details><summary>Get personal data menu</summary>
 
-    ![Get personal data menu flowchart](./README/images/flow_chart/get_personal_data.drawio.png)
+    ![Get personal data menu flowchart](./README/images/flow_chart/get_personal_dat -drawio.png)
 
   </details>
 
   <details><summary>Set personal data menu</summary>
 
-    ![Set personal data menu flowchart](./README/images/flow_chart/set_personal_data.drawio.png)
+    ![Set personal data menu flowchart](./README/images/flow_chart/set_personal_dat -drawio.png)
 
   </details>
 
@@ -81,7 +81,7 @@ Calories Tracker is a terminal-based application designed to put the user in con
   </details>
 
 - __Colors__
-- To improve user experience, colors were implemented. Two colors were deemed sufficient: green for success and red for errors. In the terminal, text that indicates success is displayed in green, while errors are displayed in red.
+- To improve user experience, colors were implemente  - Two colors were deemed sufficient: green for success and red for errors. In the terminal, text that indicates success is displayed in green, while errors are displayed in red.
 
 - __Technologies__
   - Python
@@ -123,7 +123,7 @@ They should be prompted to enter the product's unique identifier that is the nam
 - It then offers the user the option to add these calories to their daily intake record in the Google Sheet.
 - If the user selects "Yes," the application adds the calories consumed to the daily intake record and returns to the main menu.
 - If the user selects "No," the application keeps calculating and allows the user to search for another product.
-- The application also keeps track of the calories from previous calculations, so the user can continue adding multiple products to their daily intake record without losing previous data.
+- The application also keeps track of the calories from previous calculations, so the user can continue adding multiple products to their daily intake record without losing previous dat -
 
 ### Get personal data
 
@@ -177,7 +177,7 @@ They should be prompted to enter the product's unique identifier that is the nam
 #### Delete Account
   - If the user selects "Delete Account," the application presents a confirmation prompt to ensure the user's intention to delete their account.
   - The user must confirm their choice to delete the account.
-  - If confirmed, the application deletes the user's account, including all associated data.
+  - If confirmed, the application deletes the user's account, including all associated dat  -
   - The application then displays a goodbye message.
   - After displaying the goodbye message, the application exits, bringing the user back to the terminal prompt.
 
@@ -188,3 +188,109 @@ They should be prompted to enter the product's unique identifier that is the nam
 
 #### Color-Coding for Errors:
   - If an error occurs, such as an incorrect input or product not found, the application displays a message in red to indicate an error.
+
+## Testing
+
+### Manual testing
+
+#### User Registration and Login
+  - Verified that users can register with a valid username and password.
+  - Verified that users can log in with their registered credentials.
+  - Verified that login fails with incorrect credentials.
+  - Verified that the application handles errors gracefully and provides informative messages.
+
+#### Change Password
+  - Verified that users can change their password.
+  - Verified that password change is successful and reflected in subsequent logins.
+
+#### Delete Account
+  - Verified that users can delete their account.
+  - Verified that the application prompts for confirmation before deleting the account.
+  - Verified that all user data is removed upon account deletion.
+
+#### See Progress
+  - Verified that users can see their progress, such as average calories consumed over time.
+  - Verified that the application calculates and displays weight loss or gain progress accurately.
+
+#### Adding Calories Entry
+  - Verified that users can specify the calories consumed.
+  - Verified that the application validates user inputs (e.g., non-negative calories).
+  - Verified that the calories entry is saved correctly.
+
+#### Set Calories Limit
+  - Verified that users can set a daily calories limit.
+  - Verified that the application validates and saves the limit correctly.
+
+#### Viewing Calories Entries
+  - Verified that users can view their calorie entries.
+  - Verified that entries are displayed in a readable format.
+
+#### Editing Calories Entry
+  - Verified that users can edit an existing calories entry.
+  - Verified that the application validates and saves the changes correctly.
+
+#### Data Validation
+  - Verified that the application handles invalid inputs gracefully and provides appropriate error messages.
+  - Test for boundary conditions.
+
+#### User Experience and Usability
+  - Verified that the application provides clear and user-friendly prompts and instructions.
+  - Verified that navigation within the application is intuitive.
+  - Verified that the application responds to user inputs promptly.
+
+#### Data Persistence
+  - Verified that data is persisted correctly between application sessions.
+
+#### Add, View, and Update Calories Limit
+  - Verified that users can add a new daily calories limit.
+  - Verified that users can view their current calories limit.
+  - Verified that users can update their calories limit.
+
+#### Add, View, and Update Calories Consumed
+  - Verified that users can add calories consumed for a day.
+  - Verified that users can view their calories consumed today.
+
+#### Read Products from Google Sheet
+  - Verified that the application can successfully read products and their calorie information from a Google Sheet.
+  - Verified that the imported data is correctly displayed within the application.
+
+#### Add New Products
+  - Verified that users can add new products to their database, specifying the product name and calories.
+  - Verified that the added product is saved and available for future use.
+
+#### Update Product Name and Calories
+  - Verified that users can update the name and calorie information of existing products.
+  - Verified that the changes are saved and reflected when adding or viewing calories consumed entries.
+
+#### Track Weight in Kilograms and Pounds
+  - Verified that users can track their weight in both kilograms and pounds.
+  - Verified that the application allows users to specify the measurement unit when adding weight entries.
+  - Verified that the weight entries are saved correctly with the chosen measurement unit.
+
+### Testing against user stories
+
+  - __Customizable Daily Calorie Limit:__
+    - I can set my daily calorie limit based on my weight management goals, whether it's losing, gaining, or maintaining weight.
+
+  - __Daily Intake Logging:__
+    - The app enables me to log my daily calories intake.
+
+  - __Progress Tracking:__
+    - The app displays my progress, including the number of calories consumed and remaining for the day. I can also track my progress over a period of time, with a minimum duration of seven consecutive days. During this period, I can view my average calorie consumption as well as the amount of weight I have lost or gained.
+
+  - __Weight Tracking:__
+    - I can input my daily weight, and the app records and displays this data, showing trends over time if I track my weight and calories for at least seven consecutive days.
+
+  - __Data Privacy:__ 
+    - The app secures my password by hashing it using the bcrypt library.
+
+  - __User Account Management:__
+    - I can change my password or delete my account, along with all the data associated with it.
+
+  - __Product Table Management:__
+    - I can add new products to the product table, edit existing products, or delete products from the table.
+
+### CI Python Linter
+  The application was tested using the Python linter, and no errors were found.
+
+  ![Responsive website on different devices](./README/images/tests/python_linter.png)
