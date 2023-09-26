@@ -301,15 +301,23 @@ They should be prompted to enter the product's unique identifier that is the nam
   - Additionally, the app could provide personalized advice on calorie limits. This could be achieved by gathering user data such as age, weight, height, sex, and activity level, and then adjusting recommendations based on data from the user like daily weight tracking and daily calorie intake.
 
 ## Deployment
-  - Sign up for a Heroku account.
   - Use Template from Code Institute.
   - Prepare requirements.txt file listing the Python dependencies for your project using the pip3 freeze > requirements.txt command.
-  - Push the Project on GitHub:
-  - Configure Heroku Settings, access Heroku dashboard, go to settings, and configure the necessary settings
-  - Adding the Python and Node.js buildpacks.
-  - Setting environment variables (including port and credentials).
-  - Click the "Deploy" option in the Heroku dashboard.
-  - Connect Heroku and GitHub
+  - Push the Project on GitHub
+  - Log in to Heroku or create an account if required.
+  - Click "Create new app".
+  - Select the relevant region. I chose Europe.
+  - Enter a unique app name.
+  - Click on the "Create app" button
+  - Navigate to the settings tab and scroll down to the "Config Vars" section.
+  - Click the button labelled "Reveal Config Vars" and enter the "key" as port, the "value" as 8000 and click the "add" button.
+  - Click the button labelled "Reveal Config Vars" and enter the "key" as CREDS, the "value" from creds file and click the "add" button.
+  - Scroll down to the buildpacks section of the settings page and click the button labeled " add buildpack," select "Python," and click "Save Changes", then do the following steps again but choose "NodeJS".
+  - The buildpacks must be in the correct order.
+  - Scroll back to the top of the settings page, and navigate to the "Deploy" tab.
+  - From the deploy tab select Github as the deployment method.
+  - Confirm you want to connect to GitHub.
+  - Search for the repository name and click the connect button next to the intended repository.
   - Deploy on Heroku, trigger the deployment process in Heroku, either by manually initiating a deploy or by setting up automatic deployments.
   - Click "View" When Deployed to access the live application.
 
