@@ -198,10 +198,19 @@ def wrapper_function(func, arg):
         func(arg)
     return wrapper
 
+
 def hash_password(password):
+    """
+    This function hashes the password
+    """
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed_password
 
+
 def verify_password(input_password, hashed_password):
-    return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password)
+    """
+    This function verifies the hashed password
+    """
+    return bcrypt.checkpw(input_password.encode('utf-8'),
+                          hashed_password)
