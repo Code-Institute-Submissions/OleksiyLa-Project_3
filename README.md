@@ -84,7 +84,14 @@ Calories Tracker is a terminal-based application designed to put the user in con
 - To improve user experience, colors were implemente  - Two colors were deemed sufficient: green for success and red for errors. In the terminal, text that indicates success is displayed in green, while errors are displayed in red.
 
 - __Technologies__
-  - Python
+  - Packages:
+    - gspread - Google Sheets Python API
+    - google auth, OAuth 2.0 client library
+    - bcrypt - Password hashing
+    - pwinput - Password input masking
+
+  - Languages:
+    - Python
 
 ## Features
 
@@ -281,7 +288,7 @@ They should be prompted to enter the product's unique identifier that is the nam
   - __Weight Tracking:__
     - I can input my daily weight, and the app records and displays this data, showing trends over time if I track my weight and calories for at least seven consecutive days.
 
-  - __Data Privacy:__ 
+  - __Data Privacy:__
     - To enhance security, the application employs a multi-layered approach. It not only securely stores hashed passwords in the database but also ensures that user passwords are concealed during input, with asterisks masking the characters as they are entered.
 
   - __User Account Management:__
