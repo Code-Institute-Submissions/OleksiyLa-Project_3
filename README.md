@@ -62,6 +62,12 @@ Calorie Tracker is a terminal-based application designed to put the user in cont
 
   </details>
 
+  <details><summary>Set personal data menu</summary>
+
+    ![Set personal data menu flowchart](./README/images/flow_chart/set_personal_data.drawio.png)
+
+  </details>
+
 - __Colors__
 - To improve user experience, colors were implemented. Two colors were deemed sufficient: green for success and red for errors. In the terminal, text that indicates success is displayed in green, while errors are displayed in red.
 
