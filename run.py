@@ -5,6 +5,15 @@ import python.options as options
 OK = '\033[92m'
 Q = '\033[0m'
 
+ascii_art = r"""
+   ____      _            _             _____               _
+  / ___|__ _| | ___  _ __(_) ___  ___  |_   _| __ __ _  ___| | _____ _ __
+ | |   / _` | |/ _ \| '__| |/ _ \/ __|   | || '__/ _` |/ __| |/ / _ \ '__|
+ | |__| (_| | | (_) | |  | |  __/\__ \   | || | | (_| | (__|   <  __/ |
+  \____\__,_|_|\___/|_|  |_|\___||___/   |_||_|  \__,_|\___|_|\_\___|_|
+
+"""
+
 
 def auth():
     """
@@ -122,7 +131,10 @@ def main():
     """
     Start the Calories Tracker App
     """
-    helpers.clear_terminal()
+    print("\n\n")
+    print(ascii_art)
+    print("\n\n")
+    helpers.enter_to_continue()
     print(f"{OK}\n Welcome to the Calories Tracker App{Q}\n ")
     if auth():
         menu()
